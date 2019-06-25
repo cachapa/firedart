@@ -1,0 +1,18 @@
+# Cache and build files
+.packages
+.pub/
+build/
+ios/.generated/
+packages
+pubspec.lock
+.flutter-plugins
+.gradle
+
+# IDE local settings
+.atom/
+.idea
+.vscode/
+
+# MacOS garbage
+.DS_Store
+
