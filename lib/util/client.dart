@@ -100,9 +100,10 @@ class AuthClient extends http.BaseClient {
   }
 
   Future<http.BaseRequest> _signRequest(http.BaseRequest request) async {
-    if (tokenProvider != null)
+    if (tokenProvider != null) {
       request.headers["Authorization"] =
           "Bearer ${await tokenProvider.idToken}";
+    }
     return request;
   }
 }

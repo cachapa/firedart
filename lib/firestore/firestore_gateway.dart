@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:firedart/util/client.dart';
 import 'package:firedart/firestore/firestore.dart';
+import 'package:firedart/util/client.dart';
 
 class FirestoreGateway {
   final AuthClient _client;
@@ -59,23 +59,26 @@ class FirestoreGateway {
     if (value == null) return {"nullValue": null};
 
     var type = value.runtimeType;
-    if (type.toString().startsWith("List"))
+    if (type.toString().startsWith("List")) {
       return {
         "arrayValue": {
           "values": (value as List).map((item) => _encode(item)).toList()
         }
       };
+    }
 
-    if (type.toString().contains("Map"))
+    if (type.toString().contains("Map")) {
       return {
         "mapValue": {
           "fields":
               (value as Map).map((key, value) => MapEntry(key, _encode(value)))
         }
       };
+    }
 
-    if (type.toString() == "Uint8List")
+    if (type.toString() == "Uint8List") {
       return {"bytesValue": base64Encode(value)};
+    }
 
     switch (type) {
       case bool:

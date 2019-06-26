@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:firedart/util/client.dart';
 import 'package:firedart/auth/token_provider.dart';
+import 'package:firedart/util/client.dart';
 
 class UserGateway {
   final UserClient _client;
@@ -57,4 +57,9 @@ class User {
   User.fromMap(Map<String, dynamic> map)
       : email = map['users'][0]['email'],
         emailVerified = map['users'][0]['emailVerified'];
+
+  @override
+  String toString() {
+    return "email: $email, emailVerified: $emailVerified";
+  }
 }

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:firedart/util/client.dart';
 import 'package:firedart/auth/firebase_auth.dart';
 import 'package:firedart/firestore/firestore_gateway.dart';
+import 'package:firedart/util/client.dart';
 import 'package:http/http.dart' as http;
 
 class Firestore {
@@ -10,9 +10,10 @@ class Firestore {
   static Firestore _instance;
 
   static Firestore initialize(String projectId) {
-    if (_instance != null)
+    if (_instance != null) {
       throw Exception("Firestore instance was already initialized");
-    FirebaseAuth auth = null;
+    }
+    FirebaseAuth auth;
     try {
       auth = FirebaseAuth.instance;
     } catch (e) {
@@ -23,9 +24,10 @@ class Firestore {
   }
 
   static Firestore get instance {
-    if (_instance == null)
+    if (_instance == null) {
       throw Exception(
           "Firestore hasn't been initialized. Please call Firestore.initialize() before using it.");
+    }
     return _instance;
   }
 

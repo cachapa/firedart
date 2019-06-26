@@ -14,7 +14,7 @@ Add firedart to your `pubspec.yaml` file:
 
 ``` yaml
 dependencies:
-  firedart: ^0.0.1+1
+  firedart: ^0.1.0
 ```
 
 ## Firebase Auth
@@ -46,6 +46,8 @@ var firebaseAuth = FirebaseAuth.(apiKey, await PreferencesStore());
 await firebaseAuth.signIn(email, password);
 var user = await firebaseAuth.getUser();
 ```
+
+Further usage examples can be found in the [integration tests](https://github.com/cachapa/firedart/blob/master/test/firebase_auth_test.dart).
 
 ### Limitations
 
@@ -79,6 +81,8 @@ await firebaseAuth.signIn(email, password);
 var map = await firestore.collection("users").get();
 var users = UserCollection.fromMap(map);
 ```
+
+Further usage examples can be found in the [integration tests](https://github.com/cachapa/firedart/blob/master/test/firestore_test.dart).
 
 ### Limitations
 
