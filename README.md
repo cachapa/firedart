@@ -2,9 +2,9 @@
 
 [![pub package](https://img.shields.io/pub/v/firedart.svg)](https://pub.dartlang.org/packages/firedart)
 
-An incomplete, dart-native implementation of the Firebase SDK based on Firebase's REST interface.
+An incomplete, dart-native implementation of the Firebase SDK based on Firebase's REST and RPC interfaces.
 
-This library has a single dependency on [http](https://pub.dev/packages/http) which should make it able to run in any environment capable of executing dart code.
+This library dependends only on [http](https://pub.dev/packages/http), [grpc](https://pub.dev/packages/grpc) and [protobuf](https://pub.dev/packages/protobuf) which should make it able to run in any environment capable of executing dart code.
 
 Currently the only supported services are `Firebase Auth` and `Firestore`.
 
@@ -14,7 +14,7 @@ Add firedart to your `pubspec.yaml` file:
 
 ``` yaml
 dependencies:
-  firedart: ^0.1.0
+  firedart: ^0.5.0
 ```
 
 ## Firebase Auth
@@ -55,7 +55,7 @@ Further usage examples can be found in the [integration tests](https://github.co
 
 ## Firestore
 
-The `Firestore` class is a basic implementation of the service's REST interface. The API is similar (but not identical) to that of the official SDK.
+The `Firestore` class is a basic implementation of the service's RPC interface. The API is similar (but not identical) to that of the official SDK.
 
 ### Usage
 
@@ -91,9 +91,21 @@ Further usage examples can be found in the [integration tests](https://github.co
 * The data is not cached locally.
 * Failed writes (e.g. due to network errors) are not retried.
 
+### Regenerating the RPC stubs
+
+The Firestore RPC stubs are based on Google's official protobuf definition files from [googleapis](https://github.com/googleapis/googleapis).
+
+To regenerate them, you will need to check out both [googleapis](https://github.com/googleapis/googleapis) and [protobuf](https://github.com/google/protobuf).
+
+Set the `PROTOBUF` and `GOOGLEAPIS` environment variables to point to your clones of the above repositories respectively, and then run:
+
+```sh
+$ tool/regenerate.sh
+```
+
 ## Debugging
 
-For debugging you can use `VerboseClient`, an HTTP client that logs all communication to the console. The logs can expose sensitive data including passwords and keys, so it's recommended to only enable it for development builds. In Flutter this can be achieved using the `kReleaseMode` constant from the `foundation` package:
+For debugging `Firebase Auth` you can use `VerboseClient`, an HTTP client that logs all communication to the console. The logs can expose sensitive data including passwords and keys, so it's recommended to only enable it for development builds. In Flutter this can be achieved using the `kReleaseMode` constant from the `foundation` package:
 
 ``` dart
 var client = !kReleaseMode ? VerboseClient() : http.Client();

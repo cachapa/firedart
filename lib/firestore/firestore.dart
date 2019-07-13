@@ -1,15 +1,18 @@
-import 'dart:convert';
-
 import 'package:firedart/auth/firebase_auth.dart';
-import 'package:firedart/firestore/firestore_gateway.dart';
-import 'package:firedart/util/client.dart';
-import 'package:http/http.dart' as http;
+import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
+import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as FS;
+import 'package:firedart/generated/google/firestore/v1/firestore.pbgrpc.dart';
+import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
+import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
+import 'package:firedart/generated/google/type/latlng.pb.dart';
+import 'package:fixnum/fixnum.dart';
+import 'package:grpc/grpc.dart';
 
 class Firestore {
   /* Singleton interface */
   static Firestore _instance;
 
-  static Firestore initialize(String projectId) {
+  static Firestore initialize(String projectId, {String databaseId}) {
     if (_instance != null) {
       throw Exception("Firestore instance was already initialized");
     }
@@ -19,7 +22,7 @@ class Firestore {
     } catch (e) {
       // FirebaseAuth isn't initialized
     }
-    _instance = Firestore(projectId, auth: auth);
+    _instance = Firestore(projectId, databaseId: databaseId, auth: auth);
     return _instance;
   }
 
@@ -32,155 +35,206 @@ class Firestore {
   }
 
   /* Instance interface */
-  FirestoreGateway _gateway;
+  FirestoreClient _gateway;
+  final String _database;
 
-  Firestore(String projectId, {http.Client httpClient, FirebaseAuth auth})
-      : assert(projectId.isNotEmpty) {
-    var client = httpClient ?? auth?.httpClient ?? http.Client();
-    var authClient = AuthClient(client, auth?.tokenProvider);
-    _gateway = FirestoreGateway(authClient, projectId);
+  Firestore(String projectId, {String databaseId, FirebaseAuth auth})
+      : _gateway = FirestoreClient(ClientChannel('firestore.googleapis.com'),
+            options: _TokenAuthenticator.from(auth)?.toCallOptions),
+        _database =
+            "projects/$projectId/databases/${databaseId ?? "(default)"}/documents",
+        assert(projectId.isNotEmpty);
+
+  CollectionReference collection(String path) {
+    if (path.split("/").length % 2 == 0) {
+      throw Exception("Path is not a collection: $path");
+    }
+    return CollectionReference._internal(_gateway, "$_database/$path");
   }
 
-  CollectionReference collection(String id) {
-    return CollectionReference._internal(_gateway, null, id);
+  DocumentReference document(String path) {
+    if (path.split("/").length % 2 == 1) {
+      throw Exception("Path is not a document: $path");
+    }
+    return DocumentReference._internal(_gateway, "$_database/$path");
   }
 }
 
+class _TokenAuthenticator {
+  factory _TokenAuthenticator.from(FirebaseAuth auth) {
+    return auth != null ? _TokenAuthenticator._internal(auth) : null;
+  }
+
+  final FirebaseAuth auth;
+
+  _TokenAuthenticator._internal(this.auth);
+
+  Future<void> authenticate(Map<String, String> metadata, String uri) async {
+    var idToken = await auth.tokenProvider.idToken;
+    metadata['authorization'] = "Bearer ${idToken}";
+  }
+
+  CallOptions get toCallOptions => CallOptions(providers: [authenticate]);
+}
+
 abstract class _Reference {
-  final FirestoreGateway _gateway;
-  final _Reference _parent;
-  String _id;
-  final String basePath;
+  final FirestoreClient _gateway;
+  final String _fullPath;
 
-  _Reference(this._gateway, this._parent, this._id)
-      : basePath =
-            "projects/${_gateway.projectId}/databases/(default)/documents" {
-    if (_id.startsWith(basePath)) {
-      this._id = _id.substring(basePath.length + 1);
-    }
-  }
-
-  String get id => _id;
-
-  String get path {
-    return "${_parent?.path ?? basePath}/$_id";
-  }
-
-  Future<Map<String, dynamic>> _get() {
-    return _gateway.get(path);
-  }
+  _Reference(this._gateway, this._fullPath);
 
   @override
   bool operator ==(other) {
-    return runtimeType == other.runtimeType && path == other.path;
+    return runtimeType == other.runtimeType && _fullPath == other._fullPath;
   }
 
   @override
   String toString() {
-    return "$runtimeType: $path";
+    return "$runtimeType: $_fullPath";
+  }
+
+  FS.Document _encodeMap(Map<String, dynamic> map) {
+    var document = FS.Document();
+    map.forEach((key, value) {
+      document.fields[key] = _encode(value);
+    });
+    return document;
   }
 }
 
 class CollectionReference extends _Reference {
-  CollectionReference._internal(
-      FirestoreGateway gateway, _Reference parent, String name)
-      : super(gateway, parent, name);
+  CollectionReference._internal(FirestoreClient gateway, String path)
+      : super(gateway, path);
 
   DocumentReference document(String id) {
-    return DocumentReference._internal(_gateway, this, id);
+    return DocumentReference._internal(_gateway, "$_fullPath/$id");
   }
 
-  Future<List<Map<String, dynamic>>> get() async {
-    var map = await _get();
-    return (map["documents"] as List<dynamic>)
-        .cast()
-        .map<Map<String, dynamic>>((item) => item["fields"])
+  Future<List<Document>> get() async {
+    var request = ListDocumentsRequest()
+      ..parent = _fullPath.substring(0, _fullPath.lastIndexOf("/"))
+      ..collectionId = _fullPath.substring(_fullPath.lastIndexOf("/") + 1);
+    var response = await _gateway.listDocuments(request);
+    return response.documents
+        .map((rawDocument) => Document._internal(_gateway, rawDocument))
         .toList(growable: false);
   }
 
   /// Create a document with a random id.
-  Future<String> add(Map<String, dynamic> document) =>
-      _gateway.add(path, document);
+  Future<Document> add(Map<String, dynamic> map) async {
+    var split = _fullPath.split("/");
+    var parent = split.sublist(0, split.length - 1).join("/");
+    var collectionId = split.last;
+    var document = _encodeMap(map);
+
+    var request = CreateDocumentRequest()
+      ..parent = parent
+      ..collectionId = collectionId
+      ..document = document;
+
+    var response = await _gateway.createDocument(request);
+    return Document._internal(_gateway, response);
+  }
 }
 
 class DocumentReference extends _Reference {
-  DocumentReference._internal(
-      FirestoreGateway gateway, _Reference parent, String name)
-      : super(gateway, parent, name);
+  DocumentReference._internal(FirestoreClient gateway, String path)
+      : super(gateway, path);
 
-  CollectionReference collection(String name) {
-    return CollectionReference._internal(_gateway, this, name);
+  CollectionReference collection(String id) {
+    return CollectionReference._internal(_gateway, "$_fullPath/$id");
   }
 
   Future<Document> get() async {
-    var map = await _get();
-    return Document._internal(_gateway, map["fields"]);
+    var rawDocument =
+        await _gateway.getDocument(GetDocumentRequest()..name = _fullPath);
+    return Document._internal(_gateway, rawDocument);
   }
 
-  /// Create a document if it doesn't exist.
-  Future<void> create(Map<String, dynamic> document) async {
-    var parentPath = path.substring(0, path.lastIndexOf("/"));
-    await _gateway.add(parentPath, document, id: id);
+  /// Check if a document exists.
+  Future<bool> exists() async {
+    try {
+      await get();
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
-  Future<bool> exists() => _gateway.exists(path);
+  /// Create a document if it doesn't exist, otherwise throw exception.
+  Future<Document> create(Map<String, dynamic> map) async {
+    var split = _fullPath.split("/");
+    var parent = split.sublist(0, split.length - 2).join("/");
+    var collectionId = split[split.length - 2];
+    var documentId = split.last;
+    var document = _encodeMap(map);
+
+    var request = CreateDocumentRequest()
+      ..parent = parent
+      ..collectionId = collectionId
+      ..documentId = documentId
+      ..document = document;
+
+    var response = await _gateway.createDocument(request);
+    return Document._internal(_gateway, response);
+  }
 
   /// Create or update a document.
   /// In the case of an update, any fields not referenced in the payload will be deleted.
-  Future<void> set(Map<String, dynamic> document) async {
-    await _gateway.set(path, document, false);
+  Future<void> set(Map<String, dynamic> map) async {
+    var document = _encodeMap(map)..name = _fullPath;
+
+    var request = UpdateDocumentRequest()..document = document;
+
+    await _gateway.updateDocument(request);
   }
 
   /// Create or update a document.
   /// In case of an update, fields not referenced in the payload will remain unchanged.
-  Future<void> update(Map<String, dynamic> document) async {
-    await _gateway.set(path, document, true);
+  Future<void> update(Map<String, dynamic> map) async {
+    var document = _encodeMap(map)..name = _fullPath;
+
+    var mask = DocumentMask();
+    map.keys.forEach((key) => mask.fieldPaths.add(key));
+
+    var request = UpdateDocumentRequest()
+      ..updateMask = mask
+      ..document = document;
+
+    await _gateway.updateDocument(request);
   }
 
-  Future<void> delete() => _gateway.delete(path);
+  /// Deletes a document.
+  Future<void> delete() async =>
+      await _gateway.deleteDocument(DeleteDocumentRequest()..name = _fullPath);
 }
 
 class Document {
-  final FirestoreGateway _gateway;
-  final Map<String, dynamic> _map;
+  final FirestoreClient _gateway;
+  final FS.Document _rawDocument;
 
-  Document._internal(this._gateway, this._map);
+  Document._internal(this._gateway, this._rawDocument);
+
+  String get id => path.substring(path.lastIndexOf("/") + 1);
+
+  String get path =>
+      _rawDocument.name.substring(_rawDocument.name.indexOf("/documents") + 10);
 
   dynamic operator [](String key) {
-    if (!_map.containsKey(key)) return null;
-    return _decode(_map[key]);
+    if (!_rawDocument.fields.containsKey(key)) return null;
+    return _decode(_rawDocument.fields[key], _gateway);
   }
 
-  dynamic _decode(Map<String, dynamic> map) {
-    var type = map.keys.first;
-    var value = map[type];
-
-    switch (type) {
-      case "nullValue":
-      case "booleanValue":
-      case "doubleValue":
-      case "stringValue":
-        return value;
-      case "integerValue":
-        return int.parse(value);
-      case "timestampValue":
-        return DateTime.parse(value).toLocal();
-      case "bytesValue":
-        return base64Decode(value);
-      case "referenceValue":
-        return DocumentReference._internal(_gateway, null, value);
-      case "geoPointValue":
-        return GeoPoint(
-            value["latitude"].toDouble(), value["longitude"].toDouble());
-      case "arrayValue":
-        List values = value["values"];
-        return values.map((item) => _decode(item)).toList(growable: false);
-      case "mapValue":
-        Map m = value["fields"];
-        return m.map((key, value) => MapEntry(key, _decode(value)));
-      default:
-        throw Exception("Unrecognized type: $type");
-    }
+  @override
+  String toString() {
+    var output = StringBuffer("$path {");
+    var first = true;
+    _rawDocument.fields.keys.forEach((key) {
+      output.write("${first ? "" : ", "}$key: ${this[key]}");
+      first = false;
+    });
+    output.write("}");
+    return output.toString();
   }
 }
 
@@ -189,6 +243,8 @@ class GeoPoint {
   final double longitude;
 
   GeoPoint(this.latitude, this.longitude);
+
+  GeoPoint._internal(LatLng value) : this(value.latitude, value.longitude);
 
   @override
   bool operator ==(other) {
@@ -200,5 +256,84 @@ class GeoPoint {
   @override
   String toString() {
     return "lat: $latitude, lon: $longitude";
+  }
+
+  LatLng _toLatLng() {
+    return LatLng()
+      ..latitude = latitude
+      ..longitude = longitude;
+  }
+}
+
+FS.Value _encode(dynamic value) {
+  if (value == null) return FS.Value()..nullValue = NullValue.NULL_VALUE;
+
+  var type = value.runtimeType;
+
+  if (type.toString().startsWith("List")) {
+    var array = FS.ArrayValue();
+    (value as List).forEach((element) => array.values.add(_encode(element)));
+    return FS.Value()..arrayValue = array;
+  }
+
+  if (type.toString().contains("Map")) {
+    var map = FS.MapValue();
+    (value as Map).forEach((key, val) => map.fields[key] = _encode(val));
+    return FS.Value()..mapValue = map;
+  }
+
+  if (type.toString() == "Uint8List") {
+    return FS.Value()..bytesValue = value;
+  }
+
+  switch (type) {
+    case bool:
+      return FS.Value()..booleanValue = value;
+    case int:
+      return FS.Value()..integerValue = Int64(value);
+    case double:
+      return FS.Value()..doubleValue = value;
+    case DateTime:
+      return FS.Value()..timestampValue = Timestamp.fromDateTime(value);
+    case String:
+      return FS.Value()..stringValue = value;
+    case DocumentReference:
+      return FS.Value()..referenceValue = value._fullPath;
+    case GeoPoint:
+      return FS.Value()..geoPointValue = value._toLatLng();
+    default:
+      throw Exception("Unknown type: ${type}");
+  }
+}
+
+dynamic _decode(FS.Value value, FirestoreClient gateway) {
+  switch (value.whichValueType()) {
+    case FS.Value_ValueType.nullValue:
+      return null;
+    case FS.Value_ValueType.booleanValue:
+      return value.booleanValue;
+    case FS.Value_ValueType.doubleValue:
+      return value.doubleValue;
+    case FS.Value_ValueType.stringValue:
+      return value.stringValue;
+    case FS.Value_ValueType.integerValue:
+      return value.integerValue.toInt();
+    case FS.Value_ValueType.timestampValue:
+      return value.timestampValue.toDateTime().toLocal();
+    case FS.Value_ValueType.bytesValue:
+      return value.bytesValue;
+    case FS.Value_ValueType.referenceValue:
+      return DocumentReference._internal(gateway, value.referenceValue);
+    case FS.Value_ValueType.geoPointValue:
+      return GeoPoint._internal(value.geoPointValue);
+    case FS.Value_ValueType.arrayValue:
+      return value.arrayValue.values
+          .map((item) => _decode(item, gateway))
+          .toList(growable: false);
+    case FS.Value_ValueType.mapValue:
+      return value.mapValue.fields
+          .map((key, value) => MapEntry(key, _decode(value, gateway)));
+    default:
+      throw Exception("Unrecognized type: ${value}");
   }
 }

@@ -65,45 +65,9 @@ class UserClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    var response = await client.send(await _signRequest(request));
-    if (response.statusCode == 400) {
-      tokenProvider.invalidateToken();
-      response = await client.send(await _signRequest(request));
-    }
-    return response;
-  }
-
-  Future<http.BaseRequest> _signRequest(http.BaseRequest request) async {
-    return http.Request(request.method, request.url)
+    request = http.Request(request.method, request.url)
       ..headers["content-type"] = "application/x-www-form-urlencoded"
       ..bodyFields = {"idToken": await tokenProvider.idToken};
-  }
-}
-
-class AuthClient extends http.BaseClient {
-  final http.Client client;
-  final TokenProvider tokenProvider;
-
-  AuthClient(this.client, this.tokenProvider);
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    var response = await client.send(await _signRequest(request));
-    if (response.statusCode == 401 && tokenProvider != null) {
-      tokenProvider.invalidateToken();
-      // Copy request
-      request = http.Request(request.method, request.url)
-        ..body = (request as http.Request).body;
-      response = await client.send(await _signRequest(request));
-    }
-    return response;
-  }
-
-  Future<http.BaseRequest> _signRequest(http.BaseRequest request) async {
-    if (tokenProvider != null) {
-      request.headers["Authorization"] =
-          "Bearer ${await tokenProvider.idToken}";
-    }
-    return request;
+    return client.send(request);
   }
 }

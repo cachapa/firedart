@@ -12,7 +12,7 @@ Future main() async {
 
   setUp(() async {
     tokenStore = VolatileStore();
-    auth = FirebaseAuth(apiKey, tokenStore, httpClient: VerboseClient());
+    auth = FirebaseAuth(apiKey, tokenStore);
     firestore = Firestore(projectId, auth: auth);
 
     await auth.signIn(email, password);
@@ -20,16 +20,16 @@ Future main() async {
 
   test("Add and delete collection document", () async {
     var collection = firestore.collection("test");
-    var documentId = await collection.add({"field": "test"});
-    expect(documentId, isNotEmpty);
-    var document = collection.document(documentId);
+    var newDocument = await collection.add({"field": "test"});
+    expect(newDocument["field"], "test");
+    var document = collection.document(newDocument.id);
     expect(await document.exists(), true);
     await document.delete();
     expect(await document.exists(), false);
   });
 
   test("Add and delete named document", () async {
-    var document = firestore.collection("test").document("add_remove");
+    var document = firestore.document("test/add_remove");
     await document.set({"field": "test"});
     expect(await document.exists(), true);
     await document.delete();
@@ -95,15 +95,22 @@ Future main() async {
     expect(doc["map"], {"int": 1, "string": "text"});
   });
 
-  test("Refresh token", () async {
-    tokenStore.idToken = "invalid_token";
+  test("Refresh token when idToken is null", () async {
+    tokenStore.idToken = null;
+    var map = await firestore.collection("test").get();
+    expect(auth.isSignedIn, true);
+    expect(map, isNot(null));
+  });
+
+  test("Refresh token when expired", () async {
+    tokenStore.expiry = DateTime.now();
     var map = await firestore.collection("test").get();
     expect(auth.isSignedIn, true);
     expect(map, isNot(null));
   });
 
   test("Sign out on bad refresh token", () async {
-    tokenStore.idToken = "invalid_token";
+    tokenStore.idToken = null;
     tokenStore.refreshToken = "invalid_token";
     try {
       await firestore.collection("test").get();

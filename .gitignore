@@ -7,6 +7,7 @@ packages
 pubspec.lock
 .flutter-plugins
 .gradle
+.dart_tool
 
 # IDE local settings
 .atom/

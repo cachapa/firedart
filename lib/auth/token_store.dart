@@ -3,6 +3,7 @@ import 'dart:io';
 abstract class TokenStore {
   String idToken;
   String _refreshToken;
+  DateTime expiry;
 
   String get refreshToken => _refreshToken;
 

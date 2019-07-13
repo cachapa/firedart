@@ -1,8 +1,8 @@
 import 'package:firedart/auth/auth_gateway.dart';
+import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_provider.dart';
 import 'package:firedart/auth/token_store.dart';
 import 'package:firedart/auth/user_gateway.dart';
-import 'package:firedart/util/client.dart';
 import 'package:http/http.dart' as http;
 
 class FirebaseAuth {

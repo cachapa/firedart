@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:firedart/util/client.dart';
+import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_store.dart';
+
+const _tokenExpirationThreshold = Duration(seconds: 30);
 
 class TokenProvider {
   final KeyClient client;
@@ -20,7 +22,10 @@ class TokenProvider {
   Stream<bool> get signInState => _signInStateStreamController.stream;
 
   Future<String> get idToken async {
-    if (_tokenStore.idToken == null) {
+    if (_tokenStore.idToken == null ||
+        _tokenStore.expiry
+            .subtract(_tokenExpirationThreshold)
+            .isBefore(DateTime.now().toUtc())) {
       await _refresh();
     }
     return _tokenStore.idToken;
@@ -31,6 +36,8 @@ class TokenProvider {
   void setToken(Map<String, dynamic> map) {
     _tokenStore.idToken = map["idToken"];
     _tokenStore.refreshToken = map["refreshToken"];
+    _tokenStore.expiry =
+        DateTime.now().add(Duration(seconds: int.parse(map["expiresIn"])));
     _notifyState();
   }
 
@@ -41,6 +48,7 @@ class TokenProvider {
   void signOut() {
     _tokenStore.idToken = null;
     _tokenStore.refreshToken = null;
+    _tokenStore.expiry = null;
     _notifyState();
   }
 
