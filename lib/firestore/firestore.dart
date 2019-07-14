@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firedart/auth/firebase_auth.dart';
 import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as FS;
@@ -35,28 +37,33 @@ class Firestore {
   }
 
   /* Instance interface */
-  FirestoreClient _gateway;
+  final FirestoreClient _gateway;
   final String _database;
+  _RTGateway _rtGateway;
 
   Firestore(String projectId, {String databaseId, FirebaseAuth auth})
       : _gateway = FirestoreClient(ClientChannel('firestore.googleapis.com'),
             options: _TokenAuthenticator.from(auth)?.toCallOptions),
         _database =
             "projects/$projectId/databases/${databaseId ?? "(default)"}/documents",
-        assert(projectId.isNotEmpty);
+        assert(projectId.isNotEmpty) {
+    _rtGateway = _RTGateway(_gateway, _database);
+  }
 
   CollectionReference collection(String path) {
     if (path.split("/").length % 2 == 0) {
       throw Exception("Path is not a collection: $path");
     }
-    return CollectionReference._internal(_gateway, "$_database/$path");
+    return CollectionReference._internal(
+        _gateway, _rtGateway, "$_database/$path");
   }
 
   DocumentReference document(String path) {
     if (path.split("/").length % 2 == 1) {
       throw Exception("Path is not a document: $path");
     }
-    return DocumentReference._internal(_gateway, "$_database/$path");
+    return DocumentReference._internal(
+        _gateway, _rtGateway, "$_database/$path");
   }
 }
 
@@ -77,11 +84,47 @@ class _TokenAuthenticator {
   CallOptions get toCallOptions => CallOptions(providers: [authenticate]);
 }
 
+class _RTGateway {
+  final FirestoreClient gateway;
+  final String database;
+  final streamController = StreamController<ListenRequest>();
+  Stream<ListenResponse> stream;
+
+  _RTGateway(this.gateway, this.database);
+
+  Stream<Document> subscribe(String path) {
+    stream ??= gateway
+        .listen(streamController.stream,
+            options: CallOptions(
+                metadata: {'google-cloud-resource-prefix': database}))
+        .asBroadcastStream();
+
+    final documentsTarget = Target_DocumentsTarget()..documents.add(path);
+    final target = Target()..documents = documentsTarget;
+    final request = ListenRequest()
+      ..database = database
+      ..addTarget = target;
+
+    streamController.add(request);
+
+    return stream
+        .where((response) => (response.hasDocumentChange() &&
+                response.documentChange.document.name == path ||
+            (response.hasDocumentDelete() || response.hasDocumentRemove()) &&
+                response.documentDelete.document == path))
+        .map((response) => response.hasDocumentChange()
+            ? Document._internal(
+                gateway, this, response.documentChange.document)
+            : null);
+  }
+}
+
 abstract class _Reference {
   final FirestoreClient _gateway;
+  final _RTGateway _rtGateway;
   final String _fullPath;
 
-  _Reference(this._gateway, this._fullPath);
+  _Reference(this._gateway, this._rtGateway, this._fullPath);
 
   @override
   bool operator ==(other) {
@@ -103,11 +146,12 @@ abstract class _Reference {
 }
 
 class CollectionReference extends _Reference {
-  CollectionReference._internal(FirestoreClient gateway, String path)
-      : super(gateway, path);
+  CollectionReference._internal(
+      FirestoreClient gateway, _RTGateway rtGateway, String path)
+      : super(gateway, rtGateway, path);
 
   DocumentReference document(String id) {
-    return DocumentReference._internal(_gateway, "$_fullPath/$id");
+    return DocumentReference._internal(_gateway, _rtGateway, "$_fullPath/$id");
   }
 
   Future<List<Document>> get() async {
@@ -116,7 +160,8 @@ class CollectionReference extends _Reference {
       ..collectionId = _fullPath.substring(_fullPath.lastIndexOf("/") + 1);
     var response = await _gateway.listDocuments(request);
     return response.documents
-        .map((rawDocument) => Document._internal(_gateway, rawDocument))
+        .map((rawDocument) =>
+            Document._internal(_gateway, _rtGateway, rawDocument))
         .toList(growable: false);
   }
 
@@ -133,22 +178,28 @@ class CollectionReference extends _Reference {
       ..document = document;
 
     var response = await _gateway.createDocument(request);
-    return Document._internal(_gateway, response);
+    return Document._internal(_gateway, _rtGateway, response);
   }
 }
 
 class DocumentReference extends _Reference {
-  DocumentReference._internal(FirestoreClient gateway, String path)
-      : super(gateway, path);
+  DocumentReference._internal(
+      FirestoreClient gateway, _RTGateway rtGateway, String path)
+      : super(gateway, rtGateway, path);
 
   CollectionReference collection(String id) {
-    return CollectionReference._internal(_gateway, "$_fullPath/$id");
+    return CollectionReference._internal(
+        _gateway, _rtGateway, "$_fullPath/$id");
   }
 
   Future<Document> get() async {
     var rawDocument =
         await _gateway.getDocument(GetDocumentRequest()..name = _fullPath);
-    return Document._internal(_gateway, rawDocument);
+    return Document._internal(_gateway, _rtGateway, rawDocument);
+  }
+
+  Stream subscribe() {
+    return _rtGateway.subscribe(_fullPath);
   }
 
   /// Check if a document exists.
@@ -176,7 +227,7 @@ class DocumentReference extends _Reference {
       ..document = document;
 
     var response = await _gateway.createDocument(request);
-    return Document._internal(_gateway, response);
+    return Document._internal(_gateway, _rtGateway, response);
   }
 
   /// Create or update a document.
@@ -211,9 +262,10 @@ class DocumentReference extends _Reference {
 
 class Document {
   final FirestoreClient _gateway;
+  final _RTGateway _rtGateway;
   final FS.Document _rawDocument;
 
-  Document._internal(this._gateway, this._rawDocument);
+  Document._internal(this._gateway, this._rtGateway, this._rawDocument);
 
   String get id => path.substring(path.lastIndexOf("/") + 1);
 
@@ -222,7 +274,7 @@ class Document {
 
   dynamic operator [](String key) {
     if (!_rawDocument.fields.containsKey(key)) return null;
-    return _decode(_rawDocument.fields[key], _gateway);
+    return _decode(_rawDocument.fields[key], _gateway, _rtGateway);
   }
 
   @override
@@ -306,7 +358,7 @@ FS.Value _encode(dynamic value) {
   }
 }
 
-dynamic _decode(FS.Value value, FirestoreClient gateway) {
+dynamic _decode(FS.Value value, FirestoreClient gateway, _RTGateway rtGateway) {
   switch (value.whichValueType()) {
     case FS.Value_ValueType.nullValue:
       return null;
@@ -323,16 +375,17 @@ dynamic _decode(FS.Value value, FirestoreClient gateway) {
     case FS.Value_ValueType.bytesValue:
       return value.bytesValue;
     case FS.Value_ValueType.referenceValue:
-      return DocumentReference._internal(gateway, value.referenceValue);
+      return DocumentReference._internal(
+          gateway, rtGateway, value.referenceValue);
     case FS.Value_ValueType.geoPointValue:
       return GeoPoint._internal(value.geoPointValue);
     case FS.Value_ValueType.arrayValue:
       return value.arrayValue.values
-          .map((item) => _decode(item, gateway))
+          .map((item) => _decode(item, gateway, rtGateway))
           .toList(growable: false);
     case FS.Value_ValueType.mapValue:
-      return value.mapValue.fields
-          .map((key, value) => MapEntry(key, _decode(value, gateway)));
+      return value.mapValue.fields.map(
+          (key, value) => MapEntry(key, _decode(value, gateway, rtGateway)));
     default:
       throw Exception("Unrecognized type: ${value}");
   }

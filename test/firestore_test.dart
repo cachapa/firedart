@@ -64,6 +64,16 @@ Future main() async {
     await document.delete();
   });
 
+  test("Subscribe to document changes", () async {
+    var document = firestore.document("test/subscribe");
+    await document.set({"field": "test"});
+    await expectLater(
+        document.subscribe(), emits((document) => document["field"] == "test"));
+    await document.delete();
+    await expectLater(
+        document.subscribe(), emits((document) => document == null));
+  });
+
   test("Document field types", () async {
     var document = firestore.collection("test").document("types");
     var dateTime = DateTime.now();

@@ -86,7 +86,6 @@ Further usage examples can be found in the [integration tests](https://github.co
 
 ### Limitations
 
-* Real-time updates aren't implemented yet.
 * Collection queries (limit, sort, etc.) are currently not supported.
 * The data is not cached locally.
 * Failed writes (e.g. due to network errors) are not retried.
