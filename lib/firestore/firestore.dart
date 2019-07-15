@@ -51,6 +51,7 @@ class Firestore {
   }
 
   CollectionReference collection(String path) {
+    path = _sanitizePath(path);
     if (path.split("/").length % 2 == 0) {
       throw Exception("Path is not a collection: $path");
     }
@@ -59,11 +60,16 @@ class Firestore {
   }
 
   DocumentReference document(String path) {
+    path = _sanitizePath(path);
     if (path.split("/").length % 2 == 1) {
       throw Exception("Path is not a document: $path");
     }
     return DocumentReference._internal(
         _gateway, _rtGateway, "$_database/$path");
+  }
+
+  String _sanitizePath(String path) {
+    return path.startsWith("/") ? path.substring(1) : path;
   }
 }
 
