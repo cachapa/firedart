@@ -41,7 +41,13 @@ class FileStore extends TokenStore {
   FileStore({String path}) : _file = File(path ?? "token.store");
 
   @override
-  String read() => _file.existsSync() ? _file.readAsStringSync() : null;
+  String read() {
+    if (!_file.existsSync()) {
+      return null;
+    }
+    var token = _file.readAsStringSync();
+    return token.isEmpty ? null : token;
+  }
 
   @override
   void write(String refreshToken) => _file.writeAsString(_refreshToken ?? "");
