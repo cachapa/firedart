@@ -1,22 +1,16 @@
 import 'dart:convert';
 
 import 'package:firedart/firedart.dart';
+import 'package:firedart/firestore/models.dart';
 import "package:test/test.dart";
 
 import 'test_config.dart';
 
 Future main() async {
-  TokenStore tokenStore;
-  FirebaseAuth auth;
-  Firestore firestore;
-
-  setUp(() async {
-    tokenStore = VolatileStore();
-    auth = FirebaseAuth(apiKey, tokenStore);
-    firestore = Firestore(projectId, auth: auth);
-
-    await auth.signIn(email, password);
-  });
+  var tokenStore = VolatileStore();
+  var auth = FirebaseAuth(apiKey, tokenStore);
+  var firestore = Firestore(projectId, auth: auth);
+  await auth.signIn(email, password);
 
   test("Add and delete collection document", () async {
     var collection = firestore.collection("test");
@@ -74,12 +68,14 @@ Future main() async {
 
   test("Subscribe to document changes", () async {
     var document = firestore.document("test/subscribe");
+
+    // Firestore may send empty events on subscription because we're reusing the
+    // document path.
+    expect(document.subscribe().where((doc) => doc != null),
+        emits((document) => document["field"] == "test"));
+
     await document.set({"field": "test"});
-    await expectLater(
-        document.subscribe(), emits((document) => document["field"] == "test"));
     await document.delete();
-    await expectLater(
-        document.subscribe(), emits((document) => document == null));
   });
 
   test("Document field types", () async {
@@ -132,7 +128,7 @@ Future main() async {
     tokenStore.refreshToken = "invalid_token";
     try {
       await firestore.collection("test").get();
-    } catch (e) {}
+    } catch (_) {}
     expect(auth.isSignedIn, false);
   });
 }

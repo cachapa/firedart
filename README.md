@@ -4,7 +4,7 @@
 
 An incomplete, dart-native implementation of the Firebase SDK based on Firebase's REST and RPC interfaces.
 
-This library dependends only on [http](https://pub.dev/packages/http), [grpc](https://pub.dev/packages/grpc) and [protobuf](https://pub.dev/packages/protobuf) which should make it able to run in any environment capable of executing dart code.
+This library attempts to minimize dependencies with the intention of making it able to run in any environment capable of executing dart code. Currently it has been successfully tested ùsing the dart runtime (`x86-64` and `arm32`) as well as on Flutter Android, iOS and Desktop.
 
 Currently the only supported services are `Firebase Auth` and `Firestore`.
 
@@ -86,6 +86,7 @@ Further usage examples can be found in the [integration tests](https://github.co
 
 ### Limitations
 
+* Listening to real-time document updates is still experimental.
 * Collection queries (limit, sort, etc.) are currently not supported.
 * The data is not cached locally.
 * Failed writes (e.g. due to network errors) are not retried.
