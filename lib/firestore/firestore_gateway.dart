@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
-import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as FS;
+import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/firestore.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 
@@ -35,7 +35,7 @@ class FirestoreGateway {
   }
 
   Future<Document> createDocument(
-      String path, String documentId, FS.Document document) async {
+      String path, String documentId, fs.Document document) async {
     var split = path.split("/");
     var parent = split.sublist(0, split.length - 1).join("/");
     var collectionId = split.last;
@@ -58,7 +58,7 @@ class FirestoreGateway {
     return Document(this, rawDocument);
   }
 
-  Future updateDocument(String path, FS.Document document, bool update) async {
+  Future updateDocument(String path, fs.Document document, bool update) async {
     document.name = path;
 
     var request = UpdateDocumentRequest()..document = document;

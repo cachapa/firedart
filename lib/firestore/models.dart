@@ -1,4 +1,4 @@
-import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as FS;
+import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
 import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
 import 'package:firedart/generated/google/type/latlng.pb.dart';
@@ -29,8 +29,8 @@ abstract class _Reference {
     return "$runtimeType: $path";
   }
 
-  FS.Document _encodeMap(Map<String, dynamic> map) {
-    var document = FS.Document();
+  fs.Document _encodeMap(Map<String, dynamic> map) {
+    var document = fs.Document();
     map.forEach((key, value) {
       document.fields[key] = _encode(value);
     });
@@ -107,7 +107,7 @@ class DocumentReference extends _Reference {
 
 class Document {
   final FirestoreGateway _gateway;
-  final FS.Document _rawDocument;
+  final fs.Document _rawDocument;
 
   Document(this._gateway, this._rawDocument);
 
@@ -163,72 +163,72 @@ class GeoPoint {
   }
 }
 
-FS.Value _encode(dynamic value) {
-  if (value == null) return FS.Value()..nullValue = NullValue.NULL_VALUE;
+fs.Value _encode(dynamic value) {
+  if (value == null) return fs.Value()..nullValue = NullValue.NULL_VALUE;
 
   var type = value.runtimeType;
 
   if (type.toString().startsWith("List")) {
-    var array = FS.ArrayValue();
+    var array = fs.ArrayValue();
     (value as List).forEach((element) => array.values.add(_encode(element)));
-    return FS.Value()..arrayValue = array;
+    return fs.Value()..arrayValue = array;
   }
 
   if (type.toString().contains("Map")) {
-    var map = FS.MapValue();
+    var map = fs.MapValue();
     (value as Map).forEach((key, val) => map.fields[key] = _encode(val));
-    return FS.Value()..mapValue = map;
+    return fs.Value()..mapValue = map;
   }
 
   if (type.toString() == "Uint8List") {
-    return FS.Value()..bytesValue = value;
+    return fs.Value()..bytesValue = value;
   }
 
   switch (type) {
     case bool:
-      return FS.Value()..booleanValue = value;
+      return fs.Value()..booleanValue = value;
     case int:
-      return FS.Value()..integerValue = Int64(value);
+      return fs.Value()..integerValue = Int64(value);
     case double:
-      return FS.Value()..doubleValue = value;
+      return fs.Value()..doubleValue = value;
     case DateTime:
-      return FS.Value()..timestampValue = Timestamp.fromDateTime(value);
+      return fs.Value()..timestampValue = Timestamp.fromDateTime(value);
     case String:
-      return FS.Value()..stringValue = value;
+      return fs.Value()..stringValue = value;
     case DocumentReference:
-      return FS.Value()..referenceValue = value._fullPath;
+      return fs.Value()..referenceValue = value._fullPath;
     case GeoPoint:
-      return FS.Value()..geoPointValue = value._toLatLng();
+      return fs.Value()..geoPointValue = value._toLatLng();
     default:
       throw Exception("Unknown type: ${type}");
   }
 }
 
-dynamic _decode(FS.Value value, FirestoreGateway gateway) {
+dynamic _decode(fs.Value value, FirestoreGateway gateway) {
   switch (value.whichValueType()) {
-    case FS.Value_ValueType.nullValue:
+    case fs.Value_ValueType.nullValue:
       return null;
-    case FS.Value_ValueType.booleanValue:
+    case fs.Value_ValueType.booleanValue:
       return value.booleanValue;
-    case FS.Value_ValueType.doubleValue:
+    case fs.Value_ValueType.doubleValue:
       return value.doubleValue;
-    case FS.Value_ValueType.stringValue:
+    case fs.Value_ValueType.stringValue:
       return value.stringValue;
-    case FS.Value_ValueType.integerValue:
+    case fs.Value_ValueType.integerValue:
       return value.integerValue.toInt();
-    case FS.Value_ValueType.timestampValue:
+    case fs.Value_ValueType.timestampValue:
       return value.timestampValue.toDateTime().toLocal();
-    case FS.Value_ValueType.bytesValue:
+    case fs.Value_ValueType.bytesValue:
       return value.bytesValue;
-    case FS.Value_ValueType.referenceValue:
+    case fs.Value_ValueType.referenceValue:
       return DocumentReference(gateway, value.referenceValue);
-    case FS.Value_ValueType.geoPointValue:
+    case fs.Value_ValueType.geoPointValue:
       return GeoPoint._internal(value.geoPointValue);
-    case FS.Value_ValueType.arrayValue:
+    case fs.Value_ValueType.arrayValue:
       return value.arrayValue.values
           .map((item) => _decode(item, gateway))
           .toList(growable: false);
-    case FS.Value_ValueType.mapValue:
+    case fs.Value_ValueType.mapValue:
       return value.mapValue.fields
           .map((key, value) => MapEntry(key, _decode(value, gateway)));
     default:
