@@ -109,23 +109,15 @@ Future main() async {
     expect(doc["map"], {"int": 1, "string": "text"});
   });
 
-  test("Refresh token when idToken is null", () async {
-    tokenStore.idToken = null;
-    var map = await firestore.collection("test").get();
-    expect(auth.isSignedIn, true);
-    expect(map, isNot(null));
-  });
-
   test("Refresh token when expired", () async {
-    tokenStore.expiry = DateTime.now();
+    tokenStore.expireToken();
     var map = await firestore.collection("test").get();
     expect(auth.isSignedIn, true);
     expect(map, isNot(null));
   });
 
   test("Sign out on bad refresh token", () async {
-    tokenStore.idToken = null;
-    tokenStore.refreshToken = "invalid_token";
+    tokenStore.setToken("bad_token", "bad_token", 0);
     try {
       await firestore.collection("test").get();
     } catch (_) {}

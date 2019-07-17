@@ -39,7 +39,7 @@ class FirebaseAuth {
         assert(tokenStore != null) {
     httpClient ??= http.Client();
     var keyClient = KeyClient(httpClient, apiKey);
-    tokenProvider = TokenProvider(keyClient, tokenStore ?? FileStore());
+    tokenProvider = TokenProvider(keyClient, tokenStore);
 
     _authGateway = AuthGateway(keyClient, tokenProvider);
     _userGateway = UserGateway(keyClient, tokenProvider);

@@ -26,17 +26,21 @@ Future main() async {
     expect(user.email, isNotEmpty);
   });
 
-  test("Refresh token when idToken is null", () async {
+  test("Refresh token when expired", () async {
     await auth.signIn(email, password);
-    tokenStore.idToken = null;
+    tokenStore.expireToken();
     var user = await auth.getUser();
     expect(user.email, isNotEmpty);
     expect(auth.isSignedIn, true);
   });
 
-  test("Refresh token when expired", () async {
+  test("FileStore", () async {
+    auth = FirebaseAuth(apiKey, FileStore());
     await auth.signIn(email, password);
-    tokenStore.expiry = DateTime.now();
+    expect(auth.isSignedIn, true);
+
+    // Reinstantiate auth
+    auth = FirebaseAuth(apiKey, FileStore());
     var user = await auth.getUser();
     expect(user.email, isNotEmpty);
     expect(auth.isSignedIn, true);
@@ -44,8 +48,7 @@ Future main() async {
 
   test("Sign out on bad refresh token", () async {
     await auth.signIn(email, password);
-    tokenStore.idToken = null;
-    tokenStore.refreshToken = "invalid_token";
+    tokenStore.setToken("bad_token", "bad_token", 0);
     try {
       await auth.getUser();
     } catch (e) {}

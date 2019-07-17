@@ -17,38 +17,30 @@ class TokenProvider {
         StreamController<bool>(onListen: _notifyState);
   }
 
-  bool get isSignedIn => _tokenStore.refreshToken != null;
-
+  String get refreshToken => _tokenStore.refreshToken;
+  bool get isSignedIn => _tokenStore.hasToken;
   Stream<bool> get signInState => _signInStateStreamController.stream;
 
   Future<String> get idToken async {
-    if (_tokenStore.idToken == null ||
-        _tokenStore.expiry
-            .subtract(_tokenExpirationThreshold)
-            .isBefore(DateTime.now().toUtc())) {
+    if (_tokenStore.expiry
+        .subtract(_tokenExpirationThreshold)
+        .isBefore(DateTime.now().toUtc())) {
       await _refresh();
     }
     return _tokenStore.idToken;
   }
 
-  String get refreshToken => _tokenStore.refreshToken;
-
   void setToken(Map<String, dynamic> map) {
-    _tokenStore.idToken = map["idToken"];
-    _tokenStore.refreshToken = map["refreshToken"];
-    _tokenStore.expiry =
-        DateTime.now().add(Duration(seconds: int.parse(map["expiresIn"])));
+    _tokenStore.setToken(
+      map["idToken"],
+      map["refreshToken"],
+      int.parse(map["expiresIn"]),
+    );
     _notifyState();
   }
 
-  void invalidateToken() {
-    _tokenStore.idToken = null;
-  }
-
   void signOut() {
-    _tokenStore.idToken = null;
-    _tokenStore.refreshToken = null;
-    _tokenStore.expiry = null;
+    _tokenStore.clear();
     _notifyState();
   }
 
@@ -64,8 +56,11 @@ class TokenProvider {
     switch (response.statusCode) {
       case 200:
         var map = json.decode(response.body);
-        _tokenStore.idToken = map['id_token'];
-        _tokenStore.refreshToken = map['refresh_token'];
+        _tokenStore.setToken(
+          map['id_token'],
+          map['refresh_token'],
+          int.parse(map['expires_in']),
+        );
         break;
       case 400:
         signOut();

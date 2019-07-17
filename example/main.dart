@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firedart/firedart.dart';
 
 const apiKey = "Project Settings -> General -> Web API Key";
@@ -6,10 +8,10 @@ const email = "you@server.com";
 const password = "1234";
 
 Future main() async {
-  var auth = FirebaseAuth(apiKey, VolatileStore());
-  var firestore =
-      Firestore(projectId, auth: auth); // Firestore reuses the auth client
+  FirebaseAuth.initialize(apiKey, VolatileStore());
+  Firestore.initialize(projectId); // Firestore reuses the auth client
 
+  var auth = FirebaseAuth.instance;
   // Monitor sign-in state
   auth.signInState.listen((state) => print("Signed ${state ? "in" : "out"}"));
 
@@ -21,7 +23,7 @@ Future main() async {
   print(user);
 
   // Instantiate a reference to a document - this happens offline
-  var ref = firestore.collection("test").document("doc");
+  var ref = Firestore.instance.collection("test").document("doc");
 
   // Subscribe to changes to that document
   ref.subscribe().listen((document) => print("updated: $document"));
@@ -34,4 +36,9 @@ Future main() async {
   print("snapshot: ${document["value"]}");
 
   auth.signOut();
+
+  // Allow some time to get the signed out event
+  await Future.delayed(Duration(seconds: 1));
+
+  exit(0);
 }

@@ -12,6 +12,7 @@ abstract class _Reference {
   final String path;
 
   String get id => path.substring(path.lastIndexOf("/") + 1);
+
   String get _fullPath => "${_gateway.database}/$path";
 
   _Reference(this._gateway, String path)
@@ -116,6 +117,9 @@ class Document {
   String get path =>
       _rawDocument.name.substring(_rawDocument.name.indexOf("/documents") + 10);
 
+  Map<String, dynamic> get map =>
+      _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
+
   DocumentReference get reference => DocumentReference(_gateway, path);
 
   dynamic operator [](String key) {
@@ -124,16 +128,7 @@ class Document {
   }
 
   @override
-  String toString() {
-    var output = StringBuffer("$path {");
-    var first = true;
-    _rawDocument.fields.keys.forEach((key) {
-      output.write("${first ? "" : ", "}$key: ${this[key]}");
-      first = false;
-    });
-    output.write("}");
-    return output.toString();
-  }
+  String toString() => "$path $map";
 }
 
 class GeoPoint {

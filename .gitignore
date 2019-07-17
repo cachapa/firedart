@@ -14,6 +14,9 @@ pubspec.lock
 .idea
 .vscode/
 
+# Test token
+token.json
+
 # MacOS garbage
 .DS_Store
 
