@@ -38,6 +38,22 @@ Future main() async {
     expect(await document.exists(), false);
   });
 
+  test("Path with trailing slash", () async {
+    var document = firestore.document("test/path/");
+    await document.set({"field": "test"});
+    expect(await document.exists(), true);
+    await document.delete();
+    expect(await document.exists(), false);
+  });
+
+  test("Path with leading and trailing slashes", () async {
+    var document = firestore.document("/test/path/");
+    await document.set({"field": "test"});
+    expect(await document.exists(), true);
+    await document.delete();
+    expect(await document.exists(), false);
+  });
+
   test("Read data from document", () async {
     var document = firestore.collection("test").document("read_data");
     await document.set({"field": "test"});

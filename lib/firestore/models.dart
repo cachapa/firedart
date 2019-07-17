@@ -16,9 +16,9 @@ abstract class _Reference {
   String get _fullPath => "${_gateway.database}/$path";
 
   _Reference(this._gateway, String path)
-      : this.path = path.startsWith(_gateway.database)
+      : this.path = _trimSlashes(path.startsWith(_gateway.database)
             ? path.substring(_gateway.database.length + 1)
-            : path.startsWith("/") ? path.substring(1) : path;
+            : path);
 
   @override
   bool operator ==(other) {
@@ -36,6 +36,11 @@ abstract class _Reference {
       document.fields[key] = _encode(value);
     });
     return document;
+  }
+
+  static _trimSlashes(String path) {
+    path = path.startsWith("/") ? path.substring(1) : path;
+    return path.endsWith("/") ? path.substring(0, path.length-2) : path;
   }
 }
 
