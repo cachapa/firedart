@@ -40,7 +40,14 @@ class Firestore {
   Reference reference(String path) => Reference.create(_gateway, path);
 
   CollectionReference collection(String path) =>
-      CollectionReference(_gateway, path);
+      CollectionReference(_gateway, path, null);
 
-  DocumentReference document(String path) => DocumentReference(_gateway, path);
+  DocumentReference document(String path) =>
+      DocumentReference(_gateway, path, null);
+
+  runTransaction(Future<Null> Function(List<int> transactionId) func) async {
+    var transactionId = await _gateway.beginTransaction();
+    await func(transactionId);
+//    await _gateway.commitTransaction(transactionId);
+  }
 }

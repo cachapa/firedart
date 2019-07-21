@@ -10,20 +10,21 @@ import 'firestore_gateway.dart';
 abstract class Reference {
   final FirestoreGateway _gateway;
   final String path;
+  final List<int> _transaction;
 
   String get id => path.substring(path.lastIndexOf("/") + 1);
 
-  String get _fullPath => "${_gateway.database}/$path";
+  String get _fullPath => "${_gateway.database}/documents/$path";
 
-  Reference(this._gateway, String path)
+  Reference(this._gateway, String path, this._transaction)
       : this.path = _trimSlashes(path.startsWith(_gateway.database)
             ? path.substring(_gateway.database.length + 1)
             : path);
 
   factory Reference.create(FirestoreGateway gateway, String path) {
     return _trimSlashes(path).split("/").length % 2 == 0
-        ? DocumentReference(gateway, path)
-        : CollectionReference(gateway, path);
+        ? DocumentReference(gateway, path, null)
+        : CollectionReference(gateway, path, null);
   }
 
   @override
@@ -51,15 +52,16 @@ abstract class Reference {
 }
 
 class CollectionReference extends Reference {
-  CollectionReference(FirestoreGateway gateway, String path)
-      : super(gateway, path) {
+  CollectionReference(
+      FirestoreGateway gateway, String path, List<int> transaction)
+      : super(gateway, path, transaction) {
     if (_fullPath.split("/").length % 2 == 1) {
       throw Exception("Path is not a collection: $path");
     }
   }
 
   DocumentReference document(String id) {
-    return DocumentReference(_gateway, "$path/$id");
+    return DocumentReference(_gateway, "$path/$id", _transaction);
   }
 
   Future<List<Document>> get() => _gateway.getCollection(_fullPath);
@@ -72,15 +74,16 @@ class CollectionReference extends Reference {
 }
 
 class DocumentReference extends Reference {
-  DocumentReference(FirestoreGateway gateway, String path)
-      : super(gateway, path) {
+  DocumentReference(
+      FirestoreGateway gateway, String path, List<int> transaction)
+      : super(gateway, path, transaction) {
     if (_fullPath.split("/").length % 2 == 0) {
       throw Exception("Path is not a document: $path");
     }
   }
 
   CollectionReference collection(String id) {
-    return CollectionReference(_gateway, "$path/$id");
+    return CollectionReference(_gateway, "$path/$id", _transaction);
   }
 
   Future<Document> get() => _gateway.getDocument(_fullPath);
@@ -136,7 +139,7 @@ class Document {
   Map<String, dynamic> get map =>
       _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
 
-  DocumentReference get reference => DocumentReference(_gateway, path);
+  DocumentReference get reference => DocumentReference(_gateway, path, null);
 
   dynamic operator [](String key) {
     if (!_rawDocument.fields.containsKey(key)) return null;
@@ -232,7 +235,7 @@ dynamic _decode(fs.Value value, FirestoreGateway gateway) {
     case fs.Value_ValueType.bytesValue:
       return value.bytesValue;
     case fs.Value_ValueType.referenceValue:
-      return DocumentReference(gateway, value.referenceValue);
+      return DocumentReference(gateway, value.referenceValue, null);
     case fs.Value_ValueType.geoPointValue:
       return GeoPoint._internal(value.geoPointValue);
     case fs.Value_ValueType.arrayValue:

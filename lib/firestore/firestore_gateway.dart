@@ -20,7 +20,7 @@ class FirestoreGateway {
 
   FirestoreGateway(String projectId, {String databaseId, this.auth})
       : database =
-            "projects/$projectId/databases/${databaseId ?? "(default)"}/documents" {
+            "projects/$projectId/databases/${databaseId ?? "(default)"}" {
     _setupClient();
   }
 
@@ -105,7 +105,7 @@ class FirestoreGateway {
     await _client.updateDocument(request).catchError(_handleError);
   }
 
-  Future<void> deleteDocument(String path) => _client
+  Future<void> deleteDocument(String path) async => _client
       .deleteDocument(DeleteDocumentRequest()..name = path)
       .catchError(_handleError);
 
@@ -128,6 +128,26 @@ class FirestoreGateway {
         .map((response) => response.hasDocumentChange()
             ? Document(this, response.documentChange.document)
             : null);
+  }
+
+  Future<List<int>> beginTransaction() async {
+//    var document = fs.Document()
+//    ..name = path;
+//
+//    var request = UpdateDocumentRequest()..document = document;
+//
+//    if (update) {
+//      var mask = DocumentMask();
+//      document.fields.keys.forEach((key) => mask.fieldPaths.add(key));
+//      request.updateMask = mask;
+//    }
+//
+//    var write = Write()..update = document;
+//
+//    var request = CommitRequest()
+//      ..database = database
+//      ..writes.add(write);
+//    await _client.commit(request);
   }
 
   void _setupClient() {
