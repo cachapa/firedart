@@ -11,6 +11,19 @@ Future main() async {
   var firestore = Firestore(projectId, auth: auth);
   await auth.signIn(email, password);
 
+  test("Create reference", () async {
+    // Ensure document exists
+    var reference = firestore.document("test/reference");
+    await reference.set({"field": "test"});
+
+    var collectionReference = firestore.reference("test");
+    expect(collectionReference.runtimeType, equals(CollectionReference));
+    var documentReference = firestore.reference("test/types");
+    expect(documentReference.runtimeType, equals(DocumentReference));
+
+    reference.delete();
+  });
+
   test("Get collection", () async {
     var reference = firestore.collection("test");
     var documents = await reference.get();

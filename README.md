@@ -14,7 +14,7 @@ Add firedart to your `pubspec.yaml` file:
 
 ``` yaml
 dependencies:
-  firedart: ^0.6.0
+  firedart: ^0.6.1
 ```
 
 ## Firebase Auth

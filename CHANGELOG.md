@@ -1,3 +1,7 @@
+## [0.6.1] - 21 July 2019.
+
+* Add generic Reference factory
+
 ## [0.6.0] - 21 July 2019.
 
 * Implement collection streaming

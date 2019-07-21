@@ -37,6 +37,8 @@ class Firestore {
             FirestoreGateway(projectId, databaseId: databaseId, auth: auth),
         assert(projectId.isNotEmpty);
 
+  Reference reference(String path) => Reference.create(_gateway, path);
+
   CollectionReference collection(String path) =>
       CollectionReference(_gateway, path);
 

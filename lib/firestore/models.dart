@@ -7,7 +7,7 @@ import 'package:grpc/grpc.dart';
 
 import 'firestore_gateway.dart';
 
-abstract class _Reference {
+abstract class Reference {
   final FirestoreGateway _gateway;
   final String path;
 
@@ -15,10 +15,16 @@ abstract class _Reference {
 
   String get _fullPath => "${_gateway.database}/$path";
 
-  _Reference(this._gateway, String path)
+  Reference(this._gateway, String path)
       : this.path = _trimSlashes(path.startsWith(_gateway.database)
             ? path.substring(_gateway.database.length + 1)
             : path);
+
+  factory Reference.create(FirestoreGateway gateway, String path) {
+    return _trimSlashes(path).split("/").length % 2 == 0
+        ? DocumentReference(gateway, path)
+        : CollectionReference(gateway, path);
+  }
 
   @override
   bool operator ==(other) {
@@ -44,7 +50,7 @@ abstract class _Reference {
   }
 }
 
-class CollectionReference extends _Reference {
+class CollectionReference extends Reference {
   CollectionReference(FirestoreGateway gateway, String path)
       : super(gateway, path) {
     if (_fullPath.split("/").length % 2 == 1) {
@@ -65,7 +71,7 @@ class CollectionReference extends _Reference {
       _gateway.createDocument(_fullPath, null, _encodeMap(map));
 }
 
-class DocumentReference extends _Reference {
+class DocumentReference extends Reference {
   DocumentReference(FirestoreGateway gateway, String path)
       : super(gateway, path) {
     if (_fullPath.split("/").length % 2 == 0) {
