@@ -40,7 +40,7 @@ abstract class _Reference {
 
   static _trimSlashes(String path) {
     path = path.startsWith("/") ? path.substring(1) : path;
-    return path.endsWith("/") ? path.substring(0, path.length-2) : path;
+    return path.endsWith("/") ? path.substring(0, path.length - 2) : path;
   }
 }
 
@@ -56,7 +56,10 @@ class CollectionReference extends _Reference {
     return DocumentReference(_gateway, "$path/$id");
   }
 
+  @Deprecated("Use the documents getter instead")
   Future<List<Document>> get() => _gateway.listDocuments(_fullPath);
+
+  Future<List<Document>> get documents => _gateway.listDocuments(_fullPath);
 
   /// Create a document with a random id.
   Future<Document> add(Map<String, dynamic> map) =>
@@ -75,14 +78,20 @@ class DocumentReference extends _Reference {
     return CollectionReference(_gateway, "$path/$id");
   }
 
-  Future<Document> get() => _gateway.getDocument(_fullPath);
+  @Deprecated("Use the document getter instead")
+  Future<Document> get() => document;
 
-  Stream<Document> subscribe() => _gateway.listen(_fullPath);
+  Future<Document> get document => _gateway.getDocument(_fullPath);
+
+  @Deprecated("Use the stream getter instead")
+  Stream<Document> subscribe() => stream;
+
+  Stream<Document> get stream => _gateway.listen(_fullPath);
 
   /// Check if a document exists.
-  Future<bool> exists() async {
+  Future<bool> get exists async {
     try {
-      await get();
+      await document;
       return true;
     } on GrpcError catch (e) {
       if (e.code == StatusCode.notFound) {

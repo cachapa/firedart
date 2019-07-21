@@ -22,14 +22,14 @@ Future main() async {
 
   test("Get user", () async {
     await auth.signIn(email, password);
-    var user = await auth.getUser();
+    var user = await auth.user;
     expect(user.email, isNotEmpty);
   });
 
   test("Refresh token when expired", () async {
     await auth.signIn(email, password);
     tokenStore.expireToken();
-    var user = await auth.getUser();
+    var user = await auth.user;
     expect(user.email, isNotEmpty);
     expect(auth.isSignedIn, true);
   });
@@ -41,7 +41,7 @@ Future main() async {
 
     // Reinstantiate auth
     auth = FirebaseAuth(apiKey, FileStore());
-    var user = await auth.getUser();
+    var user = await auth.user;
     expect(user.email, isNotEmpty);
     expect(auth.isSignedIn, true);
   });
@@ -50,7 +50,7 @@ Future main() async {
     await auth.signIn(email, password);
     tokenStore.setToken("bad_token", "bad_token", 0);
     try {
-      await auth.getUser();
+      await auth.user;
     } catch (e) {}
     expect(auth.isSignedIn, false);
   });

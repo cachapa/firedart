@@ -58,7 +58,8 @@ class FirestoreGateway {
     return Document(this, rawDocument);
   }
 
-  Future updateDocument(String path, fs.Document document, bool update) async {
+  Future<void> updateDocument(
+      String path, fs.Document document, bool update) async {
     document.name = path;
 
     var request = UpdateDocumentRequest()..document = document;
@@ -72,11 +73,11 @@ class FirestoreGateway {
     await _client.updateDocument(request).catchError(_handleError);
   }
 
-  Future deleteDocument(String path) => _client
+  Future<void> deleteDocument(String path) => _client
       .deleteDocument(DeleteDocumentRequest()..name = path)
       .catchError(_handleError);
 
-  listen(String path) {
+  Stream<Document> listen(String path) {
     streamController ??= StreamController<ListenRequest>();
     stream ??= _client
         .listen(streamController.stream,
