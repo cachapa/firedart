@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/firestore.pbgrpc.dart';
+import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
 import 'package:grpc/grpc.dart';
 
 import '../firedart.dart';
@@ -23,7 +24,7 @@ class FirestoreGateway {
     _setupClient();
   }
 
-  Future<List<Document>> listDocuments(String path) async {
+  Future<List<Document>> getCollection(String path) async {
     var request = ListDocumentsRequest()
       ..parent = path.substring(0, path.lastIndexOf("/"))
       ..collectionId = path.substring(path.lastIndexOf("/") + 1);
@@ -32,6 +33,37 @@ class FirestoreGateway {
     return response.documents
         .map((rawDocument) => Document(this, rawDocument))
         .toList(growable: false);
+  }
+
+  Stream<List<Document>> streamCollection(String path) {
+    _initStream();
+
+    var selector = StructuredQuery_CollectionSelector()
+      ..collectionId = path.substring(path.lastIndexOf("/") + 1);
+    var query = StructuredQuery()..from.add(selector);
+    final queryTarget = Target_QueryTarget()
+      ..parent = path.substring(0, path.lastIndexOf("/"))
+      ..structuredQuery = query;
+    final target = Target()..query = queryTarget;
+    final request = ListenRequest()
+      ..database = database
+      ..addTarget = target;
+
+    streamController.add(request);
+
+    var map = <String, Document>{};
+    return stream
+        .where((response) =>
+            response.hasDocumentChange() || response.hasDocumentDelete())
+        .map((response) {
+      if (response.hasDocumentChange()) {
+        map[response.documentChange.document.name] =
+            Document(this, response.documentChange.document);
+      } else {
+        map.remove(response.documentDelete.document);
+      }
+      return map.values.toList();
+    });
   }
 
   Future<Document> createDocument(
@@ -77,14 +109,8 @@ class FirestoreGateway {
       .deleteDocument(DeleteDocumentRequest()..name = path)
       .catchError(_handleError);
 
-  Stream<Document> listen(String path) {
-    streamController ??= StreamController<ListenRequest>();
-    stream ??= _client
-        .listen(streamController.stream,
-            options: CallOptions(
-                metadata: {'google-cloud-resource-prefix': database}))
-        .handleError(_handleError)
-        .asBroadcastStream();
+  Stream<Document> streamDocument(String path) {
+    _initStream();
 
     final documentsTarget = Target_DocumentsTarget()..documents.add(path);
     final target = Target()..documents = documentsTarget;
@@ -123,5 +149,15 @@ class FirestoreGateway {
       _setupClient();
     }
     throw e;
+  }
+
+  void _initStream() {
+    streamController ??= StreamController<ListenRequest>();
+    stream ??= _client
+        .listen(streamController.stream,
+            options: CallOptions(
+                metadata: {'google-cloud-resource-prefix': database}))
+        .handleError(_handleError)
+        .asBroadcastStream();
   }
 }

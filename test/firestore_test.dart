@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:firedart/firedart.dart';
-import 'package:firedart/firestore/models.dart';
 import "package:test/test.dart";
 
 import 'test_config.dart';
@@ -11,6 +10,12 @@ Future main() async {
   var auth = FirebaseAuth(apiKey, tokenStore);
   var firestore = Firestore(projectId, auth: auth);
   await auth.signIn(email, password);
+
+  test("Get collection", () async {
+    var reference = firestore.collection("test");
+    var documents = await reference.documents;
+    expect(documents.isNotEmpty, true);
+  });
 
   test("Add and delete collection document", () async {
     var reference = firestore.collection("test");
@@ -82,7 +87,7 @@ Future main() async {
     await reference.delete();
   });
 
-  test("Subscribe to document changes", () async {
+  test("Stream document changes", () async {
     var reference = firestore.document("test/subscribe");
 
     // Firestore may send empty events on subscription because we're reusing the
@@ -92,6 +97,15 @@ Future main() async {
 
     await reference.set({"field": "test"});
     await reference.delete();
+  });
+
+  test("Stream collection changes", () async {
+    var reference = firestore.collection("test");
+
+    var document = await reference.add({"field": "test"});
+    expect(reference.stream,
+        emits((List<Document> documents) => documents.isNotEmpty));
+    await document.reference.delete();
   });
 
   test("Document field types", () async {

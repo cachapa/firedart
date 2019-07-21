@@ -57,9 +57,11 @@ class CollectionReference extends _Reference {
   }
 
   @Deprecated("Use the documents getter instead")
-  Future<List<Document>> get() => _gateway.listDocuments(_fullPath);
+  Future<List<Document>> get() => _gateway.getCollection(_fullPath);
 
-  Future<List<Document>> get documents => _gateway.listDocuments(_fullPath);
+  Future<List<Document>> get documents => _gateway.getCollection(_fullPath);
+
+  Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
   /// Create a document with a random id.
   Future<Document> add(Map<String, dynamic> map) =>
@@ -86,7 +88,7 @@ class DocumentReference extends _Reference {
   @Deprecated("Use the stream getter instead")
   Stream<Document> subscribe() => stream;
 
-  Stream<Document> get stream => _gateway.listen(_fullPath);
+  Stream<Document> get stream => _gateway.streamDocument(_fullPath);
 
   /// Check if a document exists.
   Future<bool> get exists async {
