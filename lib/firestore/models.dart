@@ -56,10 +56,7 @@ class CollectionReference extends _Reference {
     return DocumentReference(_gateway, "$path/$id");
   }
 
-  @Deprecated("Use the documents getter instead")
   Future<List<Document>> get() => _gateway.getCollection(_fullPath);
-
-  Future<List<Document>> get documents => _gateway.getCollection(_fullPath);
 
   Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
@@ -80,10 +77,7 @@ class DocumentReference extends _Reference {
     return CollectionReference(_gateway, "$path/$id");
   }
 
-  @Deprecated("Use the document getter instead")
-  Future<Document> get() => document;
-
-  Future<Document> get document => _gateway.getDocument(_fullPath);
+  Future<Document> get() => _gateway.getDocument(_fullPath);
 
   @Deprecated("Use the stream getter instead")
   Stream<Document> subscribe() => stream;
@@ -93,7 +87,7 @@ class DocumentReference extends _Reference {
   /// Check if a document exists.
   Future<bool> get exists async {
     try {
-      await document;
+      await get();
       return true;
     } on GrpcError catch (e) {
       if (e.code == StatusCode.notFound) {

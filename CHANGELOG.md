@@ -1,3 +1,8 @@
+## [0.6.0] - 21 July 2019.
+
+* Implement collection streaming
+* Deprecate some getter methods in favour of dart's getter syntax
+
 ## [0.5.1] - 17 July 2019.
 
 * Improve token storage

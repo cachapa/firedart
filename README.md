@@ -14,7 +14,7 @@ Add firedart to your `pubspec.yaml` file:
 
 ``` yaml
 dependencies:
-  firedart: ^0.5.0+1
+  firedart: ^0.6.0
 ```
 
 ## Firebase Auth
@@ -86,10 +86,10 @@ Further usage examples can be found in the [integration tests](https://github.co
 
 ### Limitations
 
-* Listening to real-time document updates is still experimental.
 * Collection queries (limit, sort, etc.) are currently not supported.
 * The data is not cached locally.
 * Failed writes (e.g. due to network errors) are not retried.
+* Closed streams are not automatically recovered.
 
 ### Regenerating the RPC stubs
 

@@ -65,10 +65,7 @@ class FirebaseAuth {
   Future<void> changePassword(String password) =>
       _userGateway.changePassword(password);
 
-  @Deprecated("Use the user getter instead")
-  Future<User> getUser() => user;
-
-  Future<User> get user => _userGateway.getUser();
+  Future<User> getUser() => _userGateway.getUser();
 
   Future<void> updateProfile({String displayName, String photoUrl}) =>
       _userGateway.updateProfile(displayName, photoUrl);

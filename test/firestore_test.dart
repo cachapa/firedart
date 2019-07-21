@@ -13,7 +13,7 @@ Future main() async {
 
   test("Get collection", () async {
     var reference = firestore.collection("test");
-    var documents = await reference.documents;
+    var documents = await reference.get();
     expect(documents.isNotEmpty, true);
   });
 
@@ -62,7 +62,7 @@ Future main() async {
   test("Read data from document", () async {
     var reference = firestore.collection("test").document("read_data");
     await reference.set({"field": "test"});
-    var map = await reference.document;
+    var map = await reference.get();
     expect(map["field"], "test");
     await reference.delete();
   });
@@ -71,7 +71,7 @@ Future main() async {
     var reference = firestore.collection("test").document("overwrite");
     await reference.set({"field1": "test1", "field2": "test1"});
     await reference.set({"field1": "test2"});
-    var doc = await reference.document;
+    var doc = await reference.get();
     expect(doc["field1"], "test2");
     expect(doc["field2"], null);
     await reference.delete();
@@ -81,7 +81,7 @@ Future main() async {
     var reference = firestore.collection("test").document("update");
     await reference.set({"field1": "test1", "field2": "test1"});
     await reference.update({"field1": "test2"});
-    var doc = await reference.document;
+    var doc = await reference.get();
     expect(doc["field1"], "test2");
     expect(doc["field2"], "test1");
     await reference.delete();
@@ -125,7 +125,7 @@ Future main() async {
       "list": [1, "text"],
       "map": {"int": 1, "string": "text"},
     });
-    var doc = await reference.document;
+    var doc = await reference.get();
     expect(doc["null"], null);
     expect(doc["bool"], true);
     expect(doc["int"], 1);
@@ -141,7 +141,7 @@ Future main() async {
 
   test("Refresh token when expired", () async {
     tokenStore.expireToken();
-    var map = await firestore.collection("test").documents;
+    var map = await firestore.collection("test").get();
     expect(auth.isSignedIn, true);
     expect(map, isNot(null));
   });
@@ -149,7 +149,7 @@ Future main() async {
   test("Sign out on bad refresh token", () async {
     tokenStore.setToken("bad_token", "bad_token", 0);
     try {
-      await firestore.collection("test").documents;
+      await firestore.collection("test").get();
     } catch (_) {}
     expect(auth.isSignedIn, false);
   });
