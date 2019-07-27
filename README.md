@@ -4,7 +4,7 @@
 
 An incomplete, dart-native implementation of the Firebase SDK based on Firebase's REST and RPC interfaces.
 
-This library attempts to minimize dependencies with the intention of making it able to run in any environment capable of executing dart code. Currently it has been successfully tested ùsing the dart runtime (`x86-64` and `arm32`) as well as on Flutter Android, iOS and Desktop.
+This library attempts to minimize dependencies with the intention of making it able to run in any environment capable of executing dart code. Currently it has been successfully tested using the dart runtime (`x86-64` and `arm32`) as well as on Flutter Android, iOS and Desktop.
 
 Currently the only supported services are `Firebase Auth` and `Firestore`.
 
@@ -110,7 +110,6 @@ For debugging `Firebase Auth` you can use `VerboseClient`, an HTTP client that l
 ``` dart
 var client = !kReleaseMode ? VerboseClient() : http.Client();
 var firebaseAuth = FirebaseAuth(apiKey, await PreferencesStore(), httpClient: client);
-var firestore = Firestore(httpClient: client);
 ```
 
 ## Securing Tokens
