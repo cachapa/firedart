@@ -1,0 +1,27 @@
+name: Quality Gate
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  google/dart:latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Load test credentials
+        run: |
+          echo "const apiKey = \"${{ secrets.test_api_key }}\";" > test/test_config.dart
+          echo "const projectId = \"${{ secrets.test_project_id }}\";" >> test/test_config.dart
+          echo "const email = \"${{ secrets.test_email }}\";" >> test/test_config.dart
+          echo "const password = \"${{ secrets.test_password }}\";" >> test/test_config.dart
+      - name: Verify code formatting
+        run: dartfmt --dry-run --set-exit-if-changed .
+      - run: pub get
+      - name: Run linter
+        run: dartanalyzer --fatal-infos --fatal-warnings .
+      - name: Run tests
+        run: pub run test
