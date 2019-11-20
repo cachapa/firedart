@@ -1,6 +1,6 @@
 name: firedart
 description: An incomplete, dart-native implementation of the Firebase SDK.
-version: 0.6.1
+version: 0.6.2
 author: Daniel Cachapa <cachapa@gmail.com>
 homepage: https://github.com/cachapa/firedart
 
@@ -9,9 +9,9 @@ environment:
 
 dependencies:
   http: ^0.12.0+2
-  grpc: ^1.0.3 # Flutter is currently incompatible with version 2.x
-  protobuf: ^0.13.15
-  fixnum: ^0.10.9
+  grpc: ^2.1.3
+  protobuf: ^1.0.1
+  fixnum: ^0.10.11
 
 dev_dependencies:
   test: ^1.6.4

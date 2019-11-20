@@ -1,8 +1,9 @@
 ///
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/query.proto
-///
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
 const StructuredQuery$json = const {
   '1': 'StructuredQuery',
@@ -71,9 +72,9 @@ const StructuredQuery$json = const {
     StructuredQuery_CompositeFilter$json,
     StructuredQuery_FieldFilter$json,
     StructuredQuery_UnaryFilter$json,
-    StructuredQuery_FieldReference$json,
+    StructuredQuery_Projection$json,
     StructuredQuery_Order$json,
-    StructuredQuery_Projection$json
+    StructuredQuery_FieldReference$json
   ],
   '4': const [StructuredQuery_Direction$json],
 };
@@ -200,6 +201,8 @@ const StructuredQuery_FieldFilter_Operator$json = const {
     const {'1': 'GREATER_THAN_OR_EQUAL', '2': 4},
     const {'1': 'EQUAL', '2': 5},
     const {'1': 'ARRAY_CONTAINS', '2': 7},
+    const {'1': 'IN', '2': 8},
+    const {'1': 'ARRAY_CONTAINS_ANY', '2': 9},
   ],
 };
 
@@ -239,10 +242,17 @@ const StructuredQuery_UnaryFilter_Operator$json = const {
   ],
 };
 
-const StructuredQuery_FieldReference$json = const {
-  '1': 'FieldReference',
+const StructuredQuery_Projection$json = const {
+  '1': 'Projection',
   '2': const [
-    const {'1': 'field_path', '3': 2, '4': 1, '5': 9, '10': 'fieldPath'},
+    const {
+      '1': 'fields',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.StructuredQuery.FieldReference',
+      '10': 'fields'
+    },
   ],
 };
 
@@ -268,17 +278,10 @@ const StructuredQuery_Order$json = const {
   ],
 };
 
-const StructuredQuery_Projection$json = const {
-  '1': 'Projection',
+const StructuredQuery_FieldReference$json = const {
+  '1': 'FieldReference',
   '2': const [
-    const {
-      '1': 'fields',
-      '3': 2,
-      '4': 3,
-      '5': 11,
-      '6': '.google.firestore.v1.StructuredQuery.FieldReference',
-      '10': 'fields'
-    },
+    const {'1': 'field_path', '3': 2, '4': 1, '5': 9, '10': 'fieldPath'},
   ],
 };
 

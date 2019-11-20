@@ -1,12 +1,13 @@
 ///
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/firestore.proto
-///
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
 import 'dart:async' as $async;
 
-import 'dart:core' as $core show int, String, List;
+import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
 import 'firestore.pb.dart' as $0;
@@ -303,59 +304,62 @@ abstract class FirestoreServiceBase extends $grpc.Service {
         ($0.ListCollectionIdsResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$1.Document> getDocument_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+  $async.Future<$1.Document> getDocument_Pre($grpc.ServiceCall call,
+      $async.Future<$0.GetDocumentRequest> request) async {
     return getDocument(call, await request);
   }
 
   $async.Future<$0.ListDocumentsResponse> listDocuments_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+      $grpc.ServiceCall call,
+      $async.Future<$0.ListDocumentsRequest> request) async {
     return listDocuments(call, await request);
   }
 
-  $async.Future<$1.Document> createDocument_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+  $async.Future<$1.Document> createDocument_Pre($grpc.ServiceCall call,
+      $async.Future<$0.CreateDocumentRequest> request) async {
     return createDocument(call, await request);
   }
 
-  $async.Future<$1.Document> updateDocument_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+  $async.Future<$1.Document> updateDocument_Pre($grpc.ServiceCall call,
+      $async.Future<$0.UpdateDocumentRequest> request) async {
     return updateDocument(call, await request);
   }
 
-  $async.Future<$2.Empty> deleteDocument_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+  $async.Future<$2.Empty> deleteDocument_Pre($grpc.ServiceCall call,
+      $async.Future<$0.DeleteDocumentRequest> request) async {
     return deleteDocument(call, await request);
   }
 
   $async.Stream<$0.BatchGetDocumentsResponse> batchGetDocuments_Pre(
-      $grpc.ServiceCall call, $async.Future request) async* {
-    yield* batchGetDocuments(
-        call, (await request) as $0.BatchGetDocumentsRequest);
+      $grpc.ServiceCall call,
+      $async.Future<$0.BatchGetDocumentsRequest> request) async* {
+    yield* batchGetDocuments(call, await request);
   }
 
   $async.Future<$0.BeginTransactionResponse> beginTransaction_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+      $grpc.ServiceCall call,
+      $async.Future<$0.BeginTransactionRequest> request) async {
     return beginTransaction(call, await request);
   }
 
   $async.Future<$0.CommitResponse> commit_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+      $grpc.ServiceCall call, $async.Future<$0.CommitRequest> request) async {
     return commit(call, await request);
   }
 
   $async.Future<$2.Empty> rollback_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+      $grpc.ServiceCall call, $async.Future<$0.RollbackRequest> request) async {
     return rollback(call, await request);
   }
 
-  $async.Stream<$0.RunQueryResponse> runQuery_Pre(
-      $grpc.ServiceCall call, $async.Future request) async* {
-    yield* runQuery(call, (await request) as $0.RunQueryRequest);
+  $async.Stream<$0.RunQueryResponse> runQuery_Pre($grpc.ServiceCall call,
+      $async.Future<$0.RunQueryRequest> request) async* {
+    yield* runQuery(call, await request);
   }
 
   $async.Future<$0.ListCollectionIdsResponse> listCollectionIds_Pre(
-      $grpc.ServiceCall call, $async.Future request) async {
+      $grpc.ServiceCall call,
+      $async.Future<$0.ListCollectionIdsRequest> request) async {
     return listCollectionIds(call, await request);
   }
 

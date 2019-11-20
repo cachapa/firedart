@@ -1,18 +1,23 @@
 ///
 //  Generated code. Do not modify.
 //  source: google/protobuf/wrappers.proto
-///
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-import 'dart:core' as $core
-    show bool, Deprecated, double, int, List, Map, override, pragma, String;
+import 'dart:core' as $core;
 
-import 'package:fixnum/fixnum.dart';
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class DoubleValue extends $pb.GeneratedMessage {
+import 'package:protobuf/src/protobuf/mixins/well_known.dart' as $mixin;
+
+class DoubleValue extends $pb.GeneratedMessage with $mixin.DoubleValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('DoubleValue',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.DoubleValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.DoubleValueMixin.fromProto3JsonHelper)
     ..a<$core.double>(1, 'value', $pb.PbFieldType.OD)
     ..hasRequiredFields = false;
 
@@ -32,21 +37,30 @@ class DoubleValue extends $pb.GeneratedMessage {
   static DoubleValue create() => DoubleValue._();
   DoubleValue createEmptyInstance() => create();
   static $pb.PbList<DoubleValue> createRepeated() => $pb.PbList<DoubleValue>();
-  static DoubleValue getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static DoubleValue getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DoubleValue>(create);
   static DoubleValue _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
   set value($core.double v) {
     $_setDouble(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class FloatValue extends $pb.GeneratedMessage {
+class FloatValue extends $pb.GeneratedMessage with $mixin.FloatValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('FloatValue',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.FloatValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.FloatValueMixin.fromProto3JsonHelper)
     ..a<$core.double>(1, 'value', $pb.PbFieldType.OF)
     ..hasRequiredFields = false;
 
@@ -66,21 +80,30 @@ class FloatValue extends $pb.GeneratedMessage {
   static FloatValue create() => FloatValue._();
   FloatValue createEmptyInstance() => create();
   static $pb.PbList<FloatValue> createRepeated() => $pb.PbList<FloatValue>();
-  static FloatValue getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static FloatValue getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FloatValue>(create);
   static FloatValue _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
   set value($core.double v) {
     $_setFloat(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class Int64Value extends $pb.GeneratedMessage {
+class Int64Value extends $pb.GeneratedMessage with $mixin.Int64ValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Int64Value',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.Int64ValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.Int64ValueMixin.fromProto3JsonHelper)
     ..aInt64(1, 'value')
     ..hasRequiredFields = false;
 
@@ -100,22 +123,32 @@ class Int64Value extends $pb.GeneratedMessage {
   static Int64Value create() => Int64Value._();
   Int64Value createEmptyInstance() => create();
   static $pb.PbList<Int64Value> createRepeated() => $pb.PbList<Int64Value>();
-  static Int64Value getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static Int64Value getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Int64Value>(create);
   static Int64Value _defaultInstance;
 
-  Int64 get value => $_getI64(0);
-  set value(Int64 v) {
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get value => $_getI64(0);
+  @$pb.TagNumber(1)
+  set value($fixnum.Int64 v) {
     $_setInt64(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class UInt64Value extends $pb.GeneratedMessage {
+class UInt64Value extends $pb.GeneratedMessage with $mixin.UInt64ValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UInt64Value',
-      package: const $pb.PackageName('google.protobuf'))
-    ..a<Int64>(1, 'value', $pb.PbFieldType.OU6, Int64.ZERO)
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.UInt64ValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.UInt64ValueMixin.fromProto3JsonHelper)
+    ..a<$fixnum.Int64>(1, 'value', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false;
 
   UInt64Value._() : super();
@@ -134,21 +167,30 @@ class UInt64Value extends $pb.GeneratedMessage {
   static UInt64Value create() => UInt64Value._();
   UInt64Value createEmptyInstance() => create();
   static $pb.PbList<UInt64Value> createRepeated() => $pb.PbList<UInt64Value>();
-  static UInt64Value getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static UInt64Value getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UInt64Value>(create);
   static UInt64Value _defaultInstance;
 
-  Int64 get value => $_getI64(0);
-  set value(Int64 v) {
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get value => $_getI64(0);
+  @$pb.TagNumber(1)
+  set value($fixnum.Int64 v) {
     $_setInt64(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class Int32Value extends $pb.GeneratedMessage {
+class Int32Value extends $pb.GeneratedMessage with $mixin.Int32ValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Int32Value',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.Int32ValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.Int32ValueMixin.fromProto3JsonHelper)
     ..a<$core.int>(1, 'value', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
@@ -168,21 +210,30 @@ class Int32Value extends $pb.GeneratedMessage {
   static Int32Value create() => Int32Value._();
   Int32Value createEmptyInstance() => create();
   static $pb.PbList<Int32Value> createRepeated() => $pb.PbList<Int32Value>();
-  static Int32Value getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static Int32Value getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Int32Value>(create);
   static Int32Value _defaultInstance;
 
-  $core.int get value => $_get(0, 0);
+  @$pb.TagNumber(1)
+  $core.int get value => $_getIZ(0);
+  @$pb.TagNumber(1)
   set value($core.int v) {
     $_setSignedInt32(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class UInt32Value extends $pb.GeneratedMessage {
+class UInt32Value extends $pb.GeneratedMessage with $mixin.UInt32ValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('UInt32Value',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.UInt32ValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.UInt32ValueMixin.fromProto3JsonHelper)
     ..a<$core.int>(1, 'value', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
@@ -202,21 +253,30 @@ class UInt32Value extends $pb.GeneratedMessage {
   static UInt32Value create() => UInt32Value._();
   UInt32Value createEmptyInstance() => create();
   static $pb.PbList<UInt32Value> createRepeated() => $pb.PbList<UInt32Value>();
-  static UInt32Value getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static UInt32Value getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UInt32Value>(create);
   static UInt32Value _defaultInstance;
 
-  $core.int get value => $_get(0, 0);
+  @$pb.TagNumber(1)
+  $core.int get value => $_getIZ(0);
+  @$pb.TagNumber(1)
   set value($core.int v) {
     $_setUnsignedInt32(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class BoolValue extends $pb.GeneratedMessage {
+class BoolValue extends $pb.GeneratedMessage with $mixin.BoolValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('BoolValue',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.BoolValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.BoolValueMixin.fromProto3JsonHelper)
     ..aOB(1, 'value')
     ..hasRequiredFields = false;
 
@@ -236,21 +296,30 @@ class BoolValue extends $pb.GeneratedMessage {
   static BoolValue create() => BoolValue._();
   BoolValue createEmptyInstance() => create();
   static $pb.PbList<BoolValue> createRepeated() => $pb.PbList<BoolValue>();
-  static BoolValue getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static BoolValue getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BoolValue>(create);
   static BoolValue _defaultInstance;
 
-  $core.bool get value => $_get(0, false);
+  @$pb.TagNumber(1)
+  $core.bool get value => $_getBF(0);
+  @$pb.TagNumber(1)
   set value($core.bool v) {
     $_setBool(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class StringValue extends $pb.GeneratedMessage {
+class StringValue extends $pb.GeneratedMessage with $mixin.StringValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('StringValue',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.StringValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.StringValueMixin.fromProto3JsonHelper)
     ..aOS(1, 'value')
     ..hasRequiredFields = false;
 
@@ -270,21 +339,30 @@ class StringValue extends $pb.GeneratedMessage {
   static StringValue create() => StringValue._();
   StringValue createEmptyInstance() => create();
   static $pb.PbList<StringValue> createRepeated() => $pb.PbList<StringValue>();
-  static StringValue getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StringValue getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StringValue>(create);
   static StringValue _defaultInstance;
 
-  $core.String get value => $_getS(0, '');
+  @$pb.TagNumber(1)
+  $core.String get value => $_getSZ(0);
+  @$pb.TagNumber(1)
   set value($core.String v) {
     $_setString(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }
 
-class BytesValue extends $pb.GeneratedMessage {
+class BytesValue extends $pb.GeneratedMessage with $mixin.BytesValueMixin {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('BytesValue',
-      package: const $pb.PackageName('google.protobuf'))
+      package: const $pb.PackageName('google.protobuf'),
+      createEmptyInstance: create,
+      toProto3Json: $mixin.BytesValueMixin.toProto3JsonHelper,
+      fromProto3Json: $mixin.BytesValueMixin.fromProto3JsonHelper)
     ..a<$core.List<$core.int>>(1, 'value', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
@@ -304,14 +382,20 @@ class BytesValue extends $pb.GeneratedMessage {
   static BytesValue create() => BytesValue._();
   BytesValue createEmptyInstance() => create();
   static $pb.PbList<BytesValue> createRepeated() => $pb.PbList<BytesValue>();
-  static BytesValue getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static BytesValue getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<BytesValue>(create);
   static BytesValue _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.List<$core.int> get value => $_getN(0);
+  @$pb.TagNumber(1)
   set value($core.List<$core.int> v) {
     $_setBytes(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
   void clearValue() => clearField(1);
 }

@@ -1,3 +1,7 @@
+## [0.6.2] - 21 July 2019.
+
+* Update Protobug and GRPC dependencies to latest versions
+
 ## [0.6.1] - 21 July 2019.
 
 * Add generic Reference factory

@@ -1,20 +1,21 @@
 ///
 //  Generated code. Do not modify.
 //  source: google/type/latlng.proto
-///
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-import 'dart:core' as $core
-    show bool, Deprecated, double, int, List, Map, override, pragma, String;
+import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class LatLng extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo('LatLng', package: const $pb.PackageName('google.type'))
-        ..a<$core.double>(1, 'latitude', $pb.PbFieldType.OD)
-        ..a<$core.double>(2, 'longitude', $pb.PbFieldType.OD)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LatLng',
+      package: const $pb.PackageName('google.type'),
+      createEmptyInstance: create)
+    ..a<$core.double>(1, 'latitude', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, 'longitude', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false;
 
   LatLng._() : super();
   factory LatLng() => create();
@@ -32,22 +33,32 @@ class LatLng extends $pb.GeneratedMessage {
   static LatLng create() => LatLng._();
   LatLng createEmptyInstance() => create();
   static $pb.PbList<LatLng> createRepeated() => $pb.PbList<LatLng>();
-  static LatLng getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static LatLng getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LatLng>(create);
   static LatLng _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.double get latitude => $_getN(0);
+  @$pb.TagNumber(1)
   set latitude($core.double v) {
     $_setDouble(0, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasLatitude() => $_has(0);
+  @$pb.TagNumber(1)
   void clearLatitude() => clearField(1);
 
+  @$pb.TagNumber(2)
   $core.double get longitude => $_getN(1);
+  @$pb.TagNumber(2)
   set longitude($core.double v) {
     $_setDouble(1, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasLongitude() => $_has(1);
+  @$pb.TagNumber(2)
   void clearLongitude() => clearField(2);
 }

@@ -1,11 +1,11 @@
 ///
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/query.proto
-///
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
-import 'dart:core' as $core
-    show bool, Deprecated, double, int, List, Map, override, pragma, String;
+import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
@@ -19,7 +19,8 @@ export 'query.pbenum.dart';
 class StructuredQuery_CollectionSelector extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'StructuredQuery.CollectionSelector',
-      package: const $pb.PackageName('google.firestore.v1'))
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
     ..aOS(2, 'collectionId')
     ..aOB(3, 'allDescendants')
     ..hasRequiredFields = false;
@@ -45,24 +46,34 @@ class StructuredQuery_CollectionSelector extends $pb.GeneratedMessage {
   StructuredQuery_CollectionSelector createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery_CollectionSelector> createRepeated() =>
       $pb.PbList<StructuredQuery_CollectionSelector>();
-  static StructuredQuery_CollectionSelector getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_CollectionSelector getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_CollectionSelector>(
+          create);
   static StructuredQuery_CollectionSelector _defaultInstance;
 
-  $core.String get collectionId => $_getS(0, '');
+  @$pb.TagNumber(2)
+  $core.String get collectionId => $_getSZ(0);
+  @$pb.TagNumber(2)
   set collectionId($core.String v) {
     $_setString(0, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasCollectionId() => $_has(0);
+  @$pb.TagNumber(2)
   void clearCollectionId() => clearField(2);
 
-  $core.bool get allDescendants => $_get(1, false);
+  @$pb.TagNumber(3)
+  $core.bool get allDescendants => $_getBF(1);
+  @$pb.TagNumber(3)
   set allDescendants($core.bool v) {
     $_setBool(1, v);
   }
 
+  @$pb.TagNumber(3)
   $core.bool hasAllDescendants() => $_has(1);
+  @$pb.TagNumber(3)
   void clearAllDescendants() => clearField(3);
 }
 
@@ -82,26 +93,15 @@ class StructuredQuery_Filter extends $pb.GeneratedMessage {
     0: StructuredQuery_Filter_FilterType.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('StructuredQuery.Filter',
-      package: const $pb.PackageName('google.firestore.v1'))
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
     ..oo(0, [1, 2, 3])
-    ..a<StructuredQuery_CompositeFilter>(
-        1,
-        'compositeFilter',
-        $pb.PbFieldType.OM,
-        StructuredQuery_CompositeFilter.getDefault,
-        StructuredQuery_CompositeFilter.create)
-    ..a<StructuredQuery_FieldFilter>(
-        2,
-        'fieldFilter',
-        $pb.PbFieldType.OM,
-        StructuredQuery_FieldFilter.getDefault,
-        StructuredQuery_FieldFilter.create)
-    ..a<StructuredQuery_UnaryFilter>(
-        3,
-        'unaryFilter',
-        $pb.PbFieldType.OM,
-        StructuredQuery_UnaryFilter.getDefault,
-        StructuredQuery_UnaryFilter.create)
+    ..aOM<StructuredQuery_CompositeFilter>(1, 'compositeFilter',
+        subBuilder: StructuredQuery_CompositeFilter.create)
+    ..aOM<StructuredQuery_FieldFilter>(2, 'fieldFilter',
+        subBuilder: StructuredQuery_FieldFilter.create)
+    ..aOM<StructuredQuery_UnaryFilter>(3, 'unaryFilter',
+        subBuilder: StructuredQuery_UnaryFilter.create)
     ..hasRequiredFields = false;
 
   StructuredQuery_Filter._() : super();
@@ -123,52 +123,70 @@ class StructuredQuery_Filter extends $pb.GeneratedMessage {
   StructuredQuery_Filter createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery_Filter> createRepeated() =>
       $pb.PbList<StructuredQuery_Filter>();
-  static StructuredQuery_Filter getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_Filter getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_Filter>(create);
   static StructuredQuery_Filter _defaultInstance;
 
   StructuredQuery_Filter_FilterType whichFilterType() =>
       _StructuredQuery_Filter_FilterTypeByTag[$_whichOneof(0)];
   void clearFilterType() => clearField($_whichOneof(0));
 
+  @$pb.TagNumber(1)
   StructuredQuery_CompositeFilter get compositeFilter => $_getN(0);
+  @$pb.TagNumber(1)
   set compositeFilter(StructuredQuery_CompositeFilter v) {
     setField(1, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasCompositeFilter() => $_has(0);
+  @$pb.TagNumber(1)
   void clearCompositeFilter() => clearField(1);
+  @$pb.TagNumber(1)
+  StructuredQuery_CompositeFilter ensureCompositeFilter() => $_ensure(0);
 
+  @$pb.TagNumber(2)
   StructuredQuery_FieldFilter get fieldFilter => $_getN(1);
+  @$pb.TagNumber(2)
   set fieldFilter(StructuredQuery_FieldFilter v) {
     setField(2, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasFieldFilter() => $_has(1);
+  @$pb.TagNumber(2)
   void clearFieldFilter() => clearField(2);
+  @$pb.TagNumber(2)
+  StructuredQuery_FieldFilter ensureFieldFilter() => $_ensure(1);
 
+  @$pb.TagNumber(3)
   StructuredQuery_UnaryFilter get unaryFilter => $_getN(2);
+  @$pb.TagNumber(3)
   set unaryFilter(StructuredQuery_UnaryFilter v) {
     setField(3, v);
   }
 
+  @$pb.TagNumber(3)
   $core.bool hasUnaryFilter() => $_has(2);
+  @$pb.TagNumber(3)
   void clearUnaryFilter() => clearField(3);
+  @$pb.TagNumber(3)
+  StructuredQuery_UnaryFilter ensureUnaryFilter() => $_ensure(2);
 }
 
 class StructuredQuery_CompositeFilter extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'StructuredQuery.CompositeFilter',
-      package: const $pb.PackageName('google.firestore.v1'))
-    ..e<StructuredQuery_CompositeFilter_Operator>(
-        1,
-        'op',
-        $pb.PbFieldType.OE,
-        StructuredQuery_CompositeFilter_Operator.OPERATOR_UNSPECIFIED,
-        StructuredQuery_CompositeFilter_Operator.valueOf,
-        StructuredQuery_CompositeFilter_Operator.values)
-    ..pc<StructuredQuery_Filter>(
-        2, 'filters', $pb.PbFieldType.PM, StructuredQuery_Filter.create)
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
+    ..e<StructuredQuery_CompositeFilter_Operator>(1, 'op', $pb.PbFieldType.OE,
+        defaultOrMaker:
+            StructuredQuery_CompositeFilter_Operator.OPERATOR_UNSPECIFIED,
+        valueOf: StructuredQuery_CompositeFilter_Operator.valueOf,
+        enumValues: StructuredQuery_CompositeFilter_Operator.values)
+    ..pc<StructuredQuery_Filter>(2, 'filters', $pb.PbFieldType.PM,
+        subBuilder: StructuredQuery_Filter.create)
     ..hasRequiredFields = false;
 
   StructuredQuery_CompositeFilter._() : super();
@@ -192,40 +210,41 @@ class StructuredQuery_CompositeFilter extends $pb.GeneratedMessage {
   StructuredQuery_CompositeFilter createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery_CompositeFilter> createRepeated() =>
       $pb.PbList<StructuredQuery_CompositeFilter>();
-  static StructuredQuery_CompositeFilter getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_CompositeFilter getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_CompositeFilter>(
+          create);
   static StructuredQuery_CompositeFilter _defaultInstance;
 
+  @$pb.TagNumber(1)
   StructuredQuery_CompositeFilter_Operator get op => $_getN(0);
+  @$pb.TagNumber(1)
   set op(StructuredQuery_CompositeFilter_Operator v) {
     setField(1, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasOp() => $_has(0);
+  @$pb.TagNumber(1)
   void clearOp() => clearField(1);
 
+  @$pb.TagNumber(2)
   $core.List<StructuredQuery_Filter> get filters => $_getList(1);
 }
 
 class StructuredQuery_FieldFilter extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'StructuredQuery.FieldFilter',
-      package: const $pb.PackageName('google.firestore.v1'))
-    ..a<StructuredQuery_FieldReference>(
-        1,
-        'field_1',
-        $pb.PbFieldType.OM,
-        StructuredQuery_FieldReference.getDefault,
-        StructuredQuery_FieldReference.create)
-    ..e<StructuredQuery_FieldFilter_Operator>(
-        2,
-        'op',
-        $pb.PbFieldType.OE,
-        StructuredQuery_FieldFilter_Operator.OPERATOR_UNSPECIFIED,
-        StructuredQuery_FieldFilter_Operator.valueOf,
-        StructuredQuery_FieldFilter_Operator.values)
-    ..a<$1.Value>(
-        3, 'value', $pb.PbFieldType.OM, $1.Value.getDefault, $1.Value.create)
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
+    ..aOM<StructuredQuery_FieldReference>(1, 'field',
+        subBuilder: StructuredQuery_FieldReference.create)
+    ..e<StructuredQuery_FieldFilter_Operator>(2, 'op', $pb.PbFieldType.OE,
+        defaultOrMaker:
+            StructuredQuery_FieldFilter_Operator.OPERATOR_UNSPECIFIED,
+        valueOf: StructuredQuery_FieldFilter_Operator.valueOf,
+        enumValues: StructuredQuery_FieldFilter_Operator.values)
+    ..aOM<$1.Value>(3, 'value', subBuilder: $1.Value.create)
     ..hasRequiredFields = false;
 
   StructuredQuery_FieldFilter._() : super();
@@ -249,33 +268,50 @@ class StructuredQuery_FieldFilter extends $pb.GeneratedMessage {
   StructuredQuery_FieldFilter createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery_FieldFilter> createRepeated() =>
       $pb.PbList<StructuredQuery_FieldFilter>();
-  static StructuredQuery_FieldFilter getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_FieldFilter getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_FieldFilter>(create);
   static StructuredQuery_FieldFilter _defaultInstance;
 
+  @$pb.TagNumber(1)
   StructuredQuery_FieldReference get field_1 => $_getN(0);
+  @$pb.TagNumber(1)
   set field_1(StructuredQuery_FieldReference v) {
     setField(1, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasField_1() => $_has(0);
+  @$pb.TagNumber(1)
   void clearField_1() => clearField(1);
+  @$pb.TagNumber(1)
+  StructuredQuery_FieldReference ensureField_1() => $_ensure(0);
 
+  @$pb.TagNumber(2)
   StructuredQuery_FieldFilter_Operator get op => $_getN(1);
+  @$pb.TagNumber(2)
   set op(StructuredQuery_FieldFilter_Operator v) {
     setField(2, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasOp() => $_has(1);
+  @$pb.TagNumber(2)
   void clearOp() => clearField(2);
 
+  @$pb.TagNumber(3)
   $1.Value get value => $_getN(2);
+  @$pb.TagNumber(3)
   set value($1.Value v) {
     setField(3, v);
   }
 
+  @$pb.TagNumber(3)
   $core.bool hasValue() => $_has(2);
+  @$pb.TagNumber(3)
   void clearValue() => clearField(3);
+  @$pb.TagNumber(3)
+  $1.Value ensureValue() => $_ensure(2);
 }
 
 enum StructuredQuery_UnaryFilter_OperandType { field_2, notSet }
@@ -288,21 +324,16 @@ class StructuredQuery_UnaryFilter extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'StructuredQuery.UnaryFilter',
-      package: const $pb.PackageName('google.firestore.v1'))
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
     ..oo(0, [2])
-    ..e<StructuredQuery_UnaryFilter_Operator>(
-        1,
-        'op',
-        $pb.PbFieldType.OE,
-        StructuredQuery_UnaryFilter_Operator.OPERATOR_UNSPECIFIED,
-        StructuredQuery_UnaryFilter_Operator.valueOf,
-        StructuredQuery_UnaryFilter_Operator.values)
-    ..a<StructuredQuery_FieldReference>(
-        2,
-        'field_2',
-        $pb.PbFieldType.OM,
-        StructuredQuery_FieldReference.getDefault,
-        StructuredQuery_FieldReference.create)
+    ..e<StructuredQuery_UnaryFilter_Operator>(1, 'op', $pb.PbFieldType.OE,
+        defaultOrMaker:
+            StructuredQuery_UnaryFilter_Operator.OPERATOR_UNSPECIFIED,
+        valueOf: StructuredQuery_UnaryFilter_Operator.valueOf,
+        enumValues: StructuredQuery_UnaryFilter_Operator.values)
+    ..aOM<StructuredQuery_FieldReference>(2, 'field',
+        subBuilder: StructuredQuery_FieldReference.create)
     ..hasRequiredFields = false;
 
   StructuredQuery_UnaryFilter._() : super();
@@ -326,35 +357,148 @@ class StructuredQuery_UnaryFilter extends $pb.GeneratedMessage {
   StructuredQuery_UnaryFilter createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery_UnaryFilter> createRepeated() =>
       $pb.PbList<StructuredQuery_UnaryFilter>();
-  static StructuredQuery_UnaryFilter getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_UnaryFilter getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_UnaryFilter>(create);
   static StructuredQuery_UnaryFilter _defaultInstance;
 
   StructuredQuery_UnaryFilter_OperandType whichOperandType() =>
       _StructuredQuery_UnaryFilter_OperandTypeByTag[$_whichOneof(0)];
   void clearOperandType() => clearField($_whichOneof(0));
 
+  @$pb.TagNumber(1)
   StructuredQuery_UnaryFilter_Operator get op => $_getN(0);
+  @$pb.TagNumber(1)
   set op(StructuredQuery_UnaryFilter_Operator v) {
     setField(1, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasOp() => $_has(0);
+  @$pb.TagNumber(1)
   void clearOp() => clearField(1);
 
+  @$pb.TagNumber(2)
   StructuredQuery_FieldReference get field_2 => $_getN(1);
+  @$pb.TagNumber(2)
   set field_2(StructuredQuery_FieldReference v) {
     setField(2, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasField_2() => $_has(1);
+  @$pb.TagNumber(2)
   void clearField_2() => clearField(2);
+  @$pb.TagNumber(2)
+  StructuredQuery_FieldReference ensureField_2() => $_ensure(1);
+}
+
+class StructuredQuery_Projection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      'StructuredQuery.Projection',
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
+    ..pc<StructuredQuery_FieldReference>(2, 'fields', $pb.PbFieldType.PM,
+        subBuilder: StructuredQuery_FieldReference.create)
+    ..hasRequiredFields = false;
+
+  StructuredQuery_Projection._() : super();
+  factory StructuredQuery_Projection() => create();
+  factory StructuredQuery_Projection.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StructuredQuery_Projection.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  StructuredQuery_Projection clone() =>
+      StructuredQuery_Projection()..mergeFromMessage(this);
+  StructuredQuery_Projection copyWith(
+          void Function(StructuredQuery_Projection) updates) =>
+      super.copyWith(
+          (message) => updates(message as StructuredQuery_Projection));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_Projection create() => StructuredQuery_Projection._();
+  StructuredQuery_Projection createEmptyInstance() => create();
+  static $pb.PbList<StructuredQuery_Projection> createRepeated() =>
+      $pb.PbList<StructuredQuery_Projection>();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_Projection getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_Projection>(create);
+  static StructuredQuery_Projection _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $core.List<StructuredQuery_FieldReference> get fields => $_getList(0);
+}
+
+class StructuredQuery_Order extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('StructuredQuery.Order',
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
+    ..aOM<StructuredQuery_FieldReference>(1, 'field',
+        subBuilder: StructuredQuery_FieldReference.create)
+    ..e<StructuredQuery_Direction>(2, 'direction', $pb.PbFieldType.OE,
+        defaultOrMaker: StructuredQuery_Direction.DIRECTION_UNSPECIFIED,
+        valueOf: StructuredQuery_Direction.valueOf,
+        enumValues: StructuredQuery_Direction.values)
+    ..hasRequiredFields = false;
+
+  StructuredQuery_Order._() : super();
+  factory StructuredQuery_Order() => create();
+  factory StructuredQuery_Order.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory StructuredQuery_Order.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  StructuredQuery_Order clone() =>
+      StructuredQuery_Order()..mergeFromMessage(this);
+  StructuredQuery_Order copyWith(
+          void Function(StructuredQuery_Order) updates) =>
+      super.copyWith((message) => updates(message as StructuredQuery_Order));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_Order create() => StructuredQuery_Order._();
+  StructuredQuery_Order createEmptyInstance() => create();
+  static $pb.PbList<StructuredQuery_Order> createRepeated() =>
+      $pb.PbList<StructuredQuery_Order>();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_Order getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_Order>(create);
+  static StructuredQuery_Order _defaultInstance;
+
+  @$pb.TagNumber(1)
+  StructuredQuery_FieldReference get field_1 => $_getN(0);
+  @$pb.TagNumber(1)
+  set field_1(StructuredQuery_FieldReference v) {
+    setField(1, v);
+  }
+
+  @$pb.TagNumber(1)
+  $core.bool hasField_1() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearField_1() => clearField(1);
+  @$pb.TagNumber(1)
+  StructuredQuery_FieldReference ensureField_1() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  StructuredQuery_Direction get direction => $_getN(1);
+  @$pb.TagNumber(2)
+  set direction(StructuredQuery_Direction v) {
+    setField(2, v);
+  }
+
+  @$pb.TagNumber(2)
+  $core.bool hasDirection() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDirection() => clearField(2);
 }
 
 class StructuredQuery_FieldReference extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       'StructuredQuery.FieldReference',
-      package: const $pb.PackageName('google.firestore.v1'))
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
     ..aOS(2, 'fieldPath')
     ..hasRequiredFields = false;
 
@@ -379,134 +523,40 @@ class StructuredQuery_FieldReference extends $pb.GeneratedMessage {
   StructuredQuery_FieldReference createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery_FieldReference> createRepeated() =>
       $pb.PbList<StructuredQuery_FieldReference>();
-  static StructuredQuery_FieldReference getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery_FieldReference getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery_FieldReference>(create);
   static StructuredQuery_FieldReference _defaultInstance;
 
-  $core.String get fieldPath => $_getS(0, '');
+  @$pb.TagNumber(2)
+  $core.String get fieldPath => $_getSZ(0);
+  @$pb.TagNumber(2)
   set fieldPath($core.String v) {
     $_setString(0, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasFieldPath() => $_has(0);
+  @$pb.TagNumber(2)
   void clearFieldPath() => clearField(2);
-}
-
-class StructuredQuery_Order extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo('StructuredQuery.Order',
-      package: const $pb.PackageName('google.firestore.v1'))
-    ..a<StructuredQuery_FieldReference>(
-        1,
-        'field_1',
-        $pb.PbFieldType.OM,
-        StructuredQuery_FieldReference.getDefault,
-        StructuredQuery_FieldReference.create)
-    ..e<StructuredQuery_Direction>(
-        2,
-        'direction',
-        $pb.PbFieldType.OE,
-        StructuredQuery_Direction.DIRECTION_UNSPECIFIED,
-        StructuredQuery_Direction.valueOf,
-        StructuredQuery_Direction.values)
-    ..hasRequiredFields = false;
-
-  StructuredQuery_Order._() : super();
-  factory StructuredQuery_Order() => create();
-  factory StructuredQuery_Order.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory StructuredQuery_Order.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-  StructuredQuery_Order clone() =>
-      StructuredQuery_Order()..mergeFromMessage(this);
-  StructuredQuery_Order copyWith(
-          void Function(StructuredQuery_Order) updates) =>
-      super.copyWith((message) => updates(message as StructuredQuery_Order));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static StructuredQuery_Order create() => StructuredQuery_Order._();
-  StructuredQuery_Order createEmptyInstance() => create();
-  static $pb.PbList<StructuredQuery_Order> createRepeated() =>
-      $pb.PbList<StructuredQuery_Order>();
-  static StructuredQuery_Order getDefault() =>
-      _defaultInstance ??= create()..freeze();
-  static StructuredQuery_Order _defaultInstance;
-
-  StructuredQuery_FieldReference get field_1 => $_getN(0);
-  set field_1(StructuredQuery_FieldReference v) {
-    setField(1, v);
-  }
-
-  $core.bool hasField_1() => $_has(0);
-  void clearField_1() => clearField(1);
-
-  StructuredQuery_Direction get direction => $_getN(1);
-  set direction(StructuredQuery_Direction v) {
-    setField(2, v);
-  }
-
-  $core.bool hasDirection() => $_has(1);
-  void clearDirection() => clearField(2);
-}
-
-class StructuredQuery_Projection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      'StructuredQuery.Projection',
-      package: const $pb.PackageName('google.firestore.v1'))
-    ..pc<StructuredQuery_FieldReference>(
-        2, 'fields', $pb.PbFieldType.PM, StructuredQuery_FieldReference.create)
-    ..hasRequiredFields = false;
-
-  StructuredQuery_Projection._() : super();
-  factory StructuredQuery_Projection() => create();
-  factory StructuredQuery_Projection.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory StructuredQuery_Projection.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
-  StructuredQuery_Projection clone() =>
-      StructuredQuery_Projection()..mergeFromMessage(this);
-  StructuredQuery_Projection copyWith(
-          void Function(StructuredQuery_Projection) updates) =>
-      super.copyWith(
-          (message) => updates(message as StructuredQuery_Projection));
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static StructuredQuery_Projection create() => StructuredQuery_Projection._();
-  StructuredQuery_Projection createEmptyInstance() => create();
-  static $pb.PbList<StructuredQuery_Projection> createRepeated() =>
-      $pb.PbList<StructuredQuery_Projection>();
-  static StructuredQuery_Projection getDefault() =>
-      _defaultInstance ??= create()..freeze();
-  static StructuredQuery_Projection _defaultInstance;
-
-  $core.List<StructuredQuery_FieldReference> get fields => $_getList(0);
 }
 
 class StructuredQuery extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('StructuredQuery',
-      package: const $pb.PackageName('google.firestore.v1'))
-    ..a<StructuredQuery_Projection>(
-        1,
-        'select',
-        $pb.PbFieldType.OM,
-        StructuredQuery_Projection.getDefault,
-        StructuredQuery_Projection.create)
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
+    ..aOM<StructuredQuery_Projection>(1, 'select',
+        subBuilder: StructuredQuery_Projection.create)
     ..pc<StructuredQuery_CollectionSelector>(2, 'from', $pb.PbFieldType.PM,
-        StructuredQuery_CollectionSelector.create)
-    ..a<StructuredQuery_Filter>(3, 'where', $pb.PbFieldType.OM,
-        StructuredQuery_Filter.getDefault, StructuredQuery_Filter.create)
-    ..pc<StructuredQuery_Order>(
-        4, 'orderBy', $pb.PbFieldType.PM, StructuredQuery_Order.create)
-    ..a<$0.Int32Value>(5, 'limit', $pb.PbFieldType.OM, $0.Int32Value.getDefault,
-        $0.Int32Value.create)
+        subBuilder: StructuredQuery_CollectionSelector.create)
+    ..aOM<StructuredQuery_Filter>(3, 'where',
+        subBuilder: StructuredQuery_Filter.create)
+    ..pc<StructuredQuery_Order>(4, 'orderBy', $pb.PbFieldType.PM,
+        subBuilder: StructuredQuery_Order.create)
+    ..aOM<$0.Int32Value>(5, 'limit', subBuilder: $0.Int32Value.create)
     ..a<$core.int>(6, 'offset', $pb.PbFieldType.O3)
-    ..a<Cursor>(
-        7, 'startAt', $pb.PbFieldType.OM, Cursor.getDefault, Cursor.create)
-    ..a<Cursor>(
-        8, 'endAt', $pb.PbFieldType.OM, Cursor.getDefault, Cursor.create)
+    ..aOM<Cursor>(7, 'startAt', subBuilder: Cursor.create)
+    ..aOM<Cursor>(8, 'endAt', subBuilder: Cursor.create)
     ..hasRequiredFields = false;
 
   StructuredQuery._() : super();
@@ -526,67 +576,105 @@ class StructuredQuery extends $pb.GeneratedMessage {
   StructuredQuery createEmptyInstance() => create();
   static $pb.PbList<StructuredQuery> createRepeated() =>
       $pb.PbList<StructuredQuery>();
-  static StructuredQuery getDefault() =>
-      _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static StructuredQuery getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<StructuredQuery>(create);
   static StructuredQuery _defaultInstance;
 
+  @$pb.TagNumber(1)
   StructuredQuery_Projection get select => $_getN(0);
+  @$pb.TagNumber(1)
   set select(StructuredQuery_Projection v) {
     setField(1, v);
   }
 
+  @$pb.TagNumber(1)
   $core.bool hasSelect() => $_has(0);
+  @$pb.TagNumber(1)
   void clearSelect() => clearField(1);
+  @$pb.TagNumber(1)
+  StructuredQuery_Projection ensureSelect() => $_ensure(0);
 
+  @$pb.TagNumber(2)
   $core.List<StructuredQuery_CollectionSelector> get from => $_getList(1);
 
+  @$pb.TagNumber(3)
   StructuredQuery_Filter get where => $_getN(2);
+  @$pb.TagNumber(3)
   set where(StructuredQuery_Filter v) {
     setField(3, v);
   }
 
+  @$pb.TagNumber(3)
   $core.bool hasWhere() => $_has(2);
+  @$pb.TagNumber(3)
   void clearWhere() => clearField(3);
+  @$pb.TagNumber(3)
+  StructuredQuery_Filter ensureWhere() => $_ensure(2);
 
+  @$pb.TagNumber(4)
   $core.List<StructuredQuery_Order> get orderBy => $_getList(3);
 
+  @$pb.TagNumber(5)
   $0.Int32Value get limit => $_getN(4);
+  @$pb.TagNumber(5)
   set limit($0.Int32Value v) {
     setField(5, v);
   }
 
+  @$pb.TagNumber(5)
   $core.bool hasLimit() => $_has(4);
+  @$pb.TagNumber(5)
   void clearLimit() => clearField(5);
+  @$pb.TagNumber(5)
+  $0.Int32Value ensureLimit() => $_ensure(4);
 
-  $core.int get offset => $_get(5, 0);
+  @$pb.TagNumber(6)
+  $core.int get offset => $_getIZ(5);
+  @$pb.TagNumber(6)
   set offset($core.int v) {
     $_setSignedInt32(5, v);
   }
 
+  @$pb.TagNumber(6)
   $core.bool hasOffset() => $_has(5);
+  @$pb.TagNumber(6)
   void clearOffset() => clearField(6);
 
+  @$pb.TagNumber(7)
   Cursor get startAt => $_getN(6);
+  @$pb.TagNumber(7)
   set startAt(Cursor v) {
     setField(7, v);
   }
 
+  @$pb.TagNumber(7)
   $core.bool hasStartAt() => $_has(6);
+  @$pb.TagNumber(7)
   void clearStartAt() => clearField(7);
+  @$pb.TagNumber(7)
+  Cursor ensureStartAt() => $_ensure(6);
 
+  @$pb.TagNumber(8)
   Cursor get endAt => $_getN(7);
+  @$pb.TagNumber(8)
   set endAt(Cursor v) {
     setField(8, v);
   }
 
+  @$pb.TagNumber(8)
   $core.bool hasEndAt() => $_has(7);
+  @$pb.TagNumber(8)
   void clearEndAt() => clearField(8);
+  @$pb.TagNumber(8)
+  Cursor ensureEndAt() => $_ensure(7);
 }
 
 class Cursor extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('Cursor',
-      package: const $pb.PackageName('google.firestore.v1'))
-    ..pc<$1.Value>(1, 'values', $pb.PbFieldType.PM, $1.Value.create)
+      package: const $pb.PackageName('google.firestore.v1'),
+      createEmptyInstance: create)
+    ..pc<$1.Value>(1, 'values', $pb.PbFieldType.PM, subBuilder: $1.Value.create)
     ..aOB(2, 'before')
     ..hasRequiredFields = false;
 
@@ -606,16 +694,23 @@ class Cursor extends $pb.GeneratedMessage {
   static Cursor create() => Cursor._();
   Cursor createEmptyInstance() => create();
   static $pb.PbList<Cursor> createRepeated() => $pb.PbList<Cursor>();
-  static Cursor getDefault() => _defaultInstance ??= create()..freeze();
+  @$core.pragma('dart2js:noInline')
+  static Cursor getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Cursor>(create);
   static Cursor _defaultInstance;
 
+  @$pb.TagNumber(1)
   $core.List<$1.Value> get values => $_getList(0);
 
-  $core.bool get before => $_get(1, false);
+  @$pb.TagNumber(2)
+  $core.bool get before => $_getBF(1);
+  @$pb.TagNumber(2)
   set before($core.bool v) {
     $_setBool(1, v);
   }
 
+  @$pb.TagNumber(2)
   $core.bool hasBefore() => $_has(1);
+  @$pb.TagNumber(2)
   void clearBefore() => clearField(2);
 }

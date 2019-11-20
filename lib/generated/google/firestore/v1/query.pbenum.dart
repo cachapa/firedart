@@ -1,11 +1,12 @@
 ///
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/query.proto
-///
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name
+//
+// @dart = 2.3
+// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME,UNUSED_SHOWN_NAME
-import 'dart:core' as $core show int, dynamic, String, List, Map;
+import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class StructuredQuery_Direction extends $pb.ProtobufEnum {
@@ -66,6 +67,10 @@ class StructuredQuery_FieldFilter_Operator extends $pb.ProtobufEnum {
       StructuredQuery_FieldFilter_Operator._(5, 'EQUAL');
   static const StructuredQuery_FieldFilter_Operator ARRAY_CONTAINS =
       StructuredQuery_FieldFilter_Operator._(7, 'ARRAY_CONTAINS');
+  static const StructuredQuery_FieldFilter_Operator IN =
+      StructuredQuery_FieldFilter_Operator._(8, 'IN');
+  static const StructuredQuery_FieldFilter_Operator ARRAY_CONTAINS_ANY =
+      StructuredQuery_FieldFilter_Operator._(9, 'ARRAY_CONTAINS_ANY');
 
   static const $core.List<StructuredQuery_FieldFilter_Operator> values =
       <StructuredQuery_FieldFilter_Operator>[
@@ -76,6 +81,8 @@ class StructuredQuery_FieldFilter_Operator extends $pb.ProtobufEnum {
     GREATER_THAN_OR_EQUAL,
     EQUAL,
     ARRAY_CONTAINS,
+    IN,
+    ARRAY_CONTAINS_ANY,
   ];
 
   static final $core.Map<$core.int, StructuredQuery_FieldFilter_Operator>
