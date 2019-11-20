@@ -21,7 +21,7 @@ Future main() async {
     var documentReference = firestore.reference("test/types");
     expect(documentReference.runtimeType, equals(DocumentReference));
 
-    reference.delete();
+    await reference.delete();
   });
 
   test("Get collection", () async {

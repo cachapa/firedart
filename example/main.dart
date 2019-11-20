@@ -26,7 +26,7 @@ Future main() async {
   var ref = Firestore.instance.collection("test").document("doc");
 
   // Subscribe to changes to that document
-  ref.subscribe().listen((document) => print("updated: $document"));
+  ref.stream.listen((document) => print("updated: $document"));
 
   // Update the document
   await ref.update({"value": "test"});

@@ -1,6 +1,6 @@
 name: firedart
 description: An incomplete, dart-native implementation of the Firebase SDK.
-version: 0.6.2
+version: 0.6.3
 author: Daniel Cachapa <cachapa@gmail.com>
 homepage: https://github.com/cachapa/firedart
 

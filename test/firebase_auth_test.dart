@@ -51,7 +51,9 @@ Future main() async {
     tokenStore.setToken("bad_token", "bad_token", 0);
     try {
       await auth.getUser();
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     expect(auth.isSignedIn, false);
   });
 }

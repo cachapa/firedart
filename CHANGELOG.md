@@ -1,4 +1,8 @@
-## [0.6.2] - 21 July 2019.
+## [0.6.3] - 20 November 2019.
+
+* Fix linter warnings
+
+## [0.6.2] - 20 November 2019.
 
 * Update Protobug and GRPC dependencies to latest versions
 
