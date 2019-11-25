@@ -49,11 +49,7 @@ Future main() async {
   test("Sign out on bad refresh token", () async {
     await auth.signIn(email, password);
     tokenStore.setToken("bad_token", "bad_token", 0);
-    try {
-      await auth.getUser();
-    } catch (e) {
-      print(e);
-    }
+    await expectLater(auth.getUser(), throwsNoSuchMethodError);
     expect(auth.isSignedIn, false);
   });
 }
