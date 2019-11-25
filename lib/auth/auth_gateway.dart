@@ -10,13 +10,13 @@ class AuthGateway {
   AuthGateway(this.client, this.tokenProvider);
 
   Future<void> signUp(String email, String password) async =>
-      _auth("signupNewUser", email, password);
+      _auth("signUp", email, password);
 
   Future<void> signIn(String email, String password) async =>
-      _auth("verifyPassword", email, password);
+      _auth("signInWithPassword", email, password);
 
   resetPassword(String email) {
-    _post("getOobConfirmationCode", {
+    _post("sendOobCode", {
       "requestType": "PASSWORD_RESET",
       "email": email,
     });
@@ -36,7 +36,7 @@ class AuthGateway {
   Future<Map<String, dynamic>> _post(
       String method, Map<String, String> body) async {
     var requestUrl =
-        "https://www.googleapis.com/identitytoolkit/v3/relyingparty/$method";
+        "https://identitytoolkit.googleapis.com/v1/accounts:$method";
 
     var response = await client.post(
       requestUrl,
