@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/firedart.svg)](https://pub.dartlang.org/packages/firedart)
 
-An incomplete, dart-native implementation of the Firebase SDK based on Firebase's REST and RPC interfaces.
+A dart-native implementation of the Firebase Auth and Firestore SDKs.
 
 This library attempts to minimize dependencies with the intention of making it able to run in any environment capable of executing dart code. Currently it has been successfully tested using the dart runtime (`x86-64` and `arm32`) as well as on Flutter Android, iOS and Desktop.
 
@@ -14,7 +14,7 @@ Add firedart to your `pubspec.yaml` file:
 
 ``` yaml
 dependencies:
-  firedart: ^0.6.3
+  firedart: [latest version]
 ```
 
 ## Firebase Auth
