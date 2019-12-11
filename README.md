@@ -1,6 +1,8 @@
 # firedart
 
 [![pub package](https://img.shields.io/pub/v/firedart.svg)](https://pub.dartlang.org/packages/firedart)
+[![codecov](https://codecov.io/gh/cachapa/firedart/branch/master/graph/badge.svg)](https://codecov.io/gh/cachapa/firedart)
+
 
 A dart-native implementation of the Firebase Auth and Firestore SDKs.
 
