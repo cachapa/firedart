@@ -43,6 +43,10 @@ class AuthGateway {
       body: body,
     );
 
+    if (response.statusCode != 200) {
+      throw Exception("${response.statusCode}: ${response.reasonPhrase}");
+    }
+
     return json.decode(response.body);
   }
 
