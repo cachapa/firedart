@@ -40,4 +40,17 @@ Future main() async {
     await expectLater(auth.getUser(), throwsNoSuchMethodError);
     expect(auth.isSignedIn, false);
   });
+
+  test("Emit signedIn events", () async {
+    var stream = auth.signInState;
+    var expect = expectLater(
+        stream,
+        emitsInOrder([
+          (isSignedIn) => isSignedIn == true,
+          (isSignedIn) => isSignedIn == false,
+        ]));
+    await auth.signIn(email, password);
+    auth.signOut();
+    await expect;
+  });
 }
