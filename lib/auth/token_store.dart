@@ -1,11 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
-
 abstract class TokenStore {
   Token _token;
 
   String get idToken => _token._idToken;
+
   String get refreshToken => _token._refreshToken;
+
   DateTime get expiry => _token._expiry;
 
   bool get hasToken => _token != null;
@@ -52,40 +51,6 @@ class VolatileStore extends TokenStore {
 
   @override
   void delete() {}
-}
-
-/// Stores the refresh token as plaintext in a file.
-/// Defaults to ./token.json if path isn't specified.
-class FileStore extends TokenStore {
-  final File _file;
-
-  FileStore({String path}) : _file = File(path ?? "token.json");
-
-  @override
-  Token read() {
-    if (!_file.existsSync()) {
-      return null;
-    }
-
-    try {
-      Map<String, dynamic> map = json.decode(_file.readAsStringSync());
-      return Token.fromMap(map);
-    } catch (e) {
-      print("Error while reading token: $e");
-      return null;
-    }
-  }
-
-  @override
-  void write(Token token) =>
-      _file.writeAsStringSync(json.encode(token.toMap()));
-
-  @override
-  void delete() {
-    if (_file.existsSync()) {
-      _file.deleteSync();
-    }
-  }
 }
 
 class Token {

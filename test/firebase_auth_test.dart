@@ -34,18 +34,6 @@ Future main() async {
     expect(auth.isSignedIn, true);
   });
 
-  test("FileStore", () async {
-    auth = FirebaseAuth(apiKey, FileStore());
-    await auth.signIn(email, password);
-    expect(auth.isSignedIn, true);
-
-    // Reinstantiate auth
-    auth = FirebaseAuth(apiKey, FileStore());
-    var user = await auth.getUser();
-    expect(user.email, isNotEmpty);
-    expect(auth.isSignedIn, true);
-  });
-
   test("Sign out on bad refresh token", () async {
     await auth.signIn(email, password);
     tokenStore.setToken("bad_token", "bad_token", 0);
