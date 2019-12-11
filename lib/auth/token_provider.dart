@@ -13,12 +13,13 @@ class TokenProvider {
   StreamController<bool> _signInStateStreamController;
 
   TokenProvider(this.client, this._tokenStore) {
-    _signInStateStreamController =
-        StreamController<bool>(onListen: _notifyState);
+    _signInStateStreamController = StreamController<bool>();
   }
 
   String get refreshToken => _tokenStore.refreshToken;
+
   bool get isSignedIn => _tokenStore.hasToken;
+
   Stream<bool> get signInState => _signInStateStreamController.stream;
 
   Future<String> get idToken async {
