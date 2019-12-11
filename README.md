@@ -23,7 +23,7 @@ The `FirebaseAuth` class implements the necessary functionality for managing acc
 
 You'll also need to go to your `Firebase Console`, open `Project Settings` and under the `General` tab copy the `Web API Key`.
 
-> **Note: if you're targeting Flutter Mobile you might want to import [PreferencesStore](https://gist.github.com/cachapa/539dd1007fcf097179040f4056cdd4c7) into your project.**
+> **Note: in order to reduce external dependencies this library doesn't include a mechanism for persisting tokens. Please look at the following examples based on [SharedPreferences](https://gist.github.com/cachapa/539dd1007fcf097179040f4056cdd4c7) and [Hive](https://gist.github.com/cachapa/33944987bd8fe6c6ba84021cecef8fb7).**
 
 ### Usage
 
@@ -34,7 +34,7 @@ import 'package:firedart/firedart.dart';
 `FirebaseAuth` has a singleton version which should be enough for most use cases. You'll need to initialise it with your API key and a token store (see note above):
 
 ``` dart
-FirebaseAuth.initialize(apiKey, await PreferencesStore());
+FirebaseAuth.initialize(apiKey, await HiveStore());
 await FirebaseAuth.instance.signIn(email, password);
 var user = await FirebaseAuth.instance.getUser();
 ```
@@ -74,7 +74,7 @@ var users = UserCollection.fromMap(map);
 You can also instantiate your own `Firestore` object. Please note that if your database requires authenticated access, you'll need to pass along an instance of `FirebaseAuth`.
 
 ``` dart
-var firebaseAuth = FirebaseAuth.(apiKey, await PreferencesStore());
+var firebaseAuth = FirebaseAuth.(apiKey, await HiveStore());
 var firestore = Firestore(projectId, auth: firebaseAuth);
 
 await firebaseAuth.signIn(email, password);

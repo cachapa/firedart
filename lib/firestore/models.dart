@@ -156,22 +156,17 @@ class GeoPoint {
   GeoPoint._internal(LatLng value) : this(value.latitude, value.longitude);
 
   @override
-  bool operator ==(other) {
-    return runtimeType == other.runtimeType &&
-        latitude == other.latitude &&
-        longitude == other.longitude;
-  }
+  bool operator ==(other) =>
+      runtimeType == other.runtimeType &&
+      latitude == other.latitude &&
+      longitude == other.longitude;
 
   @override
-  String toString() {
-    return "lat: $latitude, lon: $longitude";
-  }
+  String toString() => "lat: $latitude, lon: $longitude";
 
-  LatLng _toLatLng() {
-    return LatLng()
-      ..latitude = latitude
-      ..longitude = longitude;
-  }
+  LatLng _toLatLng() => LatLng()
+    ..latitude = latitude
+    ..longitude = longitude;
 }
 
 fs.Value _encode(dynamic value) {
@@ -209,7 +204,7 @@ fs.Value _encode(dynamic value) {
     case DocumentReference:
       return fs.Value()..referenceValue = value._fullPath;
     case GeoPoint:
-      return fs.Value()..geoPointValue = value._toLatLng();
+      return fs.Value()..geoPointValue = (value as GeoPoint)._toLatLng();
     default:
       throw Exception("Unknown type: ${type}");
   }
