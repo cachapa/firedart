@@ -1,3 +1,9 @@
+## [0.6.4] - 13 December 2019.
+
+* Update to latest Firebase auth endpoints
+* Remove dart:io dependency
+* Throw exception on auth errors
+
 ## [0.6.3] - 20 November 2019.
 
 * Fix linter warnings
