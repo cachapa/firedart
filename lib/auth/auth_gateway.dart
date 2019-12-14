@@ -3,16 +3,18 @@ import 'dart:convert';
 import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_provider.dart';
 
+import 'user_gateway.dart';
+
 class AuthGateway {
   final KeyClient client;
   final TokenProvider tokenProvider;
 
   AuthGateway(this.client, this.tokenProvider);
 
-  Future<void> signUp(String email, String password) async =>
+  Future<User> signUp(String email, String password) async =>
       _auth("signUp", email, password);
 
-  Future<void> signIn(String email, String password) async =>
+  Future<User> signIn(String email, String password) async =>
       _auth("signInWithPassword", email, password);
 
   resetPassword(String email) {
@@ -22,7 +24,7 @@ class AuthGateway {
     });
   }
 
-  Future<void> _auth(String method, String email, String password) async {
+  Future<User> _auth(String method, String email, String password) async {
     var body = {
       "email": email,
       "password": password,
@@ -31,6 +33,7 @@ class AuthGateway {
 
     var map = await _post(method, body);
     tokenProvider.setToken(map);
+    return User.fromMap(map);
   }
 
   Future<Map<String, dynamic>> _post(

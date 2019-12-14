@@ -51,10 +51,10 @@ class FirebaseAuth {
 
   String get userId => tokenProvider.userId;
 
-  Future<void> signUp(String email, String password) =>
+  Future<User> signUp(String email, String password) =>
       _authGateway.signUp(email, password);
 
-  Future<void> signIn(String email, String password) =>
+  Future<User> signIn(String email, String password) =>
       _authGateway.signIn(email, password);
 
   void signOut() => tokenProvider.signOut();
