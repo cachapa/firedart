@@ -16,6 +16,8 @@ class TokenProvider {
     _signInStateStreamController = StreamController<bool>();
   }
 
+  String get userId => _tokenStore.userId;
+
   String get refreshToken => _tokenStore.refreshToken;
 
   bool get isSignedIn => _tokenStore.hasToken;
@@ -33,6 +35,7 @@ class TokenProvider {
 
   void setToken(Map<String, dynamic> map) {
     _tokenStore.setToken(
+      map["localId"],
       map["idToken"],
       map["refreshToken"],
       int.parse(map["expiresIn"]),
@@ -58,6 +61,7 @@ class TokenProvider {
       case 200:
         var map = json.decode(response.body);
         _tokenStore.setToken(
+          map["localId"],
           map['id_token'],
           map['refresh_token'],
           int.parse(map['expires_in']),
