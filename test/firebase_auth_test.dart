@@ -20,6 +20,11 @@ Future main() async {
     expect(auth.isSignedIn, false);
   });
 
+  test("Get user on signin", () async {
+    var user = await auth.signIn(email, password);
+    expect(user.email, email);
+  });
+
   test("Get user id", () async {
     await auth.signIn(email, password);
     expect(auth.userId, isNotEmpty);
@@ -28,7 +33,7 @@ Future main() async {
   test("Get user", () async {
     await auth.signIn(email, password);
     var user = await auth.getUser();
-    expect(user.email, isNotEmpty);
+    expect(user.email, email);
   });
 
   test("Refresh token when expired", () async {

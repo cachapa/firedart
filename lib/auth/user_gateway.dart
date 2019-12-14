@@ -15,7 +15,7 @@ class UserGateway {
 
   Future<User> getUser() async {
     var map = await _post("lookup", {});
-    return User.fromMap(map);
+    return User.fromMap(map['users'][0]);
   }
 
   Future<void> changePassword(String password) async {
@@ -50,15 +50,20 @@ class UserGateway {
 }
 
 class User {
+  final String id;
+  final String displayName;
+  final String photoUrl;
   final String email;
   final bool emailVerified;
 
   User.fromMap(Map<String, dynamic> map)
-      : email = map['users'][0]['email'],
-        emailVerified = map['users'][0]['emailVerified'];
+      : id = map['localId'],
+        displayName = map['displayName'],
+        photoUrl = map['photoUrl'],
+        email = map['email'],
+        emailVerified = map['emailVerified'];
 
   @override
-  String toString() {
-    return "email: $email, emailVerified: $emailVerified";
-  }
+  String toString() =>
+      "id: $id, name: $displayName, photo: $photoUrl, email: $email, emailVerified: $emailVerified";
 }
