@@ -20,6 +20,11 @@ Future main() async {
     expect(auth.isSignedIn, false);
   });
 
+  test("Get user id", () async {
+    await auth.signIn(email, password);
+    expect(auth.userId, isNotEmpty);
+  });
+
   test("Get user", () async {
     await auth.signIn(email, password);
     var user = await auth.getUser();
@@ -36,7 +41,7 @@ Future main() async {
 
   test("Sign out on bad refresh token", () async {
     await auth.signIn(email, password);
-    tokenStore.setToken("bad_token", "bad_token", 0);
+    tokenStore.setToken("user_id", "bad_token", "bad_token", 0);
     await expectLater(auth.getUser(), throwsNoSuchMethodError);
     expect(auth.isSignedIn, false);
   });

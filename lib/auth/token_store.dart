@@ -1,6 +1,8 @@
 abstract class TokenStore {
   Token _token;
 
+  String get userId => _token._userId;
+
   String get idToken => _token._idToken;
 
   String get refreshToken => _token._refreshToken;
@@ -9,10 +11,11 @@ abstract class TokenStore {
 
   bool get hasToken => _token != null;
 
-  void setToken(String idToken, String refreshToken, int expiresIn) {
+  void setToken(
+      String userId, String idToken, String refreshToken, int expiresIn) {
     assert(idToken != null && refreshToken != null && expiresIn != null);
     var expiry = DateTime.now().add(Duration(seconds: expiresIn));
-    _token = Token(idToken, refreshToken, expiry);
+    _token = Token(userId, idToken, refreshToken, expiry);
     write(_token);
   }
 
@@ -22,7 +25,8 @@ abstract class TokenStore {
 
   /// Force refresh - useful for testing
   void expireToken() {
-    _token = Token(_token._idToken, _token._refreshToken, DateTime.now());
+    _token = Token(
+        _token._userId, _token._idToken, _token._refreshToken, DateTime.now());
     write(_token);
   }
 
@@ -54,20 +58,23 @@ class VolatileStore extends TokenStore {
 }
 
 class Token {
+  final String _userId;
   final String _idToken;
   final String _refreshToken;
   final DateTime _expiry;
 
-  Token(this._idToken, this._refreshToken, this._expiry);
+  Token(this._userId, this._idToken, this._refreshToken, this._expiry);
 
   Token.fromMap(Map<String, dynamic> map)
       : this(
+          map["userId"],
           map["idToken"],
           map["refreshToken"],
           DateTime.parse(map["expiry"]),
         );
 
   Map<String, dynamic> toMap() => {
+        "userId": _userId,
         "idToken": _idToken,
         "refreshToken": _refreshToken,
         "expiry": _expiry.toIso8601String(),

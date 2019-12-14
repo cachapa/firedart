@@ -160,7 +160,7 @@ Future main() async {
   });
 
   test("Sign out on bad refresh token", () async {
-    tokenStore.setToken("bad_token", "bad_token", 0);
+    tokenStore.setToken("user_id", "bad_token", "bad_token", 0);
     try {
       await firestore.collection("test").get();
     } catch (_) {}

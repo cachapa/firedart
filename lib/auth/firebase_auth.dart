@@ -49,6 +49,8 @@ class FirebaseAuth {
 
   Stream<bool> get signInState => tokenProvider.signInState;
 
+  String get userId => tokenProvider.userId;
+
   Future<void> signUp(String email, String password) =>
       _authGateway.signUp(email, password);
 
