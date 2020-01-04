@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:firedart/firedart.dart';
 
-const apiKey = "Project Settings -> General -> Web API Key";
-const projectId = "Project Settings -> General -> Project ID";
-const email = "you@server.com";
-const password = "1234";
+const apiKey = 'Project Settings -> General -> Web API Key';
+const projectId = 'Project Settings -> General -> Project ID';
+const email = 'you@server.com';
+const password = '1234';
 
 Future main() async {
   FirebaseAuth.initialize(apiKey, VolatileStore());
@@ -23,17 +23,17 @@ Future main() async {
   print(user);
 
   // Instantiate a reference to a document - this happens offline
-  var ref = Firestore.instance.collection("test").document("doc");
+  var ref = Firestore.instance.collection('test').document('doc');
 
   // Subscribe to changes to that document
-  ref.stream.listen((document) => print("updated: $document"));
+  ref.stream.listen((document) => print('updated: $document'));
 
   // Update the document
-  await ref.update({"value": "test"});
+  await ref.update({'value': 'test'});
 
   // Get a snapshot of the document
   var document = await ref.get();
-  print("snapshot: ${document["value"]}");
+  print('snapshot: ${document['value']}');
 
   auth.signOut();
 

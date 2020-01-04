@@ -35,10 +35,10 @@ class TokenProvider {
 
   void setToken(Map<String, dynamic> map) {
     _tokenStore.setToken(
-      map["localId"],
-      map["idToken"],
-      map["refreshToken"],
-      int.parse(map["expiresIn"]),
+      map['localId'],
+      map['idToken'],
+      map['refreshToken'],
+      int.parse(map['expiresIn']),
     );
     _notifyState();
   }
@@ -50,10 +50,10 @@ class TokenProvider {
 
   Future _refresh() async {
     var response = await client.post(
-      "https://securetoken.googleapis.com/v1/token",
+      'https://securetoken.googleapis.com/v1/token',
       body: {
-        "grant_type": "refresh_token",
-        "refresh_token": _tokenStore.refreshToken,
+        'grant_type': 'refresh_token',
+        'refresh_token': _tokenStore.refreshToken,
       },
     );
 
@@ -61,7 +61,7 @@ class TokenProvider {
       case 200:
         var map = json.decode(response.body);
         _tokenStore.setToken(
-          map["localId"],
+          map['localId'],
           map['id_token'],
           map['refresh_token'],
           int.parse(map['expires_in']),

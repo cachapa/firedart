@@ -12,13 +12,13 @@ class VerboseClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    print("--> ${request.method} ${request.url}");
+    print('--> ${request.method} ${request.url}');
     print(request.headers);
     print((request as http.Request).body);
 
     var response = await _client.send(request);
     print(
-        "<-- ${response.statusCode} ${response.reasonPhrase} ${response.request.url}");
+        '<-- ${response.statusCode} ${response.reasonPhrase} ${response.request.url}');
     var loggedStream = response.stream.map((event) {
       print(utf8.decode(event));
       return event;
@@ -45,9 +45,9 @@ class KeyClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
-    if (!request.url.queryParameters.containsKey("key")) {
+    if (!request.url.queryParameters.containsKey('key')) {
       var query = Map<String, String>.from(request.url.queryParameters)
-        ..["key"] = apiKey;
+        ..['key'] = apiKey;
       var url = Uri.https(request.url.authority, request.url.path, query);
       request = http.Request(request.method, url)
         ..headers.addAll(request.headers)
@@ -66,8 +66,8 @@ class UserClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     request = http.Request(request.method, request.url)
-      ..headers["content-type"] = "application/x-www-form-urlencoded"
-      ..bodyFields = {"idToken": await tokenProvider.idToken};
+      ..headers['content-type'] = 'application/x-www-form-urlencoded'
+      ..bodyFields = {'idToken': await tokenProvider.idToken};
     return client.send(request);
   }
 }

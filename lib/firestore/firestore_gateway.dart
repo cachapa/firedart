@@ -20,14 +20,14 @@ class FirestoreGateway {
 
   FirestoreGateway(String projectId, {String databaseId, this.auth})
       : database =
-            "projects/$projectId/databases/${databaseId ?? "(default)"}/documents" {
+            'projects/$projectId/databases/${databaseId ?? '(default)'}/documents' {
     _setupClient();
   }
 
   Future<List<Document>> getCollection(String path) async {
     var request = ListDocumentsRequest()
-      ..parent = path.substring(0, path.lastIndexOf("/"))
-      ..collectionId = path.substring(path.lastIndexOf("/") + 1);
+      ..parent = path.substring(0, path.lastIndexOf('/'))
+      ..collectionId = path.substring(path.lastIndexOf('/') + 1);
     var response =
         await _client.listDocuments(request).catchError(_handleError);
     return response.documents
@@ -39,10 +39,10 @@ class FirestoreGateway {
     _initStream();
 
     var selector = StructuredQuery_CollectionSelector()
-      ..collectionId = path.substring(path.lastIndexOf("/") + 1);
+      ..collectionId = path.substring(path.lastIndexOf('/') + 1);
     var query = StructuredQuery()..from.add(selector);
     final queryTarget = Target_QueryTarget()
-      ..parent = path.substring(0, path.lastIndexOf("/"))
+      ..parent = path.substring(0, path.lastIndexOf('/'))
       ..structuredQuery = query;
     final target = Target()..query = queryTarget;
     final request = ListenRequest()
@@ -68,14 +68,14 @@ class FirestoreGateway {
 
   Future<Document> createDocument(
       String path, String documentId, fs.Document document) async {
-    var split = path.split("/");
-    var parent = split.sublist(0, split.length - 1).join("/");
+    var split = path.split('/');
+    var parent = split.sublist(0, split.length - 1).join('/');
     var collectionId = split.last;
 
     var request = CreateDocumentRequest()
       ..parent = parent
       ..collectionId = collectionId
-      ..documentId = documentId ?? ""
+      ..documentId = documentId ?? ''
       ..document = document;
 
     var response =
@@ -137,7 +137,7 @@ class FirestoreGateway {
     stream = null;
   }
 
-  _handleError(e) {
+  void _handleError(e) {
     if (e is GrpcError &&
         [
           StatusCode.unknown,

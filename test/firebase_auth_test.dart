@@ -1,5 +1,5 @@
 import 'package:firedart/firedart.dart';
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
 import 'test_config.dart';
 
@@ -12,7 +12,7 @@ Future main() async {
     auth = FirebaseAuth(apiKey, tokenStore);
   });
 
-  test("Sign In", () async {
+  test('Sign In', () async {
     expect(auth.isSignedIn, false);
     await auth.signIn(email, password);
     expect(auth.isSignedIn, true);
@@ -20,23 +20,23 @@ Future main() async {
     expect(auth.isSignedIn, false);
   });
 
-  test("Get user on signin", () async {
+  test('Get user on signin', () async {
     var user = await auth.signIn(email, password);
     expect(user.email, email);
   });
 
-  test("Get user id", () async {
+  test('Get user id', () async {
     await auth.signIn(email, password);
     expect(auth.userId, isNotEmpty);
   });
 
-  test("Get user", () async {
+  test('Get user', () async {
     await auth.signIn(email, password);
     var user = await auth.getUser();
     expect(user.email, email);
   });
 
-  test("Refresh token when expired", () async {
+  test('Refresh token when expired', () async {
     await auth.signIn(email, password);
     tokenStore.expireToken();
     var user = await auth.getUser();
@@ -44,14 +44,14 @@ Future main() async {
     expect(auth.isSignedIn, true);
   });
 
-  test("Sign out on bad refresh token", () async {
+  test('Sign out on bad refresh token', () async {
     await auth.signIn(email, password);
-    tokenStore.setToken("user_id", "bad_token", "bad_token", 0);
+    tokenStore.setToken('user_id', 'bad_token', 'bad_token', 0);
     await expectLater(auth.getUser(), throwsNoSuchMethodError);
     expect(auth.isSignedIn, false);
   });
 
-  test("Emit signedIn events", () async {
+  test('Emit signedIn events', () async {
     var stream = auth.signInState;
     var expect = expectLater(
         stream,

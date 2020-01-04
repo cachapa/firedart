@@ -11,17 +11,17 @@ abstract class Reference {
   final FirestoreGateway _gateway;
   final String path;
 
-  String get id => path.substring(path.lastIndexOf("/") + 1);
+  String get id => path.substring(path.lastIndexOf('/') + 1);
 
-  String get _fullPath => "${_gateway.database}/$path";
+  String get _fullPath => '${_gateway.database}/$path';
 
   Reference(this._gateway, String path)
-      : this.path = _trimSlashes(path.startsWith(_gateway.database)
+      : path = _trimSlashes(path.startsWith(_gateway.database)
             ? path.substring(_gateway.database.length + 1)
             : path);
 
   factory Reference.create(FirestoreGateway gateway, String path) {
-    return _trimSlashes(path).split("/").length % 2 == 0
+    return _trimSlashes(path).split('/').length % 2 == 0
         ? DocumentReference(gateway, path)
         : CollectionReference(gateway, path);
   }
@@ -33,7 +33,7 @@ abstract class Reference {
 
   @override
   String toString() {
-    return "$runtimeType: $path";
+    return '$runtimeType: $path';
   }
 
   fs.Document _encodeMap(Map<String, dynamic> map) {
@@ -44,22 +44,22 @@ abstract class Reference {
     return document;
   }
 
-  static _trimSlashes(String path) {
-    path = path.startsWith("/") ? path.substring(1) : path;
-    return path.endsWith("/") ? path.substring(0, path.length - 2) : path;
+  static String _trimSlashes(String path) {
+    path = path.startsWith('/') ? path.substring(1) : path;
+    return path.endsWith('/') ? path.substring(0, path.length - 2) : path;
   }
 }
 
 class CollectionReference extends Reference {
   CollectionReference(FirestoreGateway gateway, String path)
       : super(gateway, path) {
-    if (_fullPath.split("/").length % 2 == 1) {
-      throw Exception("Path is not a collection: $path");
+    if (_fullPath.split('/').length % 2 == 1) {
+      throw Exception('Path is not a collection: $path');
     }
   }
 
   DocumentReference document(String id) {
-    return DocumentReference(_gateway, "$path/$id");
+    return DocumentReference(_gateway, '$path/$id');
   }
 
   Future<List<Document>> get() => _gateway.getCollection(_fullPath);
@@ -74,18 +74,18 @@ class CollectionReference extends Reference {
 class DocumentReference extends Reference {
   DocumentReference(FirestoreGateway gateway, String path)
       : super(gateway, path) {
-    if (_fullPath.split("/").length % 2 == 0) {
-      throw Exception("Path is not a document: $path");
+    if (_fullPath.split('/').length % 2 == 0) {
+      throw Exception('Path is not a document: $path');
     }
   }
 
   CollectionReference collection(String id) {
-    return CollectionReference(_gateway, "$path/$id");
+    return CollectionReference(_gateway, '$path/$id');
   }
 
   Future<Document> get() => _gateway.getDocument(_fullPath);
 
-  @Deprecated("Use the stream getter instead")
+  @Deprecated('Use the stream getter instead')
   Stream<Document> subscribe() => stream;
 
   Stream<Document> get stream => _gateway.streamDocument(_fullPath);
@@ -106,7 +106,7 @@ class DocumentReference extends Reference {
 
   /// Create a document if it doesn't exist, otherwise throw exception.
   Future<Document> create(Map<String, dynamic> map) => _gateway.createDocument(
-      _fullPath.substring(0, _fullPath.lastIndexOf("/")), id, _encodeMap(map));
+      _fullPath.substring(0, _fullPath.lastIndexOf('/')), id, _encodeMap(map));
 
   /// Create or update a document.
   /// In the case of an update, any fields not referenced in the payload will be deleted.
@@ -128,10 +128,10 @@ class Document {
 
   Document(this._gateway, this._rawDocument);
 
-  String get id => path.substring(path.lastIndexOf("/") + 1);
+  String get id => path.substring(path.lastIndexOf('/') + 1);
 
   String get path =>
-      _rawDocument.name.substring(_rawDocument.name.indexOf("/documents") + 10);
+      _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
 
   Map<String, dynamic> get map =>
       _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
@@ -144,7 +144,7 @@ class Document {
   }
 
   @override
-  String toString() => "$path $map";
+  String toString() => '$path $map';
 }
 
 class GeoPoint {
@@ -162,7 +162,7 @@ class GeoPoint {
       longitude == other.longitude;
 
   @override
-  String toString() => "lat: $latitude, lon: $longitude";
+  String toString() => 'lat: $latitude, lon: $longitude';
 
   LatLng _toLatLng() => LatLng()
     ..latitude = latitude
@@ -174,19 +174,19 @@ fs.Value _encode(dynamic value) {
 
   var type = value.runtimeType;
 
-  if (type.toString().startsWith("List")) {
+  if (type.toString().startsWith('List')) {
     var array = fs.ArrayValue();
     (value as List).forEach((element) => array.values.add(_encode(element)));
     return fs.Value()..arrayValue = array;
   }
 
-  if (type.toString().contains("Map")) {
+  if (type.toString().contains('Map')) {
     var map = fs.MapValue();
     (value as Map).forEach((key, val) => map.fields[key] = _encode(val));
     return fs.Value()..mapValue = map;
   }
 
-  if (type.toString() == "Uint8List") {
+  if (type.toString() == 'Uint8List') {
     return fs.Value()..bytesValue = value;
   }
 
@@ -206,7 +206,7 @@ fs.Value _encode(dynamic value) {
     case GeoPoint:
       return fs.Value()..geoPointValue = (value as GeoPoint)._toLatLng();
     default:
-      throw Exception("Unknown type: ${type}");
+      throw Exception('Unknown type: ${type}');
   }
 }
 
@@ -238,6 +238,6 @@ dynamic _decode(fs.Value value, FirestoreGateway gateway) {
       return value.mapValue.fields
           .map((key, value) => MapEntry(key, _decode(value, gateway)));
     default:
-      throw Exception("Unrecognized type: ${value}");
+      throw Exception('Unrecognized type: ${value}');
   }
 }

@@ -9,36 +9,36 @@ class UserGateway {
   UserGateway(KeyClient client, TokenProvider tokenProvider)
       : _client = UserClient(client, tokenProvider);
 
-  Future<void> requestEmailVerification() async => _post("sendOobCode", {
-        "requestType": "VERIFY_EMAIL",
+  Future<void> requestEmailVerification() async => _post('sendOobCode', {
+        'requestType': 'VERIFY_EMAIL',
       });
 
   Future<User> getUser() async {
-    var map = await _post("lookup", {});
+    var map = await _post('lookup', {});
     return User.fromMap(map['users'][0]);
   }
 
   Future<void> changePassword(String password) async {
-    await _post("update", {
-      "password": password,
+    await _post('update', {
+      'password': password,
     });
   }
 
   Future<void> updateProfile(String displayName, String photoUrl) async {
-    await _post("update", {
-      if (displayName != null) "displayName": displayName,
-      if (photoUrl != null) "photoUrl": photoUrl,
+    await _post('update', {
+      if (displayName != null) 'displayName': displayName,
+      if (photoUrl != null) 'photoUrl': photoUrl,
     });
   }
 
   Future<void> deleteAccount() async {
-    await _post("delete", {});
+    await _post('delete', {});
   }
 
   Future<Map<String, dynamic>> _post<T>(
       String method, Map<String, String> body) async {
     var requestUrl =
-        "https://identitytoolkit.googleapis.com/v1/accounts:$method";
+        'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await _client.post(
       requestUrl,
@@ -65,5 +65,5 @@ class User {
 
   @override
   String toString() =>
-      "id: $id, name: $displayName, photo: $photoUrl, email: $email, emailVerified: $emailVerified";
+      'id: $id, name: $displayName, photo: $photoUrl, email: $email, emailVerified: $emailVerified';
 }

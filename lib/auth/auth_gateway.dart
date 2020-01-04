@@ -12,23 +12,21 @@ class AuthGateway {
   AuthGateway(this.client, this.tokenProvider);
 
   Future<User> signUp(String email, String password) async =>
-      _auth("signUp", email, password);
+      _auth('signUp', email, password);
 
   Future<User> signIn(String email, String password) async =>
-      _auth("signInWithPassword", email, password);
+      _auth('signInWithPassword', email, password);
 
-  resetPassword(String email) {
-    _post("sendOobCode", {
-      "requestType": "PASSWORD_RESET",
-      "email": email,
-    });
-  }
+  Future<void> resetPassword(String email) => _post('sendOobCode', {
+        'requestType': 'PASSWORD_RESET',
+        'email': email,
+      });
 
   Future<User> _auth(String method, String email, String password) async {
     var body = {
-      "email": email,
-      "password": password,
-      "returnSecureToken": "true",
+      'email': email,
+      'password': password,
+      'returnSecureToken': 'true',
     };
 
     var map = await _post(method, body);
@@ -39,7 +37,7 @@ class AuthGateway {
   Future<Map<String, dynamic>> _post(
       String method, Map<String, String> body) async {
     var requestUrl =
-        "https://identitytoolkit.googleapis.com/v1/accounts:$method";
+        'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await client.post(
       requestUrl,
@@ -47,13 +45,9 @@ class AuthGateway {
     );
 
     if (response.statusCode != 200) {
-      throw Exception("${response.statusCode}: ${response.reasonPhrase}");
+      throw Exception('${response.statusCode}: ${response.reasonPhrase}');
     }
 
     return json.decode(response.body);
   }
-
-  updateProfile({String displayName, String photoUrl}) {}
-
-  deleteAccount() {}
 }

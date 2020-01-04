@@ -11,7 +11,7 @@ class FirebaseAuth {
 
   static FirebaseAuth initialize(String apiKey, TokenStore tokenStore) {
     if (_instance != null) {
-      throw Exception("FirebaseAuth instance was already initialized");
+      throw Exception('FirebaseAuth instance was already initialized');
     }
     _instance = FirebaseAuth(apiKey, tokenStore);
     return _instance;

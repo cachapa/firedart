@@ -9,7 +9,7 @@ class Firestore {
 
   static Firestore initialize(String projectId, {String databaseId}) {
     if (_instance != null) {
-      throw Exception("Firestore instance was already initialized");
+      throw Exception('Firestore instance was already initialized');
     }
     FirebaseAuth auth;
     try {

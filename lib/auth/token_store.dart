@@ -67,16 +67,16 @@ class Token {
 
   Token.fromMap(Map<String, dynamic> map)
       : this(
-          map["userId"],
-          map["idToken"],
-          map["refreshToken"],
-          DateTime.parse(map["expiry"]),
+          map['userId'],
+          map['idToken'],
+          map['refreshToken'],
+          DateTime.parse(map['expiry']),
         );
 
   Map<String, dynamic> toMap() => {
-        "userId": _userId,
-        "idToken": _idToken,
-        "refreshToken": _refreshToken,
-        "expiry": _expiry.toIso8601String(),
+        'userId': _userId,
+        'idToken': _idToken,
+        'refreshToken': _refreshToken,
+        'expiry': _expiry.toIso8601String(),
       };
 }
