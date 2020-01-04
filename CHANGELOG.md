@@ -1,3 +1,9 @@
+## [0.6.5] - 4 January 2020.
+
+* Return user on signup and signin
+* Expose Firebase user id
+* Fix code warnings
+
 ## [0.6.4] - 13 December 2019.
 
 * Update to latest Firebase auth endpoints
