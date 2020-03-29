@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
 import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
@@ -62,7 +64,9 @@ class CollectionReference extends Reference {
     return DocumentReference(_gateway, '$path/$id');
   }
 
-  Future<List<Document>> get() => _gateway.getCollection(_fullPath);
+  Future<Page<Document>> get(
+          {int pageSize = 1024, String nextPageToken = ''}) =>
+      _gateway.getCollection(_fullPath, pageSize, nextPageToken);
 
   Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
@@ -171,6 +175,29 @@ class GeoPoint {
   LatLng _toLatLng() => LatLng()
     ..latitude = latitude
     ..longitude = longitude;
+}
+
+class Page<T> extends ListBase<T> {
+  final _list = <T>[];
+  final String nextPageToken;
+
+  bool get hasNextPage => nextPageToken.isNotEmpty;
+
+  @override
+  int get length => _list.length;
+
+  @override
+  set length(int newLength) => _list.length = newLength;
+
+  @override
+  T operator [](int index) => _list[index];
+
+  @override
+  void operator []=(int index, T value) => _list[index] = value;
+
+  Page(Iterable<T> iterable, this.nextPageToken) {
+    _list.addAll(iterable);
+  }
 }
 
 fs.Value _encode(dynamic value) {

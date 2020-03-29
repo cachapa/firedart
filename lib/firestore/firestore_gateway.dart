@@ -24,15 +24,18 @@ class FirestoreGateway {
     _setupClient();
   }
 
-  Future<List<Document>> getCollection(String path) async {
+  Future<Page<Document>> getCollection(
+      String path, int pageSize, String nextPageToken) async {
     var request = ListDocumentsRequest()
       ..parent = path.substring(0, path.lastIndexOf('/'))
-      ..collectionId = path.substring(path.lastIndexOf('/') + 1);
+      ..collectionId = path.substring(path.lastIndexOf('/') + 1)
+      ..pageSize = pageSize
+      ..pageToken = nextPageToken;
     var response =
         await _client.listDocuments(request).catchError(_handleError);
-    return response.documents
-        .map((rawDocument) => Document(this, rawDocument))
-        .toList(growable: false);
+    var documents =
+        response.documents.map((rawDocument) => Document(this, rawDocument));
+    return Page(documents, response.nextPageToken);
   }
 
   Stream<List<Document>> streamCollection(String path) {

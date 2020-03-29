@@ -30,6 +30,23 @@ Future main() async {
     expect(documents.isNotEmpty, true);
   });
 
+  test('Limit collection page size', () async {
+    var reference = firestore.collection('test');
+    var documents = await reference.get(pageSize: 1);
+    expect(documents.length, 1);
+    expect(documents.hasNextPage, isTrue);
+  });
+
+  test('Get next collection page', () async {
+    var reference = firestore.collection('test');
+    var documents = await reference.get(pageSize: 1);
+    var first = documents[0];
+    documents = await reference.get(
+        pageSize: 1, nextPageToken: documents.nextPageToken);
+    var second = documents[0];
+    expect(first.id, isNot(second.id));
+  });
+
   test('Add and delete collection document', () async {
     var reference = firestore.collection('test');
     var docReference = await reference.add({'field': 'test'});
