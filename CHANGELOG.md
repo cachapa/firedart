@@ -1,3 +1,9 @@
+## [0.7.0] - 29 March 2020.
+
+* Implement paging
+* Expose document creation and update times
+* Fix collections only returning up to 20 documents
+
 ## [0.6.5] - 4 January 2020.
 
 * Return user on signup and signin
