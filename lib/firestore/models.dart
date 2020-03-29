@@ -133,6 +133,10 @@ class Document {
   String get path =>
       _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
 
+  DateTime get createTime => _rawDocument.createTime.toDateTime();
+
+  DateTime get updateTime => _rawDocument.updateTime.toDateTime();
+
   Map<String, dynamic> get map =>
       _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
 
