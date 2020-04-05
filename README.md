@@ -84,6 +84,11 @@ var users = UserCollection.fromMap(map);
 
 Further usage examples can be found in the [integration tests](https://github.com/cachapa/firedart/blob/master/test/firestore_test.dart).
 
+### Using the Firestore Admin SDK
+
+Limited support is provided for using the Firestore Admin SDK.  See (example/admin.dart)[example/admin.dart].
+
+
 ### Limitations
 
 * Collection queries (limit, sort, etc.) are currently not supported.

@@ -32,6 +32,10 @@ class Firestore {
   /* Instance interface */
   final FirestoreGateway _gateway;
 
+  Firestore.usingServiceAccount(String projectId, {String databaseId})
+      : _gateway = FirestoreGateway(projectId,
+            databaseId: databaseId, useServiceAccount: true);
+
   Firestore(String projectId, {String databaseId, FirebaseAuth auth})
       : _gateway =
             FirestoreGateway(projectId, databaseId: databaseId, auth: auth),
@@ -43,4 +47,8 @@ class Firestore {
       CollectionReference(_gateway, path);
 
   DocumentReference document(String path) => DocumentReference(_gateway, path);
+
+  Future<void> close() async {
+    await _gateway.close();
+  }
 }

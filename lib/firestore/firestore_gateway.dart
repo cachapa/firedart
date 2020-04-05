@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
@@ -13,13 +14,18 @@ import 'token_authenticator.dart';
 class FirestoreGateway {
   final FirebaseAuth auth;
   final String database;
+  ClientChannel _channel;
+
+  final bool _useServiceAccount; // true if we should use a service account
 
   FirestoreClient _client;
   StreamController<ListenRequest> streamController;
   Stream<ListenResponse> stream;
 
-  FirestoreGateway(String projectId, {String databaseId, this.auth})
-      : database =
+  FirestoreGateway(String projectId,
+      {String databaseId, this.auth, bool useServiceAccount: false})
+      : _useServiceAccount = useServiceAccount,
+        database =
             'projects/$projectId/databases/${databaseId ?? '(default)'}/documents' {
     _setupClient();
   }
@@ -133,9 +139,20 @@ class FirestoreGateway {
             : null);
   }
 
+  // return call options for using a service account.
+  CallOptions _serviceAccountChannelOptions() {
+    String gapp = Platform.environment['GOOGLE_APPLICATION_CREDENTIALS'];
+    var _saJson = File(gapp).readAsStringSync();
+    var _jwt = JwtServiceAccountAuthenticator(_saJson);
+    return _jwt.toCallOptions;
+  }
+
   void _setupClient() {
-    _client = FirestoreClient(ClientChannel('firestore.googleapis.com'),
-        options: TokenAuthenticator.from(auth)?.toCallOptions);
+    _channel = ClientChannel('firestore.googleapis.com');
+    var options = _useServiceAccount
+        ? _serviceAccountChannelOptions()
+        : TokenAuthenticator.from(auth)?.toCallOptions;
+    _client = FirestoreClient(_channel, options: options);
     streamController = null;
     stream = null;
   }
@@ -162,5 +179,11 @@ class FirestoreGateway {
                 metadata: {'google-cloud-resource-prefix': database}))
         .handleError(_handleError)
         .asBroadcastStream();
+  }
+
+  // close the connection
+  Future<void> close() async {
+    await streamController.close();
+    await _channel.shutdown();
   }
 }
