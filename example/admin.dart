@@ -16,13 +16,13 @@ import 'package:firedart/firedart.dart';
 /// Download and save the service account json file.
 /// ****** DO NOT CHECK THIS FILE INTO git! *****
 /// It is highly privileged and should be kept secret.
-/// Set the environment variables GOOGLE_APPLICATION_CREDENTIALS to the
+/// Set the environment variable GOOGLE_APPLICATION_CREDENTIALS to the
 /// path to this file.  For example:
 /// GOOGLE_APPLICATION_CREDENTIALS=./service-account.json
 ///
 
 Future main() async {
-  var projectId = "fluttergolf"; // replace with your project id here
+  var projectId = 'fluttergolf'; // replace with your project id here
 
   var firestore = Firestore.usingServiceAccount(projectId);
 
@@ -30,7 +30,7 @@ Future main() async {
   var ref = firestore.collection('test').document('doc');
 
   // Subscribe to changes to that document
-  var res = ref.stream.listen((document) => print('updated: $document'));
+  ref.stream.listen((document) => print('updated: $document'));
 
   // Update the document
   await ref.update({'value': 'test'});
@@ -40,7 +40,7 @@ Future main() async {
   print('snapshot: ${document['value']}');
 
   print(
-      "Sleeping for 30 seconds. You can make changes to test/doc in the UI console");
+      'Sleeping for 30 seconds. You can make changes to test/doc in the UI console');
   await Future.delayed((const Duration(seconds: 30)));
   print('closing the connection');
   await firestore.close();
