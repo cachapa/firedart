@@ -1,3 +1,7 @@
+## [0.8.0] - 5 April 2020
+
+* Implement support for the Admin SDK. See example/admin.dart
+
 ## [0.7.0] - 29 March 2020.
 
 * Implement paging
