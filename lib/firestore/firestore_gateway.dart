@@ -23,7 +23,7 @@ class FirestoreGateway {
   Stream<ListenResponse> stream;
 
   FirestoreGateway(String projectId,
-      {String databaseId, this.auth, bool useServiceAccount: false})
+      {String databaseId, this.auth, bool useServiceAccount = false})
       : _useServiceAccount = useServiceAccount,
         database =
             'projects/$projectId/databases/${databaseId ?? '(default)'}/documents' {
@@ -141,7 +141,7 @@ class FirestoreGateway {
 
   // return call options for using a service account.
   CallOptions _serviceAccountChannelOptions() {
-    String gapp = Platform.environment['GOOGLE_APPLICATION_CREDENTIALS'];
+    var gapp = Platform.environment['GOOGLE_APPLICATION_CREDENTIALS'];
     var _saJson = File(gapp).readAsStringSync();
     var _jwt = JwtServiceAccountAuthenticator(_saJson);
     return _jwt.toCallOptions;
