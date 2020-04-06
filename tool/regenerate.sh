@@ -10,7 +10,7 @@ if [ ! -d "$GOOGLEAPIS" ]; then
   exit -1
 fi
 
-PROTOC="protoc --dart_out=grpc:lib/generated -I$PROTOBUF/src -I$GOOGLEAPIS"
+PROTOC="protoc --dart_out=grpc:../lib/src/generated -I$PROTOBUF/src -I$GOOGLEAPIS"
 
 $PROTOC $GOOGLEAPIS/google/rpc/status.proto
 
@@ -29,4 +29,4 @@ $PROTOC $GOOGLEAPIS/google/firestore/v1/document.proto
 
 $PROTOC $GOOGLEAPIS/google/type/latlng.proto
 
-dartfmt -w lib/generated
+dartfmt -w ../lib/src/generated

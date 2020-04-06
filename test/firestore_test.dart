@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:firedart/firedart.dart';
 import 'package:test/test.dart';
 
-import 'test_config.dart';
+import 'test_config.dart.EDIT';
 
 Future main() async {
+  final apiKey = TestConfig.apiKey;
+  final projectId = TestConfig.projectId;
+  final email = TestConfig.email;
+  final password = TestConfig.password;
   var tokenStore = VolatileStore();
   var auth = FirebaseAuth(apiKey, tokenStore);
   var firestore = Firestore(projectId, auth: auth);
@@ -26,7 +30,7 @@ Future main() async {
 
   test('Get collection', () async {
     var reference = firestore.collection('test');
-    var documents = await reference.get();
+    var documents = await reference.getDocuments();
     expect(documents.isNotEmpty, true);
   });
 
@@ -154,7 +158,7 @@ Future main() async {
 
   test('Refresh token when expired', () async {
     tokenStore.expireToken();
-    var map = await firestore.collection('test').get();
+    var map = await firestore.collection('test').getDocuments();
     expect(auth.isSignedIn, true);
     expect(map, isNot(null));
   });
@@ -162,7 +166,7 @@ Future main() async {
   test('Sign out on bad refresh token', () async {
     tokenStore.setToken('user_id', 'bad_token', 'bad_token', 0);
     try {
-      await firestore.collection('test').get();
+      await firestore.collection('test').getDocuments();
     } catch (_) {}
     expect(auth.isSignedIn, false);
   });

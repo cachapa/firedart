@@ -1,11 +1,15 @@
 import 'package:firedart/firedart.dart';
 import 'package:test/test.dart';
 
-import 'test_config.dart';
+import 'test_config.dart.EDIT';
 
 Future main() async {
   TokenStore tokenStore;
   FirebaseAuth auth;
+
+  final apiKey = TestConfig.apiKey;
+  final email = TestConfig.email;
+  final password = TestConfig.password;
 
   setUp(() {
     tokenStore = VolatileStore();
