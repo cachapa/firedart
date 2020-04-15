@@ -20,8 +20,9 @@ class Document {
       _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
 
   /// Contains all the data of this document.
-  Map<String, dynamic> get map =>
-      _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
+  Map<String, dynamic> get map => _rawDocument.fields.isEmpty
+      ? null
+      : _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
 
   /// The [DocumentReference] of this document.
   DocumentReference get reference => DocumentReference(_gateway, path);

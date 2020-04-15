@@ -100,7 +100,15 @@ class FirestoreGateway {
   Future<Document> getDocument(path) async {
     var rawDocument = await _client
         .getDocument(GetDocumentRequest()..name = path)
-        .catchError(_handleError);
+        .catchError((e) {
+      if (e is GrpcError && e.code == StatusCode.notFound) {
+        final emptyRawDocument = fs.Document();
+        emptyRawDocument.name = path;
+        return emptyRawDocument;
+      }
+      _handleError(e);
+      return null;
+    });
     return Document(this, rawDocument);
   }
 
