@@ -9,7 +9,19 @@ class AuthGateway {
   final KeyClient client;
   final TokenProvider tokenProvider;
 
-  AuthGateway(this.client, this.tokenProvider);
+  /// The authentication server URL used to perform auth related requests.
+  final String authGatewayUrl;
+
+  /// Creates an instance of [AuthGateway] with the given [client],
+  /// [tokenProvider] and [authGatewayUrl].
+  ///
+  /// Throws an [ArgumentError] if either [client], [tokenProvider] or
+  /// [authGatewayUrl] is `null`.
+  AuthGateway(this.client, this.tokenProvider, this.authGatewayUrl) {
+    ArgumentError.checkNotNull(client, 'client');
+    ArgumentError.checkNotNull(tokenProvider, 'tokenProvider');
+    ArgumentError.checkNotNull(authGatewayUrl, 'authGatewayUrl');
+  }
 
   Future<User> signUp(String email, String password) async =>
       _auth('signUp', email, password);
@@ -36,8 +48,7 @@ class AuthGateway {
 
   Future<Map<String, dynamic>> _post(
       String method, Map<String, String> body) async {
-    var requestUrl =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$method';
+    var requestUrl = '$authGatewayUrl/v1/accounts:$method';
 
     var response = await client.post(
       requestUrl,
