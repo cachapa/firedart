@@ -10,42 +10,42 @@ Future main() async {
   final projectId = TestConfig.projectId;
   final email = TestConfig.email;
   final password = TestConfig.password;
-  var tokenStore = VolatileStore();
-  var auth = FirebaseAuth(apiKey, tokenStore);
-  var firestore = Firestore(projectId, auth: auth);
+  final tokenStore = VolatileStore();
+  final auth = FirebaseAuth(apiKey, tokenStore);
+  final firestore = Firestore(projectId, auth: auth);
   await auth.signIn(email, password);
 
   test('Create reference', () async {
     // Ensure document exists
-    var reference = firestore.document('test/reference');
+    final reference = firestore.document('test/reference');
     await reference.set({'field': 'test'});
 
-    var collectionReference = firestore.reference('test');
+    final collectionReference = firestore.reference('test');
     expect(collectionReference.runtimeType, equals(CollectionReference));
-    var documentReference = firestore.reference('test/types');
+    final documentReference = firestore.reference('test/types');
     expect(documentReference.runtimeType, equals(DocumentReference));
 
     await reference.delete();
   });
 
   test('Get collection', () async {
-    var reference = firestore.collection('test');
-    var documents = await reference.getDocuments();
+    final reference = firestore.collection('test');
+    final documents = await reference.getDocuments();
     expect(documents.isNotEmpty, true);
   });
 
   test('Add and delete collection document', () async {
-    var reference = firestore.collection('test');
-    var docReference = await reference.add({'field': 'test'});
+    final reference = firestore.collection('test');
+    final docReference = await reference.add({'field': 'test'});
     expect(docReference['field'], 'test');
-    var document = reference.document(docReference.id);
+    final document = reference.document(docReference.id);
     expect(await document.exists, true);
     await document.delete();
     expect(await document.exists, false);
   });
 
   test('Add and delete named document', () async {
-    var reference = firestore.document('test/add_remove');
+    final reference = firestore.document('test/add_remove');
     await reference.set({'field': 'test'});
     expect(await reference.exists, true);
     await reference.delete();
@@ -53,7 +53,7 @@ Future main() async {
   });
 
   test('Path with leading slash', () async {
-    var reference = firestore.document('/test/path');
+    final reference = firestore.document('/test/path');
     await reference.set({'field': 'test'});
     expect(await reference.exists, true);
     await reference.delete();
@@ -61,7 +61,7 @@ Future main() async {
   });
 
   test('Path with trailing slash', () async {
-    var reference = firestore.document('test/path/');
+    final reference = firestore.document('test/path/');
     await reference.set({'field': 'test'});
     expect(await reference.exists, true);
     await reference.delete();
@@ -69,7 +69,7 @@ Future main() async {
   });
 
   test('Path with leading and trailing slashes', () async {
-    var reference = firestore.document('/test/path/');
+    final reference = firestore.document('/test/path/');
     await reference.set({'field': 'test'});
     expect(await reference.exists, true);
     await reference.delete();
@@ -77,35 +77,35 @@ Future main() async {
   });
 
   test('Read data from document', () async {
-    var reference = firestore.collection('test').document('read_data');
+    final reference = firestore.collection('test').document('read_data');
     await reference.set({'field': 'test'});
-    var map = await reference.get();
+    final map = await reference.get();
     expect(map['field'], 'test');
     await reference.delete();
   });
 
   test('Overwrite document', () async {
-    var reference = firestore.collection('test').document('overwrite');
+    final reference = firestore.collection('test').document('overwrite');
     await reference.set({'field1': 'test1', 'field2': 'test1'});
     await reference.set({'field1': 'test2'});
-    var doc = await reference.get();
+    final doc = await reference.get();
     expect(doc['field1'], 'test2');
     expect(doc['field2'], null);
     await reference.delete();
   });
 
   test('Update document', () async {
-    var reference = firestore.collection('test').document('update');
+    final reference = firestore.collection('test').document('update');
     await reference.set({'field1': 'test1', 'field2': 'test1'});
     await reference.update({'field1': 'test2'});
-    var doc = await reference.get();
+    final doc = await reference.get();
     expect(doc['field1'], 'test2');
     expect(doc['field2'], 'test1');
     await reference.delete();
   });
 
   test('Stream document changes', () async {
-    var reference = firestore.document('test/subscribe');
+    final reference = firestore.document('test/subscribe');
 
     // Firestore may send empty events on subscription because we're reusing the
     // document path.
@@ -117,18 +117,18 @@ Future main() async {
   });
 
   test('Stream collection changes', () async {
-    var reference = firestore.collection('test');
+    final reference = firestore.collection('test');
 
-    var document = await reference.add({'field': 'test'});
+    final document = await reference.add({'field': 'test'});
     expect(reference.stream,
         emits((List<Document> documents) => documents.isNotEmpty));
     await document.reference.delete();
   });
 
   test('Document field types', () async {
-    var reference = firestore.collection('test').document('types');
-    var dateTime = DateTime.now();
-    var geoPoint = GeoPoint(38.7223, 9.1393);
+    final reference = firestore.collection('test').document('types');
+    final dateTime = DateTime.now();
+    const geoPoint = GeoPoint(38.7223, 9.1393);
     await reference.set({
       'null': null,
       'bool': true,
@@ -142,7 +142,7 @@ Future main() async {
       'list': [1, 'text'],
       'map': {'int': 1, 'string': 'text'},
     });
-    var doc = await reference.get();
+    final doc = await reference.get();
     expect(doc['null'], null);
     expect(doc['bool'], true);
     expect(doc['int'], 1);
@@ -158,7 +158,7 @@ Future main() async {
 
   test('Refresh token when expired', () async {
     tokenStore.expireToken();
-    var map = await firestore.collection('test').getDocuments();
+    final map = await firestore.collection('test').getDocuments();
     expect(auth.isSignedIn, true);
     expect(map, isNot(null));
   });

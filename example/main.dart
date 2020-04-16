@@ -11,7 +11,7 @@ Future main() async {
   FirebaseAuth.initialize(apiKey, VolatileStore());
   Firestore.initialize(projectId); // Firestore reuses the auth client
 
-  var auth = FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
   // Monitor sign-in state
   auth.signInState.listen((state) => print("Signed ${state ? "in" : "out"}"));
 
@@ -19,11 +19,11 @@ Future main() async {
   await auth.signIn(email, password);
 
   // Get user object
-  var user = await auth.getUser();
+  final user = await auth.getUser();
   print(user);
 
   // Instantiate a reference to a document - this happens offline
-  var ref = Firestore.instance.collection('test').document('doc');
+  final ref = Firestore.instance.collection('test').document('doc');
 
   // Subscribe to changes to that document
   ref.stream.listen((document) => print('updated: $document'));
@@ -32,13 +32,13 @@ Future main() async {
   await ref.update({'value': 'test'});
 
   // Get a snapshot of the document
-  var document = await ref.get();
+  final document = await ref.get();
   print('snapshot: ${document['value']}');
 
   auth.signOut();
 
   // Allow some time to get the signed out event
-  await Future.delayed(Duration(seconds: 1));
+  await Future.delayed(const Duration(seconds: 1));
 
   exit(0);
 }

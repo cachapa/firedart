@@ -12,7 +12,8 @@ dependencies:
   protobuf: ^1.0.1
   fixnum: ^0.10.11
   meta: ^1.1.8
+  equatable: ^1.1.1
 
 dev_dependencies:
+  lint: ^1.1.1
   test: ^1.6.4
-  pedantic: ^1.9.0

@@ -25,7 +25,7 @@ Future main() async {
   });
 
   test('Get user on signin', () async {
-    var user = await auth.signIn(email, password);
+    final user = await auth.signIn(email, password);
     expect(user.email, email);
   });
 
@@ -36,14 +36,14 @@ Future main() async {
 
   test('Get user', () async {
     await auth.signIn(email, password);
-    var user = await auth.getUser();
+    final user = await auth.getUser();
     expect(user.email, email);
   });
 
   test('Refresh token when expired', () async {
     await auth.signIn(email, password);
     tokenStore.expireToken();
-    var user = await auth.getUser();
+    final user = await auth.getUser();
     expect(user.email, isNotEmpty);
     expect(auth.isSignedIn, true);
   });
@@ -56,8 +56,8 @@ Future main() async {
   });
 
   test('Emit signedIn events', () async {
-    var stream = auth.signInState;
-    var expect = expectLater(
+    final stream = auth.signInState;
+    final expect = expectLater(
         stream,
         emitsInOrder([
           (isSignedIn) => isSignedIn == true,

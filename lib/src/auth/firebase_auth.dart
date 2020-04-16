@@ -1,25 +1,55 @@
-import 'package:firedart/src/auth/auth_gateway.dart';
-import 'package:firedart/src/auth/client.dart';
+import 'package:firedart/src/auth/client/key_client.dart';
 import 'package:firedart/src/auth/constants/auth_constants.dart';
-import 'package:firedart/src/auth/token_provider.dart';
-import 'package:firedart/src/auth/token_store.dart';
-import 'package:firedart/src/auth/user_gateway.dart';
+import 'package:firedart/src/auth/gateway/auth_gateway.dart';
+import 'package:firedart/src/auth/token/provider/token_provider.dart';
+import 'package:firedart/src/auth/gateway/user_gateway.dart';
+import 'package:firedart/src/auth/model/user.dart';
+import 'package:firedart/src/auth/store/token_store.dart';
 import 'package:http/http.dart' as http;
 
 /// A REST client for the Firebase Authentication 
 /// (https://firebase.google.com/docs/auth).
 class FirebaseAuth {
   /* Singleton interface */
+
+  /// Creates an instance of [FirebaseAuth] with the given [apiKey]
+  /// and [tokenStore].
+  ///
+  /// The [authGatewayUrl] is the authorization server URL.
+  /// Defaults to [AuthConstants.authGatewayUrl].
+  /// The [httpClient] is an HTTP [http.Client] to perform requests with.
+  /// Defaults to the [http.Client] instance.
+  ///
+  /// Throws an [ArgumentError] if the [tokenStore] is `null`.
+  /// Throws an [ArgumentError] if the [apiKey] is an empty string.
+  FirebaseAuth(
+      this.apiKey,
+      TokenStore tokenStore, {
+        String authGatewayUrl = AuthConstants.authGatewayUrl,
+        this.httpClient,
+      }) {
+    ArgumentError.checkNotNull(tokenStore);
+    if (apiKey.isEmpty) {
+      throw ArgumentError.value(apiKey, 'apiKey', 'must not be empty');
+    }
+
+    httpClient ??= http.Client();
+    final keyClient = KeyClient(httpClient, apiKey);
+    tokenProvider = TokenProvider(keyClient, tokenStore);
+    _authGateway = AuthGateway(keyClient, tokenProvider, authGatewayUrl);
+    _userGateway = UserGateway(keyClient, tokenProvider, authGatewayUrl);
+  }
+
   static FirebaseAuth _instance;
 
-  /// Initializes [FirebaseAuth] instance with the given [apiKey] 
+  /// Initializes [FirebaseAuth] instance with the given [apiKey]
   /// and [tokenStore] in order to follow Singleton pattern.
   /// 
   /// The [authGatewayUrl] is the authorization server URL. 
   /// Defaults to [AuthConstants.authGatewayUrl].
   /// 
   /// Throws a [StateError] if the instance was already initialized.
-  static FirebaseAuth initialize(
+  factory FirebaseAuth.initialize(
     String apiKey,
     TokenStore tokenStore, {
     String authGatewayUrl = AuthConstants.authGatewayUrl,
@@ -27,12 +57,11 @@ class FirebaseAuth {
     if (_instance != null) {
       throw StateError('FirebaseAuth instance was already initialized');
     }
-    _instance = FirebaseAuth(
+    return _instance = FirebaseAuth(
       apiKey,
       tokenStore,
       authGatewayUrl: authGatewayUrl,
     );
-    return _instance;
   }
 
   /// The current instance of this singleton.
@@ -56,34 +85,6 @@ class FirebaseAuth {
 
   AuthGateway _authGateway;
   UserGateway _userGateway;
-
-  /// Creates an instance of [FirebaseAuth] with the given [apiKey]
-  /// and [tokenStore].
-  ///
-  /// The [authGatewayUrl] is the authorization server URL.
-  /// Defaults to [AuthConstants.authGatewayUrl].
-  /// The [httpClient] is an HTTP [http.Client] to perform requests with.
-  /// Defaults to the [http.Client] instance.
-  ///
-  /// Throws an [ArgumentError] if the [tokenStore] is `null`.
-  /// Throws an [ArgumentError] if the [apiKey] is an empty string.
-  FirebaseAuth(
-    this.apiKey,
-    TokenStore tokenStore, {
-    String authGatewayUrl = AuthConstants.authGatewayUrl,
-    this.httpClient,
-  }) {
-    ArgumentError.checkNotNull(tokenStore);
-    if (apiKey.isEmpty) {
-      throw ArgumentError.value(apiKey, 'apiKey', 'must not be empty');
-    }
-
-    httpClient ??= http.Client();
-    final keyClient = KeyClient(httpClient, apiKey);
-    tokenProvider = TokenProvider(keyClient, tokenStore);
-    _authGateway = AuthGateway(keyClient, tokenProvider, authGatewayUrl);
-    _userGateway = UserGateway(keyClient, tokenProvider, authGatewayUrl);
-  }
 
   bool get isSignedIn => tokenProvider.isSignedIn;
 

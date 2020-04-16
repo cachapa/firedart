@@ -25,10 +25,10 @@ class FirestoreGateway {
   }
 
   Future<List<Document>> getCollection(String path) async {
-    var request = ListDocumentsRequest()
+    final request = ListDocumentsRequest()
       ..parent = path.substring(0, path.lastIndexOf('/'))
       ..collectionId = path.substring(path.lastIndexOf('/') + 1);
-    var response =
+    final response =
         await _client.listDocuments(request).catchError(_handleError);
     return response.documents
         .map((rawDocument) => Document(this, rawDocument))
@@ -38,9 +38,9 @@ class FirestoreGateway {
   Stream<List<Document>> streamCollection(String path) {
     _initStream();
 
-    var selector = StructuredQuery_CollectionSelector()
+    final selector = StructuredQuery_CollectionSelector()
       ..collectionId = path.substring(path.lastIndexOf('/') + 1);
-    var query = StructuredQuery()..from.add(selector);
+    final query = StructuredQuery()..from.add(selector);
     final queryTarget = Target_QueryTarget()
       ..parent = path.substring(0, path.lastIndexOf('/'))
       ..structuredQuery = query;
@@ -51,7 +51,7 @@ class FirestoreGateway {
 
     streamController.add(request);
 
-    var map = <String, Document>{};
+    final map = <String, Document>{};
     return stream
         .where((response) =>
             response.hasDocumentChange() || response.hasDocumentDelete())
@@ -68,17 +68,17 @@ class FirestoreGateway {
 
   Future<Document> createDocument(
       String path, String documentId, fs.Document document) async {
-    var split = path.split('/');
-    var parent = split.sublist(0, split.length - 1).join('/');
-    var collectionId = split.last;
+    final split = path.split('/');
+    final parent = split.sublist(0, split.length - 1).join('/');
+    final collectionId = split.last;
 
-    var request = CreateDocumentRequest()
+    final request = CreateDocumentRequest()
       ..parent = parent
       ..collectionId = collectionId
       ..documentId = documentId ?? ''
       ..document = document;
 
-    var response =
+    final response =
         await _client.createDocument(request).catchError(_handleError);
     return Document(this, response);
   }
@@ -97,8 +97,8 @@ class FirestoreGateway {
         .toList();
   }
 
-  Future<Document> getDocument(path) async {
-    var rawDocument = await _client
+  Future<Document> getDocument(String path) async {
+    final rawDocument = await _client
         .getDocument(GetDocumentRequest()..name = path)
         .catchError((e) {
       if (e is GrpcError && e.code == StatusCode.notFound) {
@@ -112,15 +112,17 @@ class FirestoreGateway {
     return Document(this, rawDocument);
   }
 
-  Future<void> updateDocument(
-      String path, fs.Document document, bool update) async {
+  Future<void> updateDocument(String path, fs.Document document,
+      {bool update}) async {
     document.name = path;
 
-    var request = UpdateDocumentRequest()..document = document;
+    final request = UpdateDocumentRequest()..document = document;
 
     if (update) {
-      var mask = DocumentMask();
-      document.fields.keys.forEach((key) => mask.fieldPaths.add(key));
+      final mask = DocumentMask();
+      for (final key in document.fields.keys) {
+        mask.fieldPaths.add(key);
+      }
       request.updateMask = mask;
     }
 
@@ -141,15 +143,17 @@ class FirestoreGateway {
       ..addTarget = target;
 
     streamController.add(request);
-
     return stream
-        .where((response) => (response.hasDocumentChange() &&
+        .where((response) =>
+            response.hasDocumentChange() &&
                 response.documentChange.document.name == path ||
             (response.hasDocumentDelete() || response.hasDocumentRemove()) &&
-                response.documentDelete.document == path))
-        .map((response) => response.hasDocumentChange()
-            ? Document(this, response.documentChange.document)
-            : null);
+                response.documentDelete.document == path)
+        .map(
+          (response) => response.hasDocumentChange()
+              ? Document(this, response.documentChange.document)
+              : null,
+        );
   }
 
   void _setupClient() {

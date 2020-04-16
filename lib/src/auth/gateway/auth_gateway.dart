@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:firedart/src/auth/client.dart';
-import 'package:firedart/src/auth/token_provider.dart';
-
-import 'user_gateway.dart';
+import 'package:firedart/src/auth/client/key_client.dart';
+import 'package:firedart/src/auth/model/user.dart';
+import 'package:firedart/src/auth/token/provider/token_provider.dart';
 
 class AuthGateway {
   final KeyClient client;
@@ -35,22 +34,23 @@ class AuthGateway {
       });
 
   Future<User> _auth(String method, String email, String password) async {
-    var body = {
+    final body = {
       'email': email,
       'password': password,
       'returnSecureToken': 'true',
     };
 
-    var map = await _post(method, body);
+    final map = await _post(method, body);
     tokenProvider.setToken(map);
     return User.fromMap(map);
   }
 
   Future<Map<String, dynamic>> _post(
       String method, Map<String, String> body) async {
-    var requestUrl = '$authGatewayUrl/v1/accounts:$method';
 
-    var response = await client.post(
+    final requestUrl = '$authGatewayUrl/v1/accounts:$method';
+
+    final response = await client.post(
       requestUrl,
       body: body,
     );
@@ -59,6 +59,6 @@ class AuthGateway {
       throw Exception('${response.statusCode}: ${response.reasonPhrase}');
     }
 
-    return json.decode(response.body);
+    return json.decode(response.body) as Map<String, dynamic>;
   }
 }

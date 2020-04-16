@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:firedart/src/auth/client.dart';
-import 'package:firedart/src/auth/token_store.dart';
+import 'package:firedart/src/auth/client/key_client.dart';
+import 'package:firedart/src/auth/store/token_store.dart';
 
 const _tokenExpirationThreshold = Duration(seconds: 30);
 
@@ -35,10 +35,10 @@ class TokenProvider {
 
   void setToken(Map<String, dynamic> map) {
     _tokenStore.setToken(
-      map['localId'],
-      map['idToken'],
-      map['refreshToken'],
-      int.parse(map['expiresIn']),
+      map['localId'] as String,
+      map['idToken'] as String,
+      map['refreshToken'] as String,
+      int.parse(map['expiresIn'] as String),
     );
     _notifyState();
   }
@@ -49,7 +49,7 @@ class TokenProvider {
   }
 
   Future _refresh() async {
-    var response = await client.post(
+    final response = await client.post(
       'https://securetoken.googleapis.com/v1/token',
       body: {
         'grant_type': 'refresh_token',
@@ -59,12 +59,12 @@ class TokenProvider {
 
     switch (response.statusCode) {
       case 200:
-        var map = json.decode(response.body);
+        final map = json.decode(response.body);
         _tokenStore.setToken(
-          map['localId'],
-          map['id_token'],
-          map['refresh_token'],
-          int.parse(map['expires_in']),
+          map['localId'] as String,
+          map['id_token'] as String,
+          map['refresh_token'] as String,
+          int.parse(map['expires_in'] as String),
         );
         break;
       case 400:

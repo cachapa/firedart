@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:firedart/firedart.dart';
 import 'package:firedart/src/generated/google/firestore/v1/document.pb.dart'
     as fs;
@@ -6,7 +7,7 @@ import 'package:firedart/src/util/firestore_encoding.dart';
 import 'package:meta/meta.dart';
 
 /// A base class for firestore references, that provides getters for path and id.
-abstract class Reference {
+abstract class Reference extends Equatable {
   @protected
   final FirestoreGateway gateway;
   final String path;
@@ -31,9 +32,7 @@ abstract class Reference {
   }
 
   @override
-  bool operator ==(other) {
-    return runtimeType == other.runtimeType && fullPath == other.fullPath;
-  }
+  List<Object> get props => [fullPath];
 
   @override
   String toString() {
@@ -43,7 +42,7 @@ abstract class Reference {
   /// Encodes the provided [map] data.
   @protected
   fs.Document encodeMap(Map<String, dynamic> map) {
-    var document = fs.Document();
+    final document = fs.Document();
     map.forEach((key, value) {
       document.fields[key] = FirestoreEncoding.encode(value);
     });
@@ -52,7 +51,9 @@ abstract class Reference {
 
   /// Trims slashes for the provided [path].
   static String _trimSlashes(String path) {
-    path = path.startsWith('/') ? path.substring(1) : path;
-    return path.endsWith('/') ? path.substring(0, path.length - 2) : path;
+    final trimPath = path.startsWith('/') ? path.substring(1) : path;
+    return trimPath.endsWith('/')
+        ? trimPath.substring(0, trimPath.length - 2)
+        : trimPath;
   }
 }

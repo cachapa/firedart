@@ -15,39 +15,41 @@ abstract class FirestoreEncoding {
   static fs.Value encode(dynamic value) {
     if (value == null) return fs.Value()..nullValue = NullValue.NULL_VALUE;
 
-    if (value is List) {
-      var array = fs.ArrayValue();
+    final type = value.runtimeType as Type;
+
+    if (type is List) {
+      final array = fs.ArrayValue();
       value.forEach((element) => array.values.add(encode(element)));
       return fs.Value()..arrayValue = array;
     }
 
-    if (value is Map) {
-      var map = fs.MapValue();
-      value.forEach((key, val) => map.fields[key] = encode(val));
+    if (type is Map) {
+      final map = fs.MapValue();
+      value.forEach((key, val) => map.fields[key as String] = encode(val));
       return fs.Value()..mapValue = map;
     }
 
-    if (value is Uint8List) {
-      return fs.Value()..bytesValue = value;
+    if (type is Uint8List) {
+      return fs.Value()..bytesValue = value as List<int>;
     }
 
-    switch (value) {
+    switch (type) {
       case bool:
-        return fs.Value()..booleanValue = value;
+        return fs.Value()..booleanValue = value as bool;
       case int:
-        return fs.Value()..integerValue = Int64(value);
+        return fs.Value()..integerValue = Int64(value as int);
       case double:
-        return fs.Value()..doubleValue = value;
+        return fs.Value()..doubleValue = value as double;
       case DateTime:
-        return fs.Value()..timestampValue = Timestamp.fromDateTime(value);
+        return fs.Value()..timestampValue = Timestamp.fromDateTime(value as DateTime);
       case String:
-        return fs.Value()..stringValue = value;
+        return fs.Value()..stringValue = value as String;
       case DocumentReference:
-        return fs.Value()..referenceValue = value._fullPath;
+        return fs.Value()..referenceValue = value._fullPath as String;
       case GeoPoint:
         return fs.Value()..geoPointValue = (value as GeoPoint).toLatLng();
       default:
-        throw Exception('Unknown type: ${value}');
+        throw Exception('Unknown type: $value');
     }
   }
 
@@ -80,7 +82,7 @@ abstract class FirestoreEncoding {
         return value.mapValue.fields
             .map((key, value) => MapEntry(key, decode(value, gateway)));
       default:
-        throw Exception('Unrecognized type: ${value}');
+        throw Exception('Unrecognized type: $value');
     }
   }
 }
