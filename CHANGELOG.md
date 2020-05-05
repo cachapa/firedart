@@ -1,3 +1,8 @@
+## [0.7.1] - 05 May 2020.
+
+* Fix requesting email confirmation
+* Add User.toMap() method
+
 ## [0.7.0] - 29 March 2020.
 
 * Implement paging
