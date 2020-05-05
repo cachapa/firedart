@@ -9,9 +9,8 @@ class UserGateway {
   UserGateway(KeyClient client, TokenProvider tokenProvider)
       : _client = UserClient(client, tokenProvider);
 
-  Future<void> requestEmailVerification() async => _post('sendOobCode', {
-        'requestType': 'VERIFY_EMAIL',
-      });
+  Future<void> requestEmailVerification() =>
+      _post('sendOobCode', {'requestType': 'VERIFY_EMAIL'});
 
   Future<User> getUser() async {
     var map = await _post('lookup', {});
@@ -63,7 +62,14 @@ class User {
         email = map['email'],
         emailVerified = map['emailVerified'];
 
+  Map<String, dynamic> toMap() => {
+        'localId': id,
+        'displayName': displayName,
+        'photoUrl': photoUrl,
+        'email': email,
+        'emailVerified': emailVerified,
+      };
+
   @override
-  String toString() =>
-      'id: $id, name: $displayName, photo: $photoUrl, email: $email, emailVerified: $emailVerified';
+  String toString() => toMap().toString();
 }
