@@ -72,5 +72,8 @@ class FirebaseAuth {
   Future<void> updateProfile({String displayName, String photoUrl}) =>
       _userGateway.updateProfile(displayName, photoUrl);
 
-  Future<void> deleteAccount() => _userGateway.deleteAccount();
+  Future<void> deleteAccount() async {
+    await _userGateway.deleteAccount();
+    signOut();
+  }
 }
