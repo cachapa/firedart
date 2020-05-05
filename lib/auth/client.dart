@@ -65,9 +65,10 @@ class UserClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    var body = (request as http.Request).bodyFields;
     request = http.Request(request.method, request.url)
       ..headers['content-type'] = 'application/x-www-form-urlencoded'
-      ..bodyFields = {'idToken': await tokenProvider.idToken};
+      ..bodyFields = {...body, 'idToken': await tokenProvider.idToken};
     return client.send(request);
   }
 }
