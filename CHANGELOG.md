@@ -1,3 +1,7 @@
+## [0.7.2] - 05 May 2020.
+
+* Logout user on account deletion
+
 ## [0.7.1] - 05 May 2020.
 
 * Fix requesting email confirmation
