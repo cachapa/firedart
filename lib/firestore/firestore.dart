@@ -43,4 +43,8 @@ class Firestore {
       CollectionReference(_gateway, path);
 
   DocumentReference document(String path) => DocumentReference(_gateway, path);
+
+  Future<void> close() async {
+    await _gateway.close();
+  }
 }
