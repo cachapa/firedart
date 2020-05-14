@@ -8,5 +8,6 @@ class UnsupportedAccess extends AbstractPlatformAccess {
   UnsupportedAccess._private();
 
   @override
-  String getEnvironmentVariable(String environmentVariable) => '';
+  String getEnvironmentVariable(String environmentVariable) =>
+      throw UnsupportedError('Environment variables do not exist on the platform you are using.');
 }

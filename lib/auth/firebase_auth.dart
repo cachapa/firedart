@@ -6,27 +6,8 @@ import 'package:firedart/auth/token_store.dart';
 import 'package:firedart/auth/user_gateway.dart';
 import 'package:http/http.dart' as http;
 
-/// For service accounts, you have 2 options here. You can use either to provide the serviceAccount parameter in this class.
-/// 1) This is the recommended method. If you wish to be as platform agnostic as possible, or just want to avoid making
-///    mistakes, this way provides you with a platform agnostic method of providing service accounts.
-///
-///    To provide a service account, use getServiceAccount().fromJson or getServiceAccount().fromEnvironmentVariable
-///    Copy paste this import line if you want:
-///    import 'package:firedart/auth/serviceaccount/abstract_service_account.dart';
-///    getServiceAccount().fromEnvironmentVariable() will throw an exception on web platforms because environment variables
-///    do not exist on the web.
-///
-///    So your best bet to support ALL platforms with ADMINISTRATIVE ACCESS to firestore is to do:
-///    getServiceAccount().fromJson(<Service account json here>);
-///
-///    You can provide the service account json file directly as well like so:
-///    getServiceAccount().fromJson(await file.readAsString()); or
-///    getServiceAccount().fromJson(file.readAsStringSync());
-///
-///    The main appeal of using this is that you can use fromEnvironmentVariable without importing dart:io.
-///
-/// 2) If you want to provide the service account as a json string directly and are confident that you will not
-///    be mixing dart:io/dart:html, then use can use ServiceAccountObject(<Service account json here>);
+/// For service accounts, you can use ServiceAccount.fromJson(String) or ServiceAccount.fromEnvironmentVariable(optional String)
+/// Using the environment variable implementation will crash if you are on a platform that dart:io does not support.
 ///
 /// If you do not provide a service account, firebase will initialize you as an anonymous user unless you sign in with
 /// the signIn(String email, String password) method in this class.
