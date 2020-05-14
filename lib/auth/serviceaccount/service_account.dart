@@ -1,3 +1,15 @@
-export 'unsupported_service_account.dart'
-    if (dart.library.io) 'io_service_account.dart'
-    if (dart.library.html) 'html_service_account.dart';
+import 'package:firedart/auth/serviceaccount/access_exporter.dart';
+
+class ServiceAccount {
+  String serviceAccountString;
+
+  ServiceAccount.fromJson(this.serviceAccountString);
+
+  ServiceAccount.fromEnvironmentVariable({String environmentVariable = 'GOOGLE_APPLICATION_CREDENTIALS'}) {
+    serviceAccountString = getIOAccess().getEnvironmentVariable(environmentVariable);
+  }
+}
+
+abstract class AbstractPlatformAccess {
+  String getEnvironmentVariable(String environmentVariable);
+}
