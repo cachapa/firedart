@@ -27,7 +27,8 @@ const projectId = 'Project Settings -> General -> Project ID';
 Future main() async {
   var projectId = 'fluttergolf'; // replace with your project id here
 
-  FirebaseAuth.initialize(apiKey, VolatileStore(), serviceAccount: serviceAccountManager().fromJson(r'''
+  FirebaseAuth.initialize(apiKey, VolatileStore(),
+      serviceAccount: serviceAccountManager().fromJson(r'''
 {
   <Project Settings -> Service Accounts -> generate new private key>
   You can either use serviceAccountManager().fromEnvironmentVariable() to locate the .json you just downloaded
@@ -51,7 +52,8 @@ Future main() async {
   var document = await ref.get();
   print('snapshot: ${document['value']}');
 
-  print('Sleeping for 30 seconds. You can make changes to test/doc in the UI console');
+  print(
+      'Sleeping for 30 seconds. You can make changes to test/doc in the UI console');
   await Future.delayed((const Duration(seconds: 30)));
   print('closing the connection');
   await Firestore.instance.close();

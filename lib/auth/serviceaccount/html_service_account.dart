@@ -8,7 +8,8 @@ class ServiceAccountHTML extends ServiceAccount {
   ServiceAccountHTML._private();
 
   @override
-  ServiceAccountObject fromEnvironmentVariable({String environmentVariable = 'GOOGLE_APPLICATION_CREDENTIALS'}) =>
+  ServiceAccountObject fromEnvironmentVariable(
+          {String environmentVariable = 'GOOGLE_APPLICATION_CREDENTIALS'}) =>
       throw UnsupportedError(
           'Web clients do not have access to system environment variables unfortunately. Please use ServiceAccount.fromJson(String json)');
 }

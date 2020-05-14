@@ -17,6 +17,7 @@ class TokenAuthenticator {
   }
 
   CallOptions get toCallOptions => auth.serviceAccount != null
-      ? JwtServiceAccountAuthenticator(auth.serviceAccount.serviceAccountString).toCallOptions
+      ? JwtServiceAccountAuthenticator(auth.serviceAccount.serviceAccountString)
+          .toCallOptions
       : CallOptions(providers: [authenticate]);
 }

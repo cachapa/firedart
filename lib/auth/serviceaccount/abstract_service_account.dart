@@ -5,7 +5,8 @@ abstract class ServiceAccount {
 
   /// You can choose to use environment variables as well. If you do not specify the environment variable name,
   /// 'GOOGLE_APPLICATION_CREDENTIALS' is used by default (recommended).
-  ServiceAccountObject fromEnvironmentVariable({String environmentVariable = 'GOOGLE_APPLICATION_CREDENTIALS'});
+  ServiceAccountObject fromEnvironmentVariable(
+      {String environmentVariable = 'GOOGLE_APPLICATION_CREDENTIALS'});
 }
 
 class ServiceAccountObject {
