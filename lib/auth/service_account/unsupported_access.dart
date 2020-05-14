@@ -9,9 +9,10 @@ class UnsupportedAccess extends AbstractPlatformAccess {
 
   @override
   String getEnvironmentVariable(String environmentVariable) =>
-      throw UnsupportedError('Environment variables do not exist on the platform you are using.');
+      throw UnsupportedError(
+          'Environment variables do not exist on the platform you are using.');
 
   @override
-  Future<String> getStringFromFile(String filePath) =>
-      throw UnsupportedError('File objects do not exist on the platform you are using.');
+  Future<String> getStringFromFile(String filePath) => throw UnsupportedError(
+      'File objects do not exist on the platform you are using.');
 }

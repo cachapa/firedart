@@ -10,7 +10,8 @@ class IOAccess extends AbstractPlatformAccess {
   IOAccess._private();
 
   @override
-  String getEnvironmentVariable(String environmentVariable) => Platform.environment[environmentVariable];
+  String getEnvironmentVariable(String environmentVariable) =>
+      Platform.environment[environmentVariable];
 
   @override
   Future<String> getStringFromFile(String filePath) async {
