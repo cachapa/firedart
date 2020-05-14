@@ -23,8 +23,7 @@ class Firestore {
 
   static Firestore get instance {
     if (_instance == null) {
-      throw Exception(
-          "Firestore hasn't been initialized. Please call Firestore.initialize() before using it.");
+      throw Exception("Firestore hasn't been initialized. Please call Firestore.initialize() before using it.");
     }
     return _instance;
   }
@@ -32,19 +31,13 @@ class Firestore {
   /* Instance interface */
   final FirestoreGateway _gateway;
 
-  Firestore.usingServiceAccount(String projectId, {String databaseId})
-      : _gateway = FirestoreGateway(projectId,
-            databaseId: databaseId, useServiceAccount: true);
-
   Firestore(String projectId, {String databaseId, FirebaseAuth auth})
-      : _gateway =
-            FirestoreGateway(projectId, databaseId: databaseId, auth: auth),
+      : _gateway = FirestoreGateway(projectId, databaseId: databaseId, auth: auth),
         assert(projectId.isNotEmpty);
 
   Reference reference(String path) => Reference.create(_gateway, path);
 
-  CollectionReference collection(String path) =>
-      CollectionReference(_gateway, path);
+  CollectionReference collection(String path) => CollectionReference(_gateway, path);
 
   DocumentReference document(String path) => DocumentReference(_gateway, path);
 
