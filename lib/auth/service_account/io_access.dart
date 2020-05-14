@@ -11,4 +11,9 @@ class IOAccess extends AbstractPlatformAccess {
 
   @override
   String getEnvironmentVariable(String environmentVariable) => Platform.environment[environmentVariable];
+
+  @override
+  Future<String> getStringFromFile(String filePath) async {
+    return await File(filePath).readAsString();
+  }
 }

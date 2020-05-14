@@ -8,7 +8,9 @@ const projectId = 'Project Settings -> General -> Project ID';
 Future main() async {
   /// You can use environment variable look-up to find your service-account.json like so:
   /// (GOOGLE_APPLICATION_CREDENTIALS is the default environment variable we look for.)
-  /// FirebaseAuth.initialize(apiKey, VolatileStore(), serviceAccount: ServiceAccount.fromEnvironmentVariable());
+  /// ServiceAccount.fromEnvironmentVariable();
+  /// or from a file
+  /// ServiceAccount.serviceAccountFromFile(filePath);
 
   /// Alternatively:
   FirebaseAuth.initialize(apiKey, VolatileStore(), serviceAccount: ServiceAccount.fromJson(r'''
