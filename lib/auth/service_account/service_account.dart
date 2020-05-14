@@ -1,4 +1,4 @@
-import 'package:firedart/auth/serviceaccount/access_exporter.dart';
+import 'package:firedart/auth/service_account/access_exporter.dart';
 
 class ServiceAccount {
   final String serviceAccountString;

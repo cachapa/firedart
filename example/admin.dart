@@ -1,3 +1,4 @@
+import 'package:firedart/auth/service_account/service_account.dart';
 import 'package:firedart/firedart.dart';
 
 const apiKey = 'Project Settings -> General -> Web API Key';
