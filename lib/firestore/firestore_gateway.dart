@@ -125,13 +125,18 @@ class FirestoreGateway {
     streamController.add(request);
 
     return stream
-        .where((response) => (response.hasDocumentChange() &&
-                response.documentChange.document.name == path ||
-            (response.hasDocumentDelete() || response.hasDocumentRemove()) &&
-                response.documentDelete.document == path))
-        .map((response) => response.hasDocumentChange()
-            ? Document(this, response.documentChange.document)
-            : null);
+        .where((response) => (response.hasDocumentChange() && response.documentChange.document.name == path ||
+            (response.hasDocumentDelete() || response.hasDocumentRemove()) && response.documentDelete.document == path))
+        .map((response) => response.hasDocumentChange() ? Document(this, response.documentChange.document) : null);
+  }
+
+  Future<Page<Document>> runQuery(StructuredQuery structuredQuery, String fullPath, {String nextPageToken = ''}) async {
+    final runQuery = RunQueryRequest()
+      ..structuredQuery = structuredQuery
+      ..parent = fullPath.substring(0, fullPath.lastIndexOf('/'));
+    final response = _client.runQuery(runQuery);
+    return Page(await response.where((event) => event.hasDocument()).map((event) => Document(this, event.document)).toList(),
+        nextPageToken);
   }
 
   void _setupClient() {
