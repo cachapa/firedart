@@ -1,12 +1,15 @@
 import 'dart:collection';
 
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
+import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
 import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
 import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
+import 'package:firedart/generated/google/protobuf/wrappers.pb.dart';
 import 'package:firedart/generated/google/type/latlng.pb.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 
+import 'firestore_encoding.dart';
 import 'firestore_gateway.dart';
 
 abstract class Reference {
@@ -53,11 +56,142 @@ abstract class Reference {
 }
 
 class CollectionReference extends Reference {
-  CollectionReference(FirestoreGateway gateway, String path)
-      : super(gateway, path) {
+  final StructuredQuery _structuredQuery = StructuredQuery();
+  final FirestoreGateway gateway;
+
+  /// Constructs a [CollectionReference] using [FirestoreGateway] and path.
+  ///
+  /// Throws [Exception] if path contains odd amount of '/'.
+  CollectionReference(this.gateway, String path) : super(gateway, path) {
+    _structuredQuery.from
+        .add(StructuredQuery_CollectionSelector()..collectionId = id);
     if (_fullPath.split('/').length % 2 == 1) {
       throw Exception('Path is not a collection: $path');
     }
+  }
+
+  CollectionReference whereIsEqualTo(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, null);
+    return this;
+  }
+
+  CollectionReference whereIsNull(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, null);
+    return this;
+  }
+
+  CollectionReference whereIsLessThan(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.LESS_THAN);
+    return this;
+  }
+
+  CollectionReference whereIsLessThanOrEqualTo(
+      String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.LESS_THAN_OR_EQUAL);
+    return this;
+  }
+
+  CollectionReference whereIsGreaterThan(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN);
+    return this;
+  }
+
+  CollectionReference whereIsGreaterThanOrEqualTo(
+      String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN_OR_EQUAL);
+    return this;
+  }
+
+  CollectionReference whereArrayContains(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS);
+    return this;
+  }
+
+  CollectionReference whereArrayContainsAny(
+      String fieldPath, List<dynamic> value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS_ANY);
+    return this;
+  }
+
+  CollectionReference whereIn(String fieldPath, List<dynamic> value) {
+    _createFilter(fieldPath, value,
+        operator: StructuredQuery_FieldFilter_Operator.IN);
+    return this;
+  }
+
+  void _createFilter(String fieldPath, dynamic value,
+      {StructuredQuery_FieldFilter_Operator operator}) {
+    var queryFilter = StructuredQuery_Filter();
+    if (value == null || operator == null) {
+      var filter = StructuredQuery_UnaryFilter();
+      filter.op = StructuredQuery_UnaryFilter_Operator.IS_NULL;
+      filter.field_2 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
+
+      queryFilter.unaryFilter = filter;
+    } else {
+      var filter = StructuredQuery_FieldFilter();
+      filter.op = operator;
+      filter.value = _encode(value);
+
+      final fieldReference = StructuredQuery_FieldReference()
+        ..fieldPath = fieldPath;
+      filter.field_1 = fieldReference;
+
+      queryFilter.fieldFilter = filter;
+    }
+    _addToComposite(queryFilter);
+  }
+
+  void _addToComposite(StructuredQuery_Filter filter) {
+    StructuredQuery_CompositeFilter compositeFilter;
+    if (_structuredQuery.hasWhere() &&
+        _structuredQuery.where.hasCompositeFilter()) {
+      compositeFilter = _structuredQuery.where.compositeFilter;
+    } else {
+      compositeFilter = StructuredQuery_CompositeFilter()
+        ..op = StructuredQuery_CompositeFilter_Operator.AND;
+    }
+
+    compositeFilter.filters.add(filter);
+    _structuredQuery.where = StructuredQuery_Filter()
+      ..compositeFilter = compositeFilter;
+  }
+
+  /// Returns [CollectionReference] that's additionally sorted by the specified
+  /// [fieldPath].
+  ///
+  /// The field is a [String] representing a single field name.
+  /// After a [CollectionReference] order by call, you cannot add any more [orderBy]
+  /// calls.
+  CollectionReference orderBy(
+    String fieldPath, {
+    bool descending = false,
+  }) {
+    final order = StructuredQuery_Order();
+    order.field_1 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
+    order.direction = descending
+        ? StructuredQuery_Direction.DESCENDING
+        : StructuredQuery_Direction.ASCENDING;
+    _structuredQuery.orderBy.add(order);
+    return this;
+  }
+
+  /// Returns [CollectionReference] that's additionally limited to only return up
+  /// to the specified number of documents.
+  CollectionReference limit(int count) {
+    _structuredQuery.limit = Int32Value()..value = count;
+    return this;
+  }
+
+  /// Delegates encoding the given [value] to [FirebaseEncoding.encode].
+  fs.Value _encode(dynamic value) {
+    return FirestoreEncoding.encode(value);
   }
 
   DocumentReference document(String id) {
@@ -66,7 +200,9 @@ class CollectionReference extends Reference {
 
   Future<Page<Document>> get(
           {int pageSize = 1024, String nextPageToken = ''}) =>
-      _gateway.getCollection(_fullPath, pageSize, nextPageToken);
+      _structuredQuery == null
+          ? _gateway.getCollection(_fullPath, pageSize, nextPageToken)
+          : gateway.runQuery(_structuredQuery, _fullPath);
 
   Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
@@ -159,22 +295,29 @@ class GeoPoint {
   final double latitude;
   final double longitude;
 
-  GeoPoint(this.latitude, this.longitude);
+  const GeoPoint(this.latitude, this.longitude);
 
-  GeoPoint._internal(LatLng value) : this(value.latitude, value.longitude);
-
-  @override
-  bool operator ==(other) =>
-      runtimeType == other.runtimeType &&
-      latitude == other.latitude &&
-      longitude == other.longitude;
+  /// Creates the [GeoPoint] instance using [LatLng].
+  GeoPoint.fromLatLng(LatLng value) : this(value.latitude, value.longitude);
 
   @override
   String toString() => 'lat: $latitude, lon: $longitude';
 
-  LatLng _toLatLng() => LatLng()
+  /// Creates the [LatLng] instance corresponding this geo point.
+  LatLng toLatLng() => LatLng()
     ..latitude = latitude
     ..longitude = longitude;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GeoPoint &&
+          runtimeType == other.runtimeType &&
+          latitude == other.latitude &&
+          longitude == other.longitude;
+
+  @override
+  int get hashCode => latitude.hashCode ^ longitude.hashCode;
 }
 
 class Page<T> extends ListBase<T> {
@@ -235,7 +378,7 @@ fs.Value _encode(dynamic value) {
     case DocumentReference:
       return fs.Value()..referenceValue = value._fullPath;
     case GeoPoint:
-      return fs.Value()..geoPointValue = (value as GeoPoint)._toLatLng();
+      return fs.Value()..geoPointValue = (value as GeoPoint).toLatLng();
     default:
       throw Exception('Unknown type: ${type}');
   }
@@ -260,7 +403,7 @@ dynamic _decode(fs.Value value, FirestoreGateway gateway) {
     case fs.Value_ValueType.referenceValue:
       return DocumentReference(gateway, value.referenceValue);
     case fs.Value_ValueType.geoPointValue:
-      return GeoPoint._internal(value.geoPointValue);
+      return GeoPoint.fromLatLng(value.geoPointValue);
     case fs.Value_ValueType.arrayValue:
       return value.arrayValue.values
           .map((item) => _decode(item, gateway))

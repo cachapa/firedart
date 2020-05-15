@@ -47,6 +47,15 @@ Future main() async {
     expect(first.id, isNot(second.id));
   });
 
+  test('Get documents via collection query', () async {
+    var reference = firestore.collection('test');
+    var query = await firestore
+        .collection('test')
+        .whereArrayContains('test_field', 'test_value')
+        .get();
+    expect(query.isNotEmpty, true);
+  });
+
   test('Add and delete collection document', () async {
     var reference = firestore.collection('test');
     var docReference = await reference.add({'field': 'test'});

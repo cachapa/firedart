@@ -10,7 +10,7 @@ class ServiceAccount {
       : serviceAccountString =
             getIOAccess().getEnvironmentVariable(environmentVariable);
 
-  static Future<ServiceAccount> serviceAccountFromFile(String filePath) async =>
+  static Future<ServiceAccount> fromFile(String filePath) async =>
       ServiceAccount.fromJson(await getIOAccess().getStringFromFile(filePath));
 }
 
