@@ -190,9 +190,7 @@ class CollectionReference extends Reference {
 
 class DocumentReference extends Reference {
   DocumentReference(FirestoreGateway gateway, String path) : super(gateway, path) {
-    if (_fullPath
-        .split('/')
-        .length % 2 == 0) {
+    if (_fullPath.split('/').length % 2 == 0) {
       throw Exception('Path is not a document: $path');
     }
   }
@@ -278,16 +276,14 @@ class GeoPoint {
   String toString() => 'lat: $latitude, lon: $longitude';
 
   /// Creates the [LatLng] instance corresponding this geo point.
-  LatLng toLatLng() =>
-      LatLng()
-        ..latitude = latitude
-        ..longitude = longitude;
+  LatLng toLatLng() => LatLng()
+    ..latitude = latitude
+    ..longitude = longitude;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is GeoPoint && runtimeType == other.runtimeType && latitude == other.latitude &&
-              longitude == other.longitude;
+      other is GeoPoint && runtimeType == other.runtimeType && latitude == other.latitude && longitude == other.longitude;
 
   @override
   int get hashCode => latitude.hashCode ^ longitude.hashCode;
@@ -351,8 +347,7 @@ fs.Value _encode(dynamic value) {
     case DocumentReference:
       return fs.Value()..referenceValue = value._fullPath;
     case GeoPoint:
-      return fs.Value()
-        ..geoPointValue = (value as GeoPoint).toLatLng();
+      return fs.Value()..geoPointValue = (value as GeoPoint).toLatLng();
     default:
       throw Exception('Unknown type: ${type}');
   }
