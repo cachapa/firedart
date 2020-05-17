@@ -1,4 +1,4 @@
-import 'package:firedart/auth/service_account/access_exporter.dart';
+import 'package:firedart/io/io_access.dart';
 
 class ServiceAccount {
   final String serviceAccountString;
@@ -12,10 +12,4 @@ class ServiceAccount {
 
   static Future<ServiceAccount> fromFile(String filePath) async =>
       ServiceAccount.fromJson(await getIOAccess().getStringFromFile(filePath));
-}
-
-abstract class AbstractPlatformAccess {
-  String getEnvironmentVariable(String environmentVariable);
-
-  Future<String> getStringFromFile(String filePath);
 }
