@@ -22,7 +22,9 @@ abstract class Reference {
   String get _fullPath => '${_gateway.database}/$path';
 
   Reference(this._gateway, String path)
-      : path = _trimSlashes(path.startsWith(_gateway.database) ? path.substring(_gateway.database.length + 1) : path);
+      : path = _trimSlashes(path.startsWith(_gateway.database)
+            ? path.substring(_gateway.database.length + 1)
+            : path);
 
   factory Reference.create(FirestoreGateway gateway, String path) {
     return _trimSlashes(path).split('/').length % 2 == 0
@@ -103,19 +105,23 @@ class CollectionReference extends Reference {
   /// to the specified number of documents.
   QueryReference limit(int count) => QueryReference(gateway, path).limit(count);
 
-  DocumentReference document(String id) => DocumentReference(_gateway, '$path/$id');
+  DocumentReference document(String id) =>
+      DocumentReference(_gateway, '$path/$id');
 
-  Future<Page<Document>> get({int pageSize = 1024, String nextPageToken = ''}) =>
+  Future<Page<Document>> get(
+          {int pageSize = 1024, String nextPageToken = ''}) =>
       _gateway.getCollection(_fullPath, pageSize, nextPageToken);
 
   Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
   /// Create a document with a random id.
-  Future<Document> add(Map<String, dynamic> map) => _gateway.createDocument(_fullPath, null, _encodeMap(map));
+  Future<Document> add(Map<String, dynamic> map) =>
+      _gateway.createDocument(_fullPath, null, _encodeMap(map));
 }
 
 class DocumentReference extends Reference {
-  DocumentReference(FirestoreGateway gateway, String path) : super(gateway, path) {
+  DocumentReference(FirestoreGateway gateway, String path)
+      : super(gateway, path) {
     if (_fullPath.split('/').length % 2 == 0) {
       throw Exception('Path is not a document: $path');
     }
@@ -147,16 +153,18 @@ class DocumentReference extends Reference {
   }
 
   /// Create a document if it doesn't exist, otherwise throw exception.
-  Future<Document> create(Map<String, dynamic> map) =>
-      _gateway.createDocument(_fullPath.substring(0, _fullPath.lastIndexOf('/')), id, _encodeMap(map));
+  Future<Document> create(Map<String, dynamic> map) => _gateway.createDocument(
+      _fullPath.substring(0, _fullPath.lastIndexOf('/')), id, _encodeMap(map));
 
   /// Create or update a document.
   /// In the case of an update, any fields not referenced in the payload will be deleted.
-  Future<void> set(Map<String, dynamic> map) async => _gateway.updateDocument(_fullPath, _encodeMap(map), false);
+  Future<void> set(Map<String, dynamic> map) async =>
+      _gateway.updateDocument(_fullPath, _encodeMap(map), false);
 
   /// Create or update a document.
   /// In case of an update, fields not referenced in the payload will remain unchanged.
-  Future<void> update(Map<String, dynamic> map) => _gateway.updateDocument(_fullPath, _encodeMap(map), true);
+  Future<void> update(Map<String, dynamic> map) =>
+      _gateway.updateDocument(_fullPath, _encodeMap(map), true);
 
   /// Deletes a document.
   Future<void> delete() async => await _gateway.deleteDocument(_fullPath);
@@ -170,13 +178,15 @@ class Document {
 
   String get id => path.substring(path.lastIndexOf('/') + 1);
 
-  String get path => _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
+  String get path =>
+      _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
 
   DateTime get createTime => _rawDocument.createTime.toDateTime();
 
   DateTime get updateTime => _rawDocument.updateTime.toDateTime();
 
-  Map<String, dynamic> get map => _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
+  Map<String, dynamic> get map =>
+      _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
 
   DocumentReference get reference => DocumentReference(_gateway, path);
 
@@ -209,7 +219,10 @@ class GeoPoint {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GeoPoint && runtimeType == other.runtimeType && latitude == other.latitude && longitude == other.longitude;
+      other is GeoPoint &&
+          runtimeType == other.runtimeType &&
+          latitude == other.latitude &&
+          longitude == other.longitude;
 
   @override
   int get hashCode => latitude.hashCode ^ longitude.hashCode;
@@ -242,7 +255,8 @@ class QueryReference extends Reference {
   final StructuredQuery _structuredQuery = StructuredQuery();
 
   QueryReference(FirestoreGateway gateway, String path) : super(gateway, path) {
-    _structuredQuery..from.add(StructuredQuery_CollectionSelector()..collectionId = id);
+    _structuredQuery
+      ..from.add(StructuredQuery_CollectionSelector()..collectionId = id);
   }
 
   QueryReference where(
@@ -258,28 +272,36 @@ class QueryReference extends Reference {
     bool isNull = false,
   }) {
     if (isEqualTo != null) {
-      _addFilter(fieldPath, isEqualTo, operator: StructuredQuery_FieldFilter_Operator.EQUAL);
+      _addFilter(fieldPath, isEqualTo,
+          operator: StructuredQuery_FieldFilter_Operator.EQUAL);
     }
     if (isLessThan != null) {
-      _addFilter(fieldPath, isLessThan, operator: StructuredQuery_FieldFilter_Operator.LESS_THAN);
+      _addFilter(fieldPath, isLessThan,
+          operator: StructuredQuery_FieldFilter_Operator.LESS_THAN);
     }
     if (isLessThanOrEqualTo != null) {
-      _addFilter(fieldPath, isLessThanOrEqualTo, operator: StructuredQuery_FieldFilter_Operator.LESS_THAN_OR_EQUAL);
+      _addFilter(fieldPath, isLessThanOrEqualTo,
+          operator: StructuredQuery_FieldFilter_Operator.LESS_THAN_OR_EQUAL);
     }
     if (isGreaterThan != null) {
-      _addFilter(fieldPath, isGreaterThan, operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN);
+      _addFilter(fieldPath, isGreaterThan,
+          operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN);
     }
     if (isGreaterThanOrEqualTo != null) {
-      _addFilter(fieldPath, isGreaterThanOrEqualTo, operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN_OR_EQUAL);
+      _addFilter(fieldPath, isGreaterThanOrEqualTo,
+          operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN_OR_EQUAL);
     }
     if (arrayContains != null) {
-      _addFilter(fieldPath, arrayContains, operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS);
+      _addFilter(fieldPath, arrayContains,
+          operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS);
     }
     if (arrayContainsAny != null) {
-      _addFilter(fieldPath, arrayContainsAny, operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS_ANY);
+      _addFilter(fieldPath, arrayContainsAny,
+          operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS_ANY);
     }
     if (whereIn != null) {
-      _addFilter(fieldPath, whereIn, operator: StructuredQuery_FieldFilter_Operator.IN);
+      _addFilter(fieldPath, whereIn,
+          operator: StructuredQuery_FieldFilter_Operator.IN);
     }
     if (isNull) {
       _addFilter(fieldPath, null);
@@ -300,7 +322,9 @@ class QueryReference extends Reference {
   }) {
     final order = StructuredQuery_Order();
     order.field_1 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
-    order.direction = descending ? StructuredQuery_Direction.DESCENDING : StructuredQuery_Direction.ASCENDING;
+    order.direction = descending
+        ? StructuredQuery_Direction.DESCENDING
+        : StructuredQuery_Direction.ASCENDING;
     _structuredQuery.orderBy.add(order);
     return this;
   }
@@ -312,9 +336,11 @@ class QueryReference extends Reference {
     return this;
   }
 
-  Future<List<Document>> get() => _gateway.runQuery(_structuredQuery, _fullPath);
+  Future<List<Document>> get() =>
+      _gateway.runQuery(_structuredQuery, _fullPath);
 
-  void _addFilter(String fieldPath, dynamic value, {StructuredQuery_FieldFilter_Operator operator}) {
+  void _addFilter(String fieldPath, dynamic value,
+      {StructuredQuery_FieldFilter_Operator operator}) {
     var queryFilter = StructuredQuery_Filter();
     if (value == null || operator == null) {
       var filter = StructuredQuery_UnaryFilter();
@@ -327,7 +353,8 @@ class QueryReference extends Reference {
       filter.op = operator;
       filter.value = _encode(value);
 
-      final fieldReference = StructuredQuery_FieldReference()..fieldPath = fieldPath;
+      final fieldReference = StructuredQuery_FieldReference()
+        ..fieldPath = fieldPath;
       filter.field_1 = fieldReference;
 
       queryFilter.fieldFilter = filter;
@@ -337,14 +364,17 @@ class QueryReference extends Reference {
 
   void _addToComposite(StructuredQuery_Filter filter) {
     StructuredQuery_CompositeFilter compositeFilter;
-    if (_structuredQuery.hasWhere() && _structuredQuery.where.hasCompositeFilter()) {
+    if (_structuredQuery.hasWhere() &&
+        _structuredQuery.where.hasCompositeFilter()) {
       compositeFilter = _structuredQuery.where.compositeFilter;
     } else {
-      compositeFilter = StructuredQuery_CompositeFilter()..op = StructuredQuery_CompositeFilter_Operator.AND;
+      compositeFilter = StructuredQuery_CompositeFilter()
+        ..op = StructuredQuery_CompositeFilter_Operator.AND;
     }
 
     compositeFilter.filters.add(filter);
-    _structuredQuery.where = StructuredQuery_Filter()..compositeFilter = compositeFilter;
+    _structuredQuery.where = StructuredQuery_Filter()
+      ..compositeFilter = compositeFilter;
   }
 
   /// Delegates encoding the given [value] to [FirebaseEncoding.encode].
@@ -415,9 +445,12 @@ dynamic _decode(fs.Value value, FirestoreGateway gateway) {
     case fs.Value_ValueType.geoPointValue:
       return GeoPoint.fromLatLng(value.geoPointValue);
     case fs.Value_ValueType.arrayValue:
-      return value.arrayValue.values.map((item) => _decode(item, gateway)).toList(growable: false);
+      return value.arrayValue.values
+          .map((item) => _decode(item, gateway))
+          .toList(growable: false);
     case fs.Value_ValueType.mapValue:
-      return value.mapValue.fields.map((key, value) => MapEntry(key, _decode(value, gateway)));
+      return value.mapValue.fields
+          .map((key, value) => MapEntry(key, _decode(value, gateway)));
     default:
       throw Exception('Unrecognized type: ${value}');
   }

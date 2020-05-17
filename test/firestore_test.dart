@@ -41,13 +41,17 @@ Future main() async {
     var reference = firestore.collection('test');
     var documents = await reference.get(pageSize: 1);
     var first = documents[0];
-    documents = await reference.get(pageSize: 1, nextPageToken: documents.nextPageToken);
+    documents = await reference.get(
+        pageSize: 1, nextPageToken: documents.nextPageToken);
     var second = documents[0];
     expect(first.id, isNot(second.id));
   });
 
   test('Get documents via collection query', () async {
-    var query = await firestore.collection('test').where('test_field', isEqualTo: 'test_value').get();
+    var query = await firestore
+        .collection('test')
+        .where('test_field', isEqualTo: 'test_value')
+        .get();
     expect(query.isNotEmpty, true);
   });
 
@@ -126,7 +130,8 @@ Future main() async {
 
     // Firestore may send empty events on subscription because we're reusing the
     // document path.
-    expect(reference.stream.where((doc) => doc != null), emits((document) => document['field'] == 'test'));
+    expect(reference.stream.where((doc) => doc != null),
+        emits((document) => document['field'] == 'test'));
 
     await reference.set({'field': 'test'});
     await reference.delete();
@@ -136,7 +141,8 @@ Future main() async {
     var reference = firestore.collection('test');
 
     var document = await reference.add({'field': 'test'});
-    expect(reference.stream, emits((List<Document> documents) => documents.isNotEmpty));
+    expect(reference.stream,
+        emits((List<Document> documents) => documents.isNotEmpty));
     await document.reference.delete();
   });
 
