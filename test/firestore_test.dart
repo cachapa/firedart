@@ -48,6 +48,7 @@ Future main() async {
   });
 
   test('Get documents via collection query', () async {
+    await firestore.document('test/query').set({'test_field': 'test_value'});
     var query = await firestore
         .collection('test')
         .where('test_field', isEqualTo: 'test_value')
