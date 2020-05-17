@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
+import 'package:firedart/generated/google/protobuf/struct.pb.dart';
 import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
 import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
 import 'package:firedart/generated/google/protobuf/wrappers.pb.dart';
@@ -21,9 +22,7 @@ abstract class Reference {
   String get _fullPath => '${_gateway.database}/$path';
 
   Reference(this._gateway, String path)
-      : path = _trimSlashes(path.startsWith(_gateway.database)
-            ? path.substring(_gateway.database.length + 1)
-            : path);
+      : path = _trimSlashes(path.startsWith(_gateway.database) ? path.substring(_gateway.database.length + 1) : path);
 
   factory Reference.create(FirestoreGateway gateway, String path) {
     return _trimSlashes(path).split('/').length % 2 == 0
@@ -58,8 +57,6 @@ abstract class Reference {
 class CollectionReference extends Reference {
   final FirestoreGateway gateway;
 
-  StructuredQuery _structuredQuery;
-
   /// Constructs a [CollectionReference] using [FirestoreGateway] and path.
   ///
   /// Throws [Exception] if path contains odd amount of '/'.
@@ -69,103 +66,26 @@ class CollectionReference extends Reference {
     }
   }
 
-  CollectionReference whereIsEqualTo(String fieldPath, dynamic value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.EQUAL);
-    return this;
-  }
+  Query whereIsEqualTo(String fieldPath, dynamic value) => Query(gateway, path)..whereIsEqualTo(fieldPath, value);
 
-  CollectionReference whereIsNull(String fieldPath, dynamic value) {
-    _createFilter(fieldPath, null);
-    return this;
-  }
+  Query whereIsNull(String fieldPath, dynamic value) => Query(gateway, path)..whereIsNull(fieldPath, value);
 
-  CollectionReference whereIsLessThan(String fieldPath, dynamic value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.LESS_THAN);
-    return this;
-  }
+  Query whereIsLessThan(String fieldPath, dynamic value) => Query(gateway, path).whereIsLessThan(fieldPath, value);
 
-  CollectionReference whereIsLessThanOrEqualTo(
-      String fieldPath, dynamic value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.LESS_THAN_OR_EQUAL);
-    return this;
-  }
+  Query whereIsLessThanOrEqualTo(String fieldPath, dynamic value) =>
+      Query(gateway, path).whereIsLessThanOrEqualTo(fieldPath, value);
 
-  CollectionReference whereIsGreaterThan(String fieldPath, dynamic value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN);
-    return this;
-  }
+  Query whereIsGreaterThan(String fieldPath, dynamic value) => Query(gateway, path).whereIsGreaterThan(fieldPath, value);
 
-  CollectionReference whereIsGreaterThanOrEqualTo(
-      String fieldPath, dynamic value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN_OR_EQUAL);
-    return this;
-  }
+  Query whereIsGreaterThanOrEqualTo(String fieldPath, dynamic value) =>
+      Query(gateway, path).whereIsGreaterThanOrEqualTo(fieldPath, value);
 
-  CollectionReference whereArrayContains(String fieldPath, dynamic value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS);
-    return this;
-  }
+  Query whereArrayContains(String fieldPath, dynamic value) => Query(gateway, path).whereArrayContains(fieldPath, value);
 
-  CollectionReference whereArrayContainsAny(
-      String fieldPath, List<dynamic> value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS_ANY);
-    return this;
-  }
+  Query whereArrayContainsAny(String fieldPath, List<dynamic> value) =>
+      Query(gateway, path).whereArrayContainsAny(fieldPath, value);
 
-  CollectionReference whereIn(String fieldPath, List<dynamic> value) {
-    _createFilter(fieldPath, value,
-        operator: StructuredQuery_FieldFilter_Operator.IN);
-    return this;
-  }
-
-  void _createFilter(String fieldPath, dynamic value,
-      {StructuredQuery_FieldFilter_Operator operator}) {
-    var queryFilter = StructuredQuery_Filter();
-    if (value == null || operator == null) {
-      var filter = StructuredQuery_UnaryFilter();
-      filter.op = StructuredQuery_UnaryFilter_Operator.IS_NULL;
-      filter.field_2 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
-
-      queryFilter.unaryFilter = filter;
-    } else {
-      var filter = StructuredQuery_FieldFilter();
-      filter.op = operator;
-      filter.value = _encode(value);
-
-      final fieldReference = StructuredQuery_FieldReference()
-        ..fieldPath = fieldPath;
-      filter.field_1 = fieldReference;
-
-      queryFilter.fieldFilter = filter;
-    }
-    _addToComposite(queryFilter);
-  }
-
-  void _addToComposite(StructuredQuery_Filter filter) {
-    StructuredQuery_CompositeFilter compositeFilter;
-    if (_getStructuredQuery().hasWhere() &&
-        _getStructuredQuery().where.hasCompositeFilter()) {
-      compositeFilter = _getStructuredQuery().where.compositeFilter;
-    } else {
-      compositeFilter = StructuredQuery_CompositeFilter()
-        ..op = StructuredQuery_CompositeFilter_Operator.AND;
-    }
-
-    compositeFilter.filters.add(filter);
-    _getStructuredQuery().where = StructuredQuery_Filter()
-      ..compositeFilter = compositeFilter;
-  }
-
-  StructuredQuery _getStructuredQuery() =>
-      _structuredQuery ??= StructuredQuery()
-        ..from.add(StructuredQuery_CollectionSelector()..collectionId = id);
+  Query whereIn(String fieldPath, List<dynamic> value) => Query(gateway, path).whereIn(fieldPath, value);
 
   /// Returns [CollectionReference] that's additionally sorted by the specified
   /// [fieldPath].
@@ -173,52 +93,28 @@ class CollectionReference extends Reference {
   /// The field is a [String] representing a single field name.
   /// After a [CollectionReference] order by call, you cannot add any more [orderBy]
   /// calls.
-  CollectionReference orderBy(
-    String fieldPath, {
-    bool descending = false,
-  }) {
-    final order = StructuredQuery_Order();
-    order.field_1 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
-    order.direction = descending
-        ? StructuredQuery_Direction.DESCENDING
-        : StructuredQuery_Direction.ASCENDING;
-    _getStructuredQuery().orderBy.add(order);
-    return this;
-  }
+  Query orderBy(String fieldPath, {bool descending = false}) =>
+      Query(gateway, path).orderBy(fieldPath, descending: descending);
 
   /// Returns [CollectionReference] that's additionally limited to only return up
   /// to the specified number of documents.
-  CollectionReference limit(int count) {
-    _getStructuredQuery().limit = Int32Value()..value = count;
-    return this;
-  }
-
-  /// Delegates encoding the given [value] to [FirebaseEncoding.encode].
-  fs.Value _encode(dynamic value) {
-    return FirestoreEncoding.encode(value);
-  }
+  Query limit(int count) => Query(gateway, path).limit(count);
 
   DocumentReference document(String id) {
     return DocumentReference(_gateway, '$path/$id');
   }
 
-  Future<Page<Document>> get(
-          {int pageSize = 1024, String nextPageToken = ''}) =>
-      _structuredQuery == null
-          ? _gateway.getCollection(_fullPath, pageSize, nextPageToken)
-          : gateway.runQuery(_structuredQuery, _fullPath,
-              nextPageToken: nextPageToken);
+  Future<Page<Document>> get({int pageSize = 1024, String nextPageToken = ''}) =>
+      _gateway.getCollection(_fullPath, pageSize, nextPageToken);
 
   Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
   /// Create a document with a random id.
-  Future<Document> add(Map<String, dynamic> map) =>
-      _gateway.createDocument(_fullPath, null, _encodeMap(map));
+  Future<Document> add(Map<String, dynamic> map) => _gateway.createDocument(_fullPath, null, _encodeMap(map));
 }
 
 class DocumentReference extends Reference {
-  DocumentReference(FirestoreGateway gateway, String path)
-      : super(gateway, path) {
+  DocumentReference(FirestoreGateway gateway, String path) : super(gateway, path) {
     if (_fullPath.split('/').length % 2 == 0) {
       throw Exception('Path is not a document: $path');
     }
@@ -250,18 +146,16 @@ class DocumentReference extends Reference {
   }
 
   /// Create a document if it doesn't exist, otherwise throw exception.
-  Future<Document> create(Map<String, dynamic> map) => _gateway.createDocument(
-      _fullPath.substring(0, _fullPath.lastIndexOf('/')), id, _encodeMap(map));
+  Future<Document> create(Map<String, dynamic> map) =>
+      _gateway.createDocument(_fullPath.substring(0, _fullPath.lastIndexOf('/')), id, _encodeMap(map));
 
   /// Create or update a document.
   /// In the case of an update, any fields not referenced in the payload will be deleted.
-  Future<void> set(Map<String, dynamic> map) async =>
-      _gateway.updateDocument(_fullPath, _encodeMap(map), false);
+  Future<void> set(Map<String, dynamic> map) async => _gateway.updateDocument(_fullPath, _encodeMap(map), false);
 
   /// Create or update a document.
   /// In case of an update, fields not referenced in the payload will remain unchanged.
-  Future<void> update(Map<String, dynamic> map) =>
-      _gateway.updateDocument(_fullPath, _encodeMap(map), true);
+  Future<void> update(Map<String, dynamic> map) => _gateway.updateDocument(_fullPath, _encodeMap(map), true);
 
   /// Deletes a document.
   Future<void> delete() async => await _gateway.deleteDocument(_fullPath);
@@ -275,15 +169,13 @@ class Document {
 
   String get id => path.substring(path.lastIndexOf('/') + 1);
 
-  String get path =>
-      _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
+  String get path => _rawDocument.name.substring(_rawDocument.name.indexOf('/documents') + 10);
 
   DateTime get createTime => _rawDocument.createTime.toDateTime();
 
   DateTime get updateTime => _rawDocument.updateTime.toDateTime();
 
-  Map<String, dynamic> get map =>
-      _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
+  Map<String, dynamic> get map => _rawDocument.fields.map((key, _) => MapEntry(key, this[key]));
 
   DocumentReference get reference => DocumentReference(_gateway, path);
 
@@ -316,10 +208,7 @@ class GeoPoint {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GeoPoint &&
-          runtimeType == other.runtimeType &&
-          latitude == other.latitude &&
-          longitude == other.longitude;
+      other is GeoPoint && runtimeType == other.runtimeType && latitude == other.latitude && longitude == other.longitude;
 
   @override
   int get hashCode => latitude.hashCode ^ longitude.hashCode;
@@ -345,6 +234,123 @@ class Page<T> extends ListBase<T> {
 
   Page(Iterable<T> iterable, this.nextPageToken) {
     _list.addAll(iterable);
+  }
+}
+
+class Query extends Reference {
+  final StructuredQuery _structuredQuery = StructuredQuery();
+
+  Query(FirestoreGateway gateway, String path) : super(gateway, path) {
+    StructuredQuery()..from.add(StructuredQuery_CollectionSelector()..collectionId = id);
+  }
+
+  Query whereIsEqualTo(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.EQUAL);
+    return this;
+  }
+
+  Query whereIsNull(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, null);
+    return this;
+  }
+
+  Query whereIsLessThan(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.LESS_THAN);
+    return this;
+  }
+
+  Query whereIsLessThanOrEqualTo(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.LESS_THAN_OR_EQUAL);
+    return this;
+  }
+
+  Query whereIsGreaterThan(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN);
+    return this;
+  }
+
+  Query whereIsGreaterThanOrEqualTo(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.GREATER_THAN_OR_EQUAL);
+    return this;
+  }
+
+  Query whereArrayContains(String fieldPath, dynamic value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS);
+    return this;
+  }
+
+  Query whereArrayContainsAny(String fieldPath, List<dynamic> value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.ARRAY_CONTAINS_ANY);
+    return this;
+  }
+
+  Query whereIn(String fieldPath, List<dynamic> value) {
+    _createFilter(fieldPath, value, operator: StructuredQuery_FieldFilter_Operator.IN);
+    return this;
+  }
+
+  /// Returns [Query] that's additionally sorted by the specified
+  /// [fieldPath].
+  ///
+  /// The field is a [String] representing a single field name.
+  /// After a [Query] order by call, you cannot add any more [orderBy]
+  /// calls.
+  Query orderBy(
+    String fieldPath, {
+    bool descending = false,
+  }) {
+    final order = StructuredQuery_Order();
+    order.field_1 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
+    order.direction = descending ? StructuredQuery_Direction.DESCENDING : StructuredQuery_Direction.ASCENDING;
+    _structuredQuery.orderBy.add(order);
+    return this;
+  }
+
+  /// Returns [Query] that's additionally limited to only return up
+  /// to the specified number of documents.
+  Query limit(int count) {
+    _structuredQuery.limit = Int32Value()..value = count;
+    return this;
+  }
+
+  Future<List<Document>> get() => _gateway.runQuery(_structuredQuery, _fullPath);
+
+  void _createFilter(String fieldPath, dynamic value, {StructuredQuery_FieldFilter_Operator operator}) {
+    var queryFilter = StructuredQuery_Filter();
+    if (value == null || operator == null) {
+      var filter = StructuredQuery_UnaryFilter();
+      filter.op = StructuredQuery_UnaryFilter_Operator.IS_NULL;
+      filter.field_2 = StructuredQuery_FieldReference()..fieldPath = fieldPath;
+
+      queryFilter.unaryFilter = filter;
+    } else {
+      var filter = StructuredQuery_FieldFilter();
+      filter.op = operator;
+      filter.value = _encode(value);
+
+      final fieldReference = StructuredQuery_FieldReference()..fieldPath = fieldPath;
+      filter.field_1 = fieldReference;
+
+      queryFilter.fieldFilter = filter;
+    }
+    _addToComposite(queryFilter);
+  }
+
+  void _addToComposite(StructuredQuery_Filter filter) {
+    StructuredQuery_CompositeFilter compositeFilter;
+    if (_structuredQuery.hasWhere() && _structuredQuery.where.hasCompositeFilter()) {
+      compositeFilter = _structuredQuery.where.compositeFilter;
+    } else {
+      compositeFilter = StructuredQuery_CompositeFilter()..op = StructuredQuery_CompositeFilter_Operator.AND;
+    }
+
+    compositeFilter.filters.add(filter);
+    _structuredQuery.where = StructuredQuery_Filter()..compositeFilter = compositeFilter;
+  }
+
+  /// Delegates encoding the given [value] to [FirebaseEncoding.encode].
+  fs.Value _encode(dynamic value) {
+    return FirestoreEncoding.encode(value);
   }
 }
 
@@ -410,12 +416,9 @@ dynamic _decode(fs.Value value, FirestoreGateway gateway) {
     case fs.Value_ValueType.geoPointValue:
       return GeoPoint.fromLatLng(value.geoPointValue);
     case fs.Value_ValueType.arrayValue:
-      return value.arrayValue.values
-          .map((item) => _decode(item, gateway))
-          .toList(growable: false);
+      return value.arrayValue.values.map((item) => _decode(item, gateway)).toList(growable: false);
     case fs.Value_ValueType.mapValue:
-      return value.mapValue.fields
-          .map((key, value) => MapEntry(key, _decode(value, gateway)));
+      return value.mapValue.fields.map((key, value) => MapEntry(key, _decode(value, gateway)));
     default:
       throw Exception('Unrecognized type: ${value}');
   }
