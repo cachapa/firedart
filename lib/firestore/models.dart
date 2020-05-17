@@ -56,15 +56,14 @@ abstract class Reference {
 }
 
 class CollectionReference extends Reference {
-  final StructuredQuery _structuredQuery = StructuredQuery();
   final FirestoreGateway gateway;
+
+  StructuredQuery _structuredQuery;
 
   /// Constructs a [CollectionReference] using [FirestoreGateway] and path.
   ///
   /// Throws [Exception] if path contains odd amount of '/'.
   CollectionReference(this.gateway, String path) : super(gateway, path) {
-    _structuredQuery.from
-        .add(StructuredQuery_CollectionSelector()..collectionId = id);
     if (_fullPath.split('/').length % 2 == 1) {
       throw Exception('Path is not a collection: $path');
     }
@@ -151,18 +150,22 @@ class CollectionReference extends Reference {
 
   void _addToComposite(StructuredQuery_Filter filter) {
     StructuredQuery_CompositeFilter compositeFilter;
-    if (_structuredQuery.hasWhere() &&
-        _structuredQuery.where.hasCompositeFilter()) {
-      compositeFilter = _structuredQuery.where.compositeFilter;
+    if (_getStructuredQuery().hasWhere() &&
+        _getStructuredQuery().where.hasCompositeFilter()) {
+      compositeFilter = _getStructuredQuery().where.compositeFilter;
     } else {
       compositeFilter = StructuredQuery_CompositeFilter()
         ..op = StructuredQuery_CompositeFilter_Operator.AND;
     }
 
     compositeFilter.filters.add(filter);
-    _structuredQuery.where = StructuredQuery_Filter()
+    _getStructuredQuery().where = StructuredQuery_Filter()
       ..compositeFilter = compositeFilter;
   }
+
+  StructuredQuery _getStructuredQuery() =>
+      _structuredQuery ??= StructuredQuery()
+        ..from.add(StructuredQuery_CollectionSelector()..collectionId = id);
 
   /// Returns [CollectionReference] that's additionally sorted by the specified
   /// [fieldPath].
@@ -179,14 +182,14 @@ class CollectionReference extends Reference {
     order.direction = descending
         ? StructuredQuery_Direction.DESCENDING
         : StructuredQuery_Direction.ASCENDING;
-    _structuredQuery.orderBy.add(order);
+    _getStructuredQuery().orderBy.add(order);
     return this;
   }
 
   /// Returns [CollectionReference] that's additionally limited to only return up
   /// to the specified number of documents.
   CollectionReference limit(int count) {
-    _structuredQuery.limit = Int32Value()..value = count;
+    _getStructuredQuery().limit = Int32Value()..value = count;
     return this;
   }
 
@@ -203,7 +206,8 @@ class CollectionReference extends Reference {
           {int pageSize = 1024, String nextPageToken = ''}) =>
       _structuredQuery == null
           ? _gateway.getCollection(_fullPath, pageSize, nextPageToken)
-          : gateway.runQuery(_structuredQuery, _fullPath);
+          : gateway.runQuery(_structuredQuery, _fullPath,
+              nextPageToken: nextPageToken);
 
   Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
 
