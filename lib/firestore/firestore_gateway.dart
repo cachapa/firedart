@@ -134,6 +134,18 @@ class FirestoreGateway {
             : null);
   }
 
+  Future<List<Document>> runQuery(
+      StructuredQuery structuredQuery, String fullPath) async {
+    final runQuery = RunQueryRequest()
+      ..structuredQuery = structuredQuery
+      ..parent = fullPath.substring(0, fullPath.lastIndexOf('/'));
+    final response = _client.runQuery(runQuery);
+    return await response
+        .where((event) => event.hasDocument())
+        .map((event) => Document(this, event.document))
+        .toList();
+  }
+
   void _setupClient() {
     _channel = ClientChannel('firestore.googleapis.com');
     var options = TokenAuthenticator.from(auth)?.toCallOptions;
