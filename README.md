@@ -6,7 +6,7 @@ A dart-native implementation of the Firebase Auth and Firestore SDKs.
 
 This library attempts to minimize dependencies with the intention of making it able to run in any environment capable of executing dart code. Currently it has been successfully tested using the dart runtime (`x86-64` and `arm32`) as well as on Flutter Android, iOS and Desktop.
 
-Currently the only supported services are `Firebase Auth` and `Firestore`.
+Firedart currently implements `Firebase Auth` and `Firestore`.
 
 ## Dependencies
 

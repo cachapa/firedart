@@ -1,6 +1,8 @@
 ## [0.8.0] - 5 April 2020
 
 * Implement support for the Admin SDK. See example/admin.dart
+* Implement Firestore queries
+* Add Firebase token verification
 
 ## [0.7.2] - 05 May 2020.
 
