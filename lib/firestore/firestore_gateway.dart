@@ -6,9 +6,9 @@ import 'package:firedart/generated/google/firestore/v1/firestore.pbgrpc.dart';
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
 import 'package:grpc/grpc.dart';
 
+import '../auth/token_authenticator.dart';
 import '../firedart.dart';
 import 'models.dart';
-import 'token_authenticator.dart';
 
 class FirestoreGateway {
   final FirebaseAuth auth;

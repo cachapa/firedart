@@ -1,10 +1,11 @@
 import 'package:firedart/auth/auth_gateway.dart';
 import 'package:firedart/auth/client.dart';
-import 'package:firedart/auth/service_account/service_account.dart';
 import 'package:firedart/auth/token_provider.dart';
 import 'package:firedart/auth/token_store.dart';
 import 'package:firedart/auth/user_gateway.dart';
 import 'package:http/http.dart' as http;
+
+import 'service_account.dart';
 
 /// For service accounts, you can use ServiceAccount.fromJson(String) or ServiceAccount.fromEnvironmentVariable(optional String)
 /// Using the environment variable implementation will crash if you are on a platform that dart:io does not support.

@@ -12,6 +12,7 @@ dependencies:
   protobuf: ^1.0.1
   fixnum: ^0.10.11
   googleapis_auth: ^0.2.11
+  gcloud: ^0.7.0+1
   asn1lib: ^0.6.4
   pointycastle: ^1.0.2
 

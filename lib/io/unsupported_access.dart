@@ -1,4 +1,6 @@
-import 'service_account.dart';
+import 'dart:async';
+
+import 'abstract_access.dart';
 
 final UnsupportedAccess _access = UnsupportedAccess._private();
 
@@ -14,5 +16,13 @@ class UnsupportedAccess extends AbstractPlatformAccess {
 
   @override
   Future<String> getStringFromFile(String filePath) => throw UnsupportedError(
+      'File objects do not exist on the platform you are using.');
+
+  @override
+  StreamConsumer openWrite(String filePath) => throw UnsupportedError(
+      'File objects do not exist on the platform you are using.');
+
+  @override
+  Stream openRead(String filePath) => throw UnsupportedError(
       'File objects do not exist on the platform you are using.');
 }
