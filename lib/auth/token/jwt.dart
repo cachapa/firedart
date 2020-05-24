@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:firedart/auth/token/user_record.dart';
-import 'package:http/http.dart' as http;
+import 'package:firedart/auth/firebase_auth.dart';
 import 'package:openid_client/openid_client.dart';
 
 import 'rsa.dart';
@@ -25,9 +24,26 @@ class Jwt {
   Jwt(this.token) : _tokenParts = token.split(' ').last.split('.');
 
   Future<bool> validate(String projectId, Map<String, String> certificates,
-      {bool enforceEmailVerification = false,
-      bool checkRevoked = false}) async {
-    // Validate payload
+      {bool enforceEmailVerification = false, bool checkRevoked = false}) async {
+    // Google can validate the token for us and we can compare the results to revoke it.
+    // Otherwise, do local validation so we don't use network bandwidth and deal with latency.
+    if (checkRevoked) {
+      var user = await FirebaseAuth.instance.getUser(uid: userId);
+
+      if (user.tokensValidAfterTime != null) {
+        var issuer = await Issuer.discover(Issuer.firebase(projectId));
+        var client = Client(issuer, projectId);
+
+        var credential = client.createCredential(idToken: token);
+
+        final authTimeUtc = credential.idToken.claims.authTime;
+        final validSinceUtc = user.tokensValidAfterTime;
+        if (authTimeUtc.isBefore(validSinceUtc)) {
+          throw RevokedTokenException();
+        }
+      }
+    }
+
     var now = (DateTime.now().toUtc().millisecondsSinceEpoch / 1000).floor();
 
     if (_payload.authenticationTime >= now) {
@@ -61,28 +77,9 @@ class Jwt {
       throw Exception('Unrecognized certificate id: ${_header.certificateId}');
     }
 
-    _rsaMap[_header.certificateId] ??=
-        Rsa.fromCertificate(certificates[_header.certificateId]);
+    _rsaMap[_header.certificateId] ??= Rsa.fromCertificate(certificates[_header.certificateId]);
     var rsa = _rsaMap[_header.certificateId];
-    var verified =
-        rsa.verify('${_tokenParts[0]}.${_tokenParts[1]}', _tokenParts[2]);
-
-    if (verified && checkRevoked) {
-      var user = UserRecord.fromJson(await _getUserObject(projectId, userId));
-
-      if (user.tokensValidAfterTime != null) {
-        var issuer = await Issuer.discover(Issuer.firebase(projectId));
-        var client = Client(issuer, projectId);
-
-        var credential = client.createCredential(idToken: token);
-
-        final authTimeUtc = credential.idToken.claims.authTime;
-        final validSinceUtc = user.tokensValidAfterTime;
-        if (authTimeUtc.isBefore(validSinceUtc)) {
-          throw RevokedTokenException();
-        }
-      }
-    }
+    var verified = rsa.verify('${_tokenParts[0]}.${_tokenParts[1]}', _tokenParts[2]);
 
     return verified;
   }
@@ -126,15 +123,4 @@ class EmailVerificationException implements Exception {
   final message = 'Email has not been verified';
 }
 
-Map<String, dynamic> _parse(String tokenPart) =>
-    jsonDecode(utf8.decode(relaxedBase64Decode(tokenPart)));
-
-Future<Map<String, String>> _getUserObject(
-        String projectId, String uid) async =>
-    (jsonDecode((await http.post(
-                'https://identitytoolkit.googleapis.com/v1/projects/$projectId/accounts:lookup',
-                body: {
-          'localId': [uid]
-        }))
-            .body) as Map<String, dynamic>)
-        .cast<String, String>();
+Map<String, dynamic> _parse(String tokenPart) => jsonDecode(utf8.decode(relaxedBase64Decode(tokenPart)));

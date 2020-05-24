@@ -6,14 +6,18 @@ import 'package:firedart/auth/token_provider.dart';
 class UserGateway {
   final UserClient _client;
 
-  UserGateway(KeyClient client, TokenProvider tokenProvider)
-      : _client = UserClient(client, tokenProvider);
+  UserGateway(KeyClient client, TokenProvider tokenProvider) : _client = UserClient(client, tokenProvider);
 
-  Future<void> requestEmailVerification() =>
-      _post('sendOobCode', {'requestType': 'VERIFY_EMAIL'});
+  Future<void> requestEmailVerification() => _post('sendOobCode', {'requestType': 'VERIFY_EMAIL'});
 
-  Future<User> getUser() async {
-    var map = await _post('lookup', {});
+  Future<User> getUser({String uid}) async {
+    var map = await _post(
+        'lookup',
+        uid == null
+            ? {}
+            : {
+                'localId': [uid]
+              });
     return User.fromMap(map['users'][0]);
   }
 
@@ -34,10 +38,8 @@ class UserGateway {
     await _post('delete', {});
   }
 
-  Future<Map<String, dynamic>> _post<T>(
-      String method, Map<String, String> body) async {
-    var requestUrl =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$method';
+  Future<Map<String, dynamic>> _post<T>(String method, Map<String, dynamic> body) async {
+    var requestUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await _client.post(
       requestUrl,
@@ -50,17 +52,24 @@ class UserGateway {
 
 class User {
   final String id;
-  final String displayName;
-  final String photoUrl;
   final String email;
   final bool emailVerified;
+  final String displayName;
+  final String photoUrl;
+  final String phoneNumber;
+  final bool disabled;
+  final DateTime tokensValidAfterTime;
 
   User.fromMap(Map<String, dynamic> map)
       : id = map['localId'],
         displayName = map['displayName'],
         photoUrl = map['photoUrl'],
         email = map['email'],
-        emailVerified = map['emailVerified'];
+        emailVerified = map['emailVerified'],
+        phoneNumber = map['phoneNumber'],
+        disabled = map['disabled'] ?? false,
+        tokensValidAfterTime =
+            map['validSince'] == null ? null : DateTime.fromMillisecondsSinceEpoch(int.parse(map['validSince']) * 1000);
 
   Map<String, dynamic> toMap() => {
         'localId': id,
@@ -68,6 +77,9 @@ class User {
         'photoUrl': photoUrl,
         'email': email,
         'emailVerified': emailVerified,
+        'phoneNumber': phoneNumber,
+        'disabled': disabled,
+        'tokenValidAfterTime': tokensValidAfterTime?.toIso8601String(),
       };
 
   @override

@@ -15,20 +15,17 @@ class FirebaseAuth {
   /* Singleton interface */
   static FirebaseAuth _instance;
 
-  static FirebaseAuth initialize(String apiKey, TokenStore tokenStore,
-      {ServiceAccount serviceAccount}) {
+  static FirebaseAuth initialize(String apiKey, TokenStore tokenStore, {ServiceAccount serviceAccount}) {
     if (_instance != null) {
       throw Exception('FirebaseAuth instance was already initialized');
     }
-    _instance =
-        FirebaseAuth(apiKey, tokenStore, serviceAccount: serviceAccount);
+    _instance = FirebaseAuth(apiKey, tokenStore, serviceAccount: serviceAccount);
     return _instance;
   }
 
   static FirebaseAuth get instance {
     if (_instance == null) {
-      throw Exception(
-          "FirebaseAuth hasn't been initialized. Please call FirebaseAuth.initialize() before using it.");
+      throw Exception("FirebaseAuth hasn't been initialized. Please call FirebaseAuth.initialize() before using it.");
     }
     return _instance;
   }
@@ -43,8 +40,7 @@ class FirebaseAuth {
   AuthGateway _authGateway;
   UserGateway _userGateway;
 
-  FirebaseAuth(this.apiKey, TokenStore tokenStore,
-      {this.httpClient, this.serviceAccount})
+  FirebaseAuth(this.apiKey, TokenStore tokenStore, {this.httpClient, this.serviceAccount})
       : assert(apiKey.isNotEmpty),
         assert(tokenStore != null) {
     httpClient ??= http.Client();
@@ -61,26 +57,21 @@ class FirebaseAuth {
 
   String get userId => tokenProvider.userId;
 
-  Future<User> signUp(String email, String password) =>
-      _authGateway.signUp(email, password);
+  Future<User> signUp(String email, String password) => _authGateway.signUp(email, password);
 
-  Future<User> signIn(String email, String password) =>
-      _authGateway.signIn(email, password);
+  Future<User> signIn(String email, String password) => _authGateway.signIn(email, password);
 
   void signOut() => tokenProvider.signOut();
 
   Future<void> resetPassword(String email) => _authGateway.resetPassword(email);
 
-  Future<void> requestEmailVerification() =>
-      _userGateway.requestEmailVerification();
+  Future<void> requestEmailVerification() => _userGateway.requestEmailVerification();
 
-  Future<void> changePassword(String password) =>
-      _userGateway.changePassword(password);
+  Future<void> changePassword(String password) => _userGateway.changePassword(password);
 
-  Future<User> getUser() => _userGateway.getUser();
+  Future<User> getUser({String uid}) => _userGateway.getUser(uid: uid);
 
-  Future<void> updateProfile({String displayName, String photoUrl}) =>
-      _userGateway.updateProfile(displayName, photoUrl);
+  Future<void> updateProfile({String displayName, String photoUrl}) => _userGateway.updateProfile(displayName, photoUrl);
 
   Future<void> deleteAccount() async {
     await _userGateway.deleteAccount();
