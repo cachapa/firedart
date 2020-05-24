@@ -24,7 +24,8 @@ class Jwt {
   Jwt(this.token) : _tokenParts = token.split(' ').last.split('.');
 
   Future<bool> validate(String projectId, Map<String, String> certificates,
-      {bool enforceEmailVerification = false, bool checkRevoked = false}) async {
+      {bool enforceEmailVerification = false,
+      bool checkRevoked = false}) async {
     // Google can validate the token for us and we can compare the results to revoke it.
     // Otherwise, do local validation so we don't use network bandwidth and deal with latency.
     if (checkRevoked) {
@@ -77,9 +78,11 @@ class Jwt {
       throw Exception('Unrecognized certificate id: ${_header.certificateId}');
     }
 
-    _rsaMap[_header.certificateId] ??= Rsa.fromCertificate(certificates[_header.certificateId]);
+    _rsaMap[_header.certificateId] ??=
+        Rsa.fromCertificate(certificates[_header.certificateId]);
     var rsa = _rsaMap[_header.certificateId];
-    var verified = rsa.verify('${_tokenParts[0]}.${_tokenParts[1]}', _tokenParts[2]);
+    var verified =
+        rsa.verify('${_tokenParts[0]}.${_tokenParts[1]}', _tokenParts[2]);
 
     return verified;
   }
@@ -123,4 +126,5 @@ class EmailVerificationException implements Exception {
   final message = 'Email has not been verified';
 }
 
-Map<String, dynamic> _parse(String tokenPart) => jsonDecode(utf8.decode(relaxedBase64Decode(tokenPart)));
+Map<String, dynamic> _parse(String tokenPart) =>
+    jsonDecode(utf8.decode(relaxedBase64Decode(tokenPart)));

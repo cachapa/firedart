@@ -6,9 +6,11 @@ import 'package:firedart/auth/token_provider.dart';
 class UserGateway {
   final UserClient _client;
 
-  UserGateway(KeyClient client, TokenProvider tokenProvider) : _client = UserClient(client, tokenProvider);
+  UserGateway(KeyClient client, TokenProvider tokenProvider)
+      : _client = UserClient(client, tokenProvider);
 
-  Future<void> requestEmailVerification() => _post('sendOobCode', {'requestType': 'VERIFY_EMAIL'});
+  Future<void> requestEmailVerification() =>
+      _post('sendOobCode', {'requestType': 'VERIFY_EMAIL'});
 
   Future<User> getUser({String uid}) async {
     var map = await _post(
@@ -38,8 +40,10 @@ class UserGateway {
     await _post('delete', {});
   }
 
-  Future<Map<String, dynamic>> _post<T>(String method, Map<String, dynamic> body) async {
-    var requestUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:$method';
+  Future<Map<String, dynamic>> _post<T>(
+      String method, Map<String, dynamic> body) async {
+    var requestUrl =
+        'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await _client.post(
       requestUrl,
@@ -68,8 +72,10 @@ class User {
         emailVerified = map['emailVerified'],
         phoneNumber = map['phoneNumber'],
         disabled = map['disabled'] ?? false,
-        tokensValidAfterTime =
-            map['validSince'] == null ? null : DateTime.fromMillisecondsSinceEpoch(int.parse(map['validSince']) * 1000);
+        tokensValidAfterTime = map['validSince'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(
+                int.parse(map['validSince']) * 1000);
 
   Map<String, dynamic> toMap() => {
         'localId': id,
