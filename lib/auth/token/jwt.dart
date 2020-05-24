@@ -1,11 +1,16 @@
 import 'dart:convert';
 
+import 'package:firedart/auth/token/user_record.dart';
+import 'package:http/http.dart' as http;
+import 'package:openid_client/openid_client.dart';
+
 import 'rsa.dart';
 
 class Jwt {
   static final _rsaMap = <String, Rsa>{};
 
   final List<String> _tokenParts;
+  final String token;
 
   // TODO Improve this when dart gets lazy field instantiation
   _Header _h;
@@ -17,10 +22,11 @@ class Jwt {
 
   String get userId => _payload.subject;
 
-  Jwt(String token) : _tokenParts = token.split(' ').last.split('.');
+  Jwt(this.token) : _tokenParts = token.split(' ').last.split('.');
 
-  bool validate(String projectId, Map<String, String> certificates,
-      {bool enforceEmailVerification = false}) {
+  Future<bool> validate(String projectId, Map<String, String> certificates,
+      {bool enforceEmailVerification = false,
+      bool checkRevoked = false}) async {
     // Validate payload
     var now = (DateTime.now().toUtc().millisecondsSinceEpoch / 1000).floor();
 
@@ -58,7 +64,27 @@ class Jwt {
     _rsaMap[_header.certificateId] ??=
         Rsa.fromCertificate(certificates[_header.certificateId]);
     var rsa = _rsaMap[_header.certificateId];
-    return rsa.verify('${_tokenParts[0]}.${_tokenParts[1]}', _tokenParts[2]);
+    var verified =
+        rsa.verify('${_tokenParts[0]}.${_tokenParts[1]}', _tokenParts[2]);
+
+    if (verified && checkRevoked) {
+      var user = UserRecord.fromJson(await _getUserObject(projectId, userId));
+
+      if (user.tokensValidAfterTime != null) {
+        var issuer = await Issuer.discover(Issuer.firebase(projectId));
+        var client = Client(issuer, projectId);
+
+        var credential = client.createCredential(idToken: token);
+
+        final authTimeUtc = credential.idToken.claims.authTime;
+        final validSinceUtc = user.tokensValidAfterTime;
+        if (authTimeUtc.isBefore(validSinceUtc)) {
+          throw RevokedTokenException();
+        }
+      }
+    }
+
+    return verified;
   }
 }
 
@@ -92,9 +118,23 @@ class _Payload {
   _Payload(String tokenPart) : data = _parse(tokenPart);
 }
 
+class RevokedTokenException implements Exception {
+  final message = 'The token has been revoked';
+}
+
 class EmailVerificationException implements Exception {
   final message = 'Email has not been verified';
 }
 
 Map<String, dynamic> _parse(String tokenPart) =>
     jsonDecode(utf8.decode(relaxedBase64Decode(tokenPart)));
+
+Future<Map<String, String>> _getUserObject(
+        String projectId, String uid) async =>
+    (jsonDecode((await http.post(
+                'https://identitytoolkit.googleapis.com/v1/projects/$projectId/accounts:lookup',
+                body: {
+          'localId': [uid]
+        }))
+            .body) as Map<String, dynamic>)
+        .cast<String, String>();
