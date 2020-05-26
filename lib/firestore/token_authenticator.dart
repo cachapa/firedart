@@ -16,8 +16,5 @@ class TokenAuthenticator {
     metadata['authorization'] = 'Bearer ${idToken}';
   }
 
-  CallOptions get toCallOptions => auth.serviceAccount != null
-      ? JwtServiceAccountAuthenticator(auth.serviceAccount.serviceAccountString)
-          .toCallOptions
-      : CallOptions(providers: [authenticate]);
+  CallOptions get toCallOptions => CallOptions(providers: [authenticate]);
 }

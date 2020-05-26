@@ -1,27 +1,19 @@
 import 'package:firedart/auth/auth_gateway.dart';
 import 'package:firedart/auth/client.dart';
-import 'package:firedart/auth/service_account/service_account.dart';
 import 'package:firedart/auth/token_provider.dart';
 import 'package:firedart/auth/token_store.dart';
 import 'package:firedart/auth/user_gateway.dart';
 import 'package:http/http.dart' as http;
 
-/// For service accounts, you can use ServiceAccount.fromJson(String) or ServiceAccount.fromEnvironmentVariable(optional String)
-/// Using the environment variable implementation will crash if you are on a platform that dart:io does not support.
-///
-/// If you do not provide a service account, firebase will initialize you as an anonymous user unless you sign in with
-/// the signIn(String email, String password) method in this class.
 class FirebaseAuth {
   /* Singleton interface */
   static FirebaseAuth _instance;
 
-  static FirebaseAuth initialize(String apiKey, TokenStore tokenStore,
-      {ServiceAccount serviceAccount}) {
+  static FirebaseAuth initialize(String apiKey, TokenStore tokenStore) {
     if (_instance != null) {
       throw Exception('FirebaseAuth instance was already initialized');
     }
-    _instance =
-        FirebaseAuth(apiKey, tokenStore, serviceAccount: serviceAccount);
+    _instance = FirebaseAuth(apiKey, tokenStore);
     return _instance;
   }
 
@@ -35,7 +27,6 @@ class FirebaseAuth {
 
   /* Instance interface */
   final String apiKey;
-  final ServiceAccount serviceAccount;
 
   http.Client httpClient;
   TokenProvider tokenProvider;
@@ -43,8 +34,7 @@ class FirebaseAuth {
   AuthGateway _authGateway;
   UserGateway _userGateway;
 
-  FirebaseAuth(this.apiKey, TokenStore tokenStore,
-      {this.httpClient, this.serviceAccount})
+  FirebaseAuth(this.apiKey, TokenStore tokenStore, {this.httpClient})
       : assert(apiKey.isNotEmpty),
         assert(tokenStore != null) {
     httpClient ??= http.Client();

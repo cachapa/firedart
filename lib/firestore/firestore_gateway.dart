@@ -14,7 +14,6 @@ class FirestoreGateway {
   final FirebaseAuth auth;
   final String database;
 
-  ClientChannel _channel;
   FirestoreClient _client;
   StreamController<ListenRequest> streamController;
   Stream<ListenResponse> stream;
@@ -147,9 +146,8 @@ class FirestoreGateway {
   }
 
   void _setupClient() {
-    _channel = ClientChannel('firestore.googleapis.com');
-    var options = TokenAuthenticator.from(auth)?.toCallOptions;
-    _client = FirestoreClient(_channel, options: options);
+    _client = FirestoreClient(ClientChannel('firestore.googleapis.com'),
+        options: TokenAuthenticator.from(auth)?.toCallOptions);
     streamController = null;
     stream = null;
   }
@@ -176,11 +174,5 @@ class FirestoreGateway {
                 metadata: {'google-cloud-resource-prefix': database}))
         .handleError(_handleError)
         .asBroadcastStream();
-  }
-
-  // close the connection
-  Future<void> close() async {
-    await streamController.close();
-    await _channel.shutdown();
   }
 }
