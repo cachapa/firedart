@@ -1,18 +1,13 @@
 import 'dart:collection';
-import 'dart:typed_data';
 
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
-import 'package:firedart/generated/google/protobuf/struct.pb.dart';
-import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
-import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
 import 'package:firedart/generated/google/protobuf/wrappers.pb.dart';
 import 'package:firedart/generated/google/type/latlng.pb.dart';
-import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 
-import 'firestore_encoding.dart';
 import 'firestore_gateway.dart';
+import 'type_util.dart';
 
 abstract class Reference {
   final FirestoreGateway _gateway;
@@ -20,7 +15,7 @@ abstract class Reference {
 
   String get id => path.substring(path.lastIndexOf('/') + 1);
 
-  String get _fullPath => '${_gateway.database}/$path';
+  String get fullPath => '${_gateway.database}/$path';
 
   Reference(this._gateway, String path)
       : path = _trimSlashes(path.startsWith(_gateway.database)
@@ -35,7 +30,7 @@ abstract class Reference {
 
   @override
   bool operator ==(other) {
-    return runtimeType == other.runtimeType && _fullPath == other._fullPath;
+    return runtimeType == other.runtimeType && fullPath == other.fullPath;
   }
 
   @override
@@ -46,7 +41,7 @@ abstract class Reference {
   fs.Document _encodeMap(Map<String, dynamic> map) {
     var document = fs.Document();
     map.forEach((key, value) {
-      document.fields[key] = _encode(value);
+      document.fields[key] = TypeUtil.encode(value);
     });
     return document;
   }
@@ -64,7 +59,7 @@ class CollectionReference extends Reference {
   ///
   /// Throws [Exception] if path contains odd amount of '/'.
   CollectionReference(this.gateway, String path) : super(gateway, path) {
-    if (_fullPath.split('/').length % 2 == 1) {
+    if (fullPath.split('/').length % 2 == 1) {
       throw Exception('Path is not a collection: $path');
     }
   }
@@ -111,19 +106,19 @@ class CollectionReference extends Reference {
 
   Future<Page<Document>> get(
           {int pageSize = 1024, String nextPageToken = ''}) =>
-      _gateway.getCollection(_fullPath, pageSize, nextPageToken);
+      _gateway.getCollection(fullPath, pageSize, nextPageToken);
 
-  Stream<List<Document>> get stream => _gateway.streamCollection(_fullPath);
+  Stream<List<Document>> get stream => _gateway.streamCollection(fullPath);
 
   /// Create a document with a random id.
   Future<Document> add(Map<String, dynamic> map) =>
-      _gateway.createDocument(_fullPath, null, _encodeMap(map));
+      _gateway.createDocument(fullPath, null, _encodeMap(map));
 }
 
 class DocumentReference extends Reference {
   DocumentReference(FirestoreGateway gateway, String path)
       : super(gateway, path) {
-    if (_fullPath.split('/').length % 2 == 0) {
+    if (fullPath.split('/').length % 2 == 0) {
       throw Exception('Path is not a document: $path');
     }
   }
@@ -132,12 +127,12 @@ class DocumentReference extends Reference {
     return CollectionReference(_gateway, '$path/$id');
   }
 
-  Future<Document> get() => _gateway.getDocument(_fullPath);
+  Future<Document> get() => _gateway.getDocument(fullPath);
 
   @Deprecated('Use the stream getter instead')
   Stream<Document> subscribe() => stream;
 
-  Stream<Document> get stream => _gateway.streamDocument(_fullPath);
+  Stream<Document> get stream => _gateway.streamDocument(fullPath);
 
   /// Check if a document exists.
   Future<bool> get exists async {
@@ -155,20 +150,20 @@ class DocumentReference extends Reference {
 
   /// Create a document if it doesn't exist, otherwise throw exception.
   Future<Document> create(Map<String, dynamic> map) => _gateway.createDocument(
-      _fullPath.substring(0, _fullPath.lastIndexOf('/')), id, _encodeMap(map));
+      fullPath.substring(0, fullPath.lastIndexOf('/')), id, _encodeMap(map));
 
   /// Create or update a document.
   /// In the case of an update, any fields not referenced in the payload will be deleted.
   Future<void> set(Map<String, dynamic> map) async =>
-      _gateway.updateDocument(_fullPath, _encodeMap(map), false);
+      _gateway.updateDocument(fullPath, _encodeMap(map), false);
 
   /// Create or update a document.
   /// In case of an update, fields not referenced in the payload will remain unchanged.
   Future<void> update(Map<String, dynamic> map) =>
-      _gateway.updateDocument(_fullPath, _encodeMap(map), true);
+      _gateway.updateDocument(fullPath, _encodeMap(map), true);
 
   /// Deletes a document.
-  Future<void> delete() async => await _gateway.deleteDocument(_fullPath);
+  Future<void> delete() async => await _gateway.deleteDocument(fullPath);
 }
 
 class Document {
@@ -193,7 +188,7 @@ class Document {
 
   dynamic operator [](String key) {
     if (!_rawDocument.fields.containsKey(key)) return null;
-    return _decode(_rawDocument.fields[key], _gateway);
+    return TypeUtil.decode(_rawDocument.fields[key], _gateway);
   }
 
   @override
@@ -337,8 +332,7 @@ class QueryReference extends Reference {
     return this;
   }
 
-  Future<List<Document>> get() =>
-      _gateway.runQuery(_structuredQuery, _fullPath);
+  Future<List<Document>> get() => _gateway.runQuery(_structuredQuery, fullPath);
 
   void _addFilter(String fieldPath, dynamic value,
       {StructuredQuery_FieldFilter_Operator operator}) {
@@ -352,7 +346,7 @@ class QueryReference extends Reference {
     } else {
       var filter = StructuredQuery_FieldFilter();
       filter.op = operator;
-      filter.value = _encode(value);
+      filter.value = TypeUtil.encode(value);
 
       final fieldReference = StructuredQuery_FieldReference()
         ..fieldPath = fieldPath;
@@ -360,10 +354,7 @@ class QueryReference extends Reference {
 
       queryFilter.fieldFilter = filter;
     }
-    _addToComposite(queryFilter);
-  }
 
-  void _addToComposite(StructuredQuery_Filter filter) {
     StructuredQuery_CompositeFilter compositeFilter;
     if (_structuredQuery.hasWhere() &&
         _structuredQuery.where.hasCompositeFilter()) {
@@ -373,86 +364,8 @@ class QueryReference extends Reference {
         ..op = StructuredQuery_CompositeFilter_Operator.AND;
     }
 
-    compositeFilter.filters.add(filter);
+    compositeFilter.filters.add(queryFilter);
     _structuredQuery.where = StructuredQuery_Filter()
       ..compositeFilter = compositeFilter;
-  }
-
-  /// Delegates encoding the given [value] to [FirebaseEncoding.encode].
-  fs.Value _encode(dynamic value) {
-    return FirestoreEncoding.encode(value);
-  }
-}
-
-fs.Value _encode(dynamic value) {
-  if (value == null) return fs.Value()..nullValue = NullValue.NULL_VALUE;
-
-  if (value is bool) {
-    return fs.Value()..booleanValue = value;
-  }
-  if (value is int) {
-    return fs.Value()..integerValue = Int64(value);
-  }
-  if (value is double) {
-    return fs.Value()..doubleValue = value;
-  }
-  if (value is DateTime) {
-    return fs.Value()..timestampValue = Timestamp.fromDateTime(value);
-  }
-  if (value is String) {
-    return fs.Value()..stringValue = value;
-  }
-  if (value is List) {
-    var array = fs.ArrayValue();
-    array.values.addAll(value.map((e) => _encode(e)));
-    return fs.Value()..arrayValue = array;
-  }
-  if (value is Map) {
-    var map = fs.MapValue();
-    value.forEach((key, val) => map.fields[key] = _encode(val));
-    return fs.Value()..mapValue = map;
-  }
-  if (value is Uint8List) {
-    return fs.Value()..bytesValue = value;
-  }
-  if (value is DocumentReference) {
-    return fs.Value()..referenceValue = value._fullPath;
-  }
-  if (value is GeoPoint) {
-    return fs.Value()..geoPointValue = value.toLatLng();
-  }
-
-  throw Exception('Unknown type: ${value.runtimeType}');
-}
-
-dynamic _decode(fs.Value value, FirestoreGateway gateway) {
-  switch (value.whichValueType()) {
-    case fs.Value_ValueType.nullValue:
-      return null;
-    case fs.Value_ValueType.booleanValue:
-      return value.booleanValue;
-    case fs.Value_ValueType.doubleValue:
-      return value.doubleValue;
-    case fs.Value_ValueType.stringValue:
-      return value.stringValue;
-    case fs.Value_ValueType.integerValue:
-      return value.integerValue.toInt();
-    case fs.Value_ValueType.timestampValue:
-      return value.timestampValue.toDateTime().toLocal();
-    case fs.Value_ValueType.bytesValue:
-      return value.bytesValue;
-    case fs.Value_ValueType.referenceValue:
-      return DocumentReference(gateway, value.referenceValue);
-    case fs.Value_ValueType.geoPointValue:
-      return GeoPoint.fromLatLng(value.geoPointValue);
-    case fs.Value_ValueType.arrayValue:
-      return value.arrayValue.values
-          .map((item) => _decode(item, gateway))
-          .toList(growable: false);
-    case fs.Value_ValueType.mapValue:
-      return value.mapValue.fields
-          .map((key, value) => MapEntry(key, _decode(value, gateway)));
-    default:
-      throw Exception('Unrecognized type: ${value}');
   }
 }
