@@ -1,3 +1,8 @@
+## [0.8.0] - 01 June 2020.
+
+* Implement collection queries (thanks @SwissCheese)
+* Improve translation between Dart and Firebase data types
+
 ## [0.7.2] - 05 May 2020.
 
 * Logout user on account deletion
