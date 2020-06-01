@@ -47,11 +47,20 @@ Future main() async {
     expect(first.id, isNot(second.id));
   });
 
-  test('Get documents via collection query', () async {
+  test('Simple query', () async {
     await firestore.document('test/query').set({'test_field': 'test_value'});
     var query = await firestore
         .collection('test')
         .where('test_field', isEqualTo: 'test_value')
+        .get();
+    expect(query.isNotEmpty, true);
+  });
+
+  test('Multiple query parameters', () async {
+    await firestore.document('test/query').set({'test_field': 42});
+    var query = await firestore
+        .collection('test')
+        .where('test_field', isEqualTo: 42, isGreaterThan: 41, isLessThan: 43)
         .get();
     expect(query.isNotEmpty, true);
   });
