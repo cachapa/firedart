@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
@@ -386,42 +387,42 @@ class QueryReference extends Reference {
 fs.Value _encode(dynamic value) {
   if (value == null) return fs.Value()..nullValue = NullValue.NULL_VALUE;
 
-  var type = value.runtimeType;
-
-  if (type.toString().startsWith('List')) {
+  if (value is bool) {
+    return fs.Value()..booleanValue = value;
+  }
+  if (value is int) {
+    return fs.Value()..integerValue = Int64(value);
+  }
+  if (value is double) {
+    return fs.Value()..doubleValue = value;
+  }
+  if (value is DateTime) {
+    return fs.Value()..timestampValue = Timestamp.fromDateTime(value);
+  }
+  if (value is String) {
+    return fs.Value()..stringValue = value;
+  }
+  if (value is List) {
     var array = fs.ArrayValue();
-    (value as List).forEach((element) => array.values.add(_encode(element)));
+    array.values.addAll(value.map((e) => _encode(e)));
     return fs.Value()..arrayValue = array;
   }
-
-  if (type.toString().contains('Map')) {
+  if (value is Map) {
     var map = fs.MapValue();
-    (value as Map).forEach((key, val) => map.fields[key] = _encode(val));
+    value.forEach((key, val) => map.fields[key] = _encode(val));
     return fs.Value()..mapValue = map;
   }
-
-  if (type.toString() == 'Uint8List') {
+  if (value is Uint8List) {
     return fs.Value()..bytesValue = value;
   }
-
-  switch (type) {
-    case bool:
-      return fs.Value()..booleanValue = value;
-    case int:
-      return fs.Value()..integerValue = Int64(value);
-    case double:
-      return fs.Value()..doubleValue = value;
-    case DateTime:
-      return fs.Value()..timestampValue = Timestamp.fromDateTime(value);
-    case String:
-      return fs.Value()..stringValue = value;
-    case DocumentReference:
-      return fs.Value()..referenceValue = value._fullPath;
-    case GeoPoint:
-      return fs.Value()..geoPointValue = (value as GeoPoint).toLatLng();
-    default:
-      throw Exception('Unknown type: ${type}');
+  if (value is DocumentReference) {
+    return fs.Value()..referenceValue = value._fullPath;
   }
+  if (value is GeoPoint) {
+    return fs.Value()..geoPointValue = value.toLatLng();
+  }
+
+  throw Exception('Unknown type: ${value.runtimeType}');
 }
 
 dynamic _decode(fs.Value value, FirestoreGateway gateway) {
