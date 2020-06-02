@@ -1,3 +1,7 @@
+## [0.8.0+1] - 02 June 2020.
+
+* Update documentation
+
 ## [0.8.0] - 01 June 2020.
 
 * Implement collection queries (thanks @SwissCheese)

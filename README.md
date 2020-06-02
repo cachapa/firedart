@@ -34,7 +34,7 @@ import 'package:firedart/firedart.dart';
 `FirebaseAuth` has a singleton version which should be enough for most use cases. You'll need to initialise it with your API key and a token store (see note above):
 
 ``` dart
-FirebaseAuth.initialize(apiKey, await HiveStore());
+FirebaseAuth.initialize(apiKey, await HiveStore.create());
 await FirebaseAuth.instance.signIn(email, password);
 var user = await FirebaseAuth.instance.getUser();
 ```
