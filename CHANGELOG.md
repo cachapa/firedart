@@ -1,3 +1,8 @@
+## [0.8.1] - 12 June 2020.
+
+* Add SignedOutException when calling protected methods while signed out
+* Add AuthException with error details to all Auth calls
+
 ## [0.8.0+1] - 02 June 2020.
 
 * Update documentation

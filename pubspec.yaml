@@ -1,6 +1,6 @@
 name: firedart
 description: A dart-native implementation of the Firebase Auth and Firestore SDKs.
-version: 0.8.0+1
+version: 0.8.1
 homepage: https://github.com/cachapa/firedart
 
 environment:
