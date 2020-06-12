@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_provider.dart';
 
+import 'exceptions.dart';
 import 'user_gateway.dart';
 
 class AuthGateway {
@@ -45,7 +46,7 @@ class AuthGateway {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('${response.statusCode}: ${response.reasonPhrase}');
+      throw AuthException(response.body);
     }
 
     return json.decode(response.body);

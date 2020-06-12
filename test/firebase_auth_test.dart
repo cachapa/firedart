@@ -1,3 +1,4 @@
+import 'package:firedart/auth/exceptions.dart';
 import 'package:firedart/firedart.dart';
 import 'package:test/test.dart';
 
@@ -9,7 +10,7 @@ Future main() async {
 
   setUp(() {
     tokenStore = VolatileStore();
-    auth = FirebaseAuth(apiKey, tokenStore);
+    auth = FirebaseAuth(apiKey, tokenStore, httpClient: VerboseClient());
   });
 
   test('Sign In', () async {
@@ -18,6 +19,25 @@ Future main() async {
     expect(auth.isSignedIn, true);
     auth.signOut();
     expect(auth.isSignedIn, false);
+  });
+
+  test('Fail sign-in on invalid email', () async {
+    await expectLater(
+        auth.signIn('bademail.com', 'bad_pass'), throwsA(isA<AuthException>()));
+  });
+
+  test('Fail sign-in on email not found', () async {
+    await expectLater(auth.signIn('bad@email.com', 'bad_pass'),
+        throwsA(isA<AuthException>()));
+  });
+
+  test('Fail sign-in on bad password', () async {
+    await expectLater(
+        auth.signIn(email, 'bad_pass'), throwsA(isA<AuthException>()));
+  });
+
+  test('Fail to get user while logged out', () async {
+    await expectLater(auth.getUser(), throwsA(isA<SignedOutException>()));
   });
 
   test('Get user on signin', () async {
@@ -47,7 +67,7 @@ Future main() async {
   test('Sign out on bad refresh token', () async {
     await auth.signIn(email, password);
     tokenStore.setToken('user_id', 'bad_token', 'bad_token', 0);
-    await expectLater(auth.getUser(), throwsNoSuchMethodError);
+    await expectLater(auth.getUser(), throwsA(isA<AuthException>()));
     expect(auth.isSignedIn, false);
   });
 
