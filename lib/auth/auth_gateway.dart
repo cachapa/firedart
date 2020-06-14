@@ -18,6 +18,17 @@ class AuthGateway {
   Future<User> signIn(String email, String password) async =>
       _auth('signInWithPassword', email, password);
 
+  Future<User> signInAnonymously() async {
+    var map = await _post(
+      'signUp',
+      {
+        'returnSecureToken': 'true',
+      },
+    );
+    tokenProvider.setToken(map);
+    return User.fromMap(map);
+  }
+
   Future<void> resetPassword(String email) => _post('sendOobCode', {
         'requestType': 'PASSWORD_RESET',
         'email': email,

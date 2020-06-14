@@ -21,6 +21,14 @@ Future main() async {
     expect(auth.isSignedIn, false);
   });
 
+  test('Sign In Anonymously', () async {
+    expect(auth.isSignedIn, false);
+    await auth.signInAnonymously();
+    expect(auth.isSignedIn, true);
+    auth.signOut();
+    expect(auth.isSignedIn, false);
+  });
+
   test('Fail sign-in on invalid email', () async {
     await expectLater(
         auth.signIn('bademail.com', 'bad_pass'), throwsA(isA<AuthException>()));
@@ -47,6 +55,11 @@ Future main() async {
 
   test('Get user id', () async {
     await auth.signIn(email, password);
+    expect(auth.userId, isNotEmpty);
+  });
+
+  test('Get anonymous user id', () async {
+    await auth.signInAnonymously();
     expect(auth.userId, isNotEmpty);
   });
 
