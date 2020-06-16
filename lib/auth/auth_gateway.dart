@@ -13,31 +13,21 @@ class AuthGateway {
   AuthGateway(this.client, this.tokenProvider);
 
   Future<User> signUp(String email, String password) async =>
-      _auth('signUp', email, password);
+      _auth('signUp', {'email': email, 'password': password});
 
   Future<User> signIn(String email, String password) async =>
-      _auth('signInWithPassword', email, password);
+      _auth('signInWithPassword', {'email': email, 'password': password});
 
-  Future<User> signInAnonymously() async {
-    var map = await _post(
-      'signUp',
-      {
-        'returnSecureToken': 'true',
-      },
-    );
-    tokenProvider.setToken(map);
-    return User.fromMap(map);
-  }
+  Future<User> signInAnonymously() async => _auth('signUp', {});
 
   Future<void> resetPassword(String email) => _post('sendOobCode', {
         'requestType': 'PASSWORD_RESET',
         'email': email,
       });
 
-  Future<User> _auth(String method, String email, String password) async {
+  Future<User> _auth(String method, Map<String, String> payload) async {
     var body = {
-      'email': email,
-      'password': password,
+      ...payload,
       'returnSecureToken': 'true',
     };
 

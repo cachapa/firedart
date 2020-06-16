@@ -10,7 +10,7 @@ Future main() async {
 
   setUp(() {
     tokenStore = VolatileStore();
-    auth = FirebaseAuth(apiKey, tokenStore, httpClient: VerboseClient());
+    auth = FirebaseAuth(apiKey, tokenStore);
   });
 
   test('Sign In', () async {
@@ -25,7 +25,7 @@ Future main() async {
     expect(auth.isSignedIn, false);
     await auth.signInAnonymously();
     expect(auth.isSignedIn, true);
-    auth.signOut();
+    await auth.deleteAccount();
     expect(auth.isSignedIn, false);
   });
 
@@ -61,6 +61,7 @@ Future main() async {
   test('Get anonymous user id', () async {
     await auth.signInAnonymously();
     expect(auth.userId, isNotEmpty);
+    await auth.deleteAccount();
   });
 
   test('Get user', () async {

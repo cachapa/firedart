@@ -1,3 +1,7 @@
+## [0.8.2] - 12 June 2020.
+
+* Add anonymous sign-in (thanks @bierbaumtim)
+
 ## [0.8.1] - 12 June 2020.
 
 * Add SignedOutException when calling protected methods while signed out
