@@ -19,7 +19,7 @@ dependencies:
 
 ## Firebase Auth
 
-The `FirebaseAuth` class implements the necessary functionality for managing accounts. It currently only supports `Email/Password` sign-in, so make sure it's enabled under `Authentication` -> `Sign-in Method`.
+The `FirebaseAuth` class implements the necessary functionality for managing accounts. It currently only supports `Email/Password` sign-in and `anonymous` sign-in, so make sure these are enabled under `Authentication` -> `Sign-in Method`.
 
 You'll also need to go to your `Firebase Console`, open `Project Settings` and under the `General` tab copy the `Web API Key`.
 
