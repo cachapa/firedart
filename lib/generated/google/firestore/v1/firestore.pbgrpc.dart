@@ -3,7 +3,7 @@
 //  source: google/firestore/v1/firestore.proto
 //
 // @dart = 2.3
-// ignore_for_file: camel_case_types,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,annotate_overrides
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
 
@@ -27,11 +27,6 @@ class FirestoreClient extends $grpc.Client {
           ($0.ListDocumentsRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ListDocumentsResponse.fromBuffer(value));
-  static final _$createDocument =
-      $grpc.ClientMethod<$0.CreateDocumentRequest, $1.Document>(
-          '/google.firestore.v1.Firestore/CreateDocument',
-          ($0.CreateDocumentRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $1.Document.fromBuffer(value));
   static final _$updateDocument =
       $grpc.ClientMethod<$0.UpdateDocumentRequest, $1.Document>(
           '/google.firestore.v1.Firestore/UpdateDocument',
@@ -69,6 +64,12 @@ class FirestoreClient extends $grpc.Client {
           ($0.RunQueryRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.RunQueryResponse.fromBuffer(value));
+  static final _$partitionQuery =
+      $grpc.ClientMethod<$0.PartitionQueryRequest, $0.PartitionQueryResponse>(
+          '/google.firestore.v1.Firestore/PartitionQuery',
+          ($0.PartitionQueryRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.PartitionQueryResponse.fromBuffer(value));
   static final _$write = $grpc.ClientMethod<$0.WriteRequest, $0.WriteResponse>(
       '/google.firestore.v1.Firestore/Write',
       ($0.WriteRequest value) => value.writeToBuffer(),
@@ -84,6 +85,17 @@ class FirestoreClient extends $grpc.Client {
       ($0.ListCollectionIdsRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $0.ListCollectionIdsResponse.fromBuffer(value));
+  static final _$batchWrite =
+      $grpc.ClientMethod<$0.BatchWriteRequest, $0.BatchWriteResponse>(
+          '/google.firestore.v1.Firestore/BatchWrite',
+          ($0.BatchWriteRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.BatchWriteResponse.fromBuffer(value));
+  static final _$createDocument =
+      $grpc.ClientMethod<$0.CreateDocumentRequest, $1.Document>(
+          '/google.firestore.v1.Firestore/CreateDocument',
+          ($0.CreateDocumentRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Document.fromBuffer(value));
 
   FirestoreClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -101,15 +113,6 @@ class FirestoreClient extends $grpc.Client {
       {$grpc.CallOptions options}) {
     final call = $createCall(
         _$listDocuments, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
-  }
-
-  $grpc.ResponseFuture<$1.Document> createDocument(
-      $0.CreateDocumentRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$createDocument, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
@@ -171,6 +174,15 @@ class FirestoreClient extends $grpc.Client {
     return $grpc.ResponseStream(call);
   }
 
+  $grpc.ResponseFuture<$0.PartitionQueryResponse> partitionQuery(
+      $0.PartitionQueryRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$partitionQuery, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
+
   $grpc.ResponseStream<$0.WriteResponse> write(
       $async.Stream<$0.WriteRequest> request,
       {$grpc.CallOptions options}) {
@@ -190,6 +202,24 @@ class FirestoreClient extends $grpc.Client {
       {$grpc.CallOptions options}) {
     final call = $createCall(
         _$listCollectionIds, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
+
+  $grpc.ResponseFuture<$0.BatchWriteResponse> batchWrite(
+      $0.BatchWriteRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$batchWrite, $async.Stream.fromIterable([request]),
+        options: options);
+    return $grpc.ResponseFuture(call);
+  }
+
+  $grpc.ResponseFuture<$1.Document> createDocument(
+      $0.CreateDocumentRequest request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(
+        _$createDocument, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseFuture(call);
   }
@@ -216,14 +246,6 @@ abstract class FirestoreServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.ListDocumentsRequest.fromBuffer(value),
             ($0.ListDocumentsResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.CreateDocumentRequest, $1.Document>(
-        'CreateDocument',
-        createDocument_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) =>
-            $0.CreateDocumentRequest.fromBuffer(value),
-        ($1.Document value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.UpdateDocumentRequest, $1.Document>(
         'UpdateDocument',
         updateDocument_Pre,
@@ -279,6 +301,15 @@ abstract class FirestoreServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.RunQueryRequest.fromBuffer(value),
         ($0.RunQueryResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.PartitionQueryRequest,
+            $0.PartitionQueryResponse>(
+        'PartitionQuery',
+        partitionQuery_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.PartitionQueryRequest.fromBuffer(value),
+        ($0.PartitionQueryResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.WriteRequest, $0.WriteResponse>(
         'Write',
         write,
@@ -302,6 +333,21 @@ abstract class FirestoreServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.ListCollectionIdsRequest.fromBuffer(value),
         ($0.ListCollectionIdsResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.BatchWriteRequest, $0.BatchWriteResponse>(
+        'BatchWrite',
+        batchWrite_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.BatchWriteRequest.fromBuffer(value),
+        ($0.BatchWriteResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CreateDocumentRequest, $1.Document>(
+        'CreateDocument',
+        createDocument_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.CreateDocumentRequest.fromBuffer(value),
+        ($1.Document value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Document> getDocument_Pre($grpc.ServiceCall call,
@@ -313,11 +359,6 @@ abstract class FirestoreServiceBase extends $grpc.Service {
       $grpc.ServiceCall call,
       $async.Future<$0.ListDocumentsRequest> request) async {
     return listDocuments(call, await request);
-  }
-
-  $async.Future<$1.Document> createDocument_Pre($grpc.ServiceCall call,
-      $async.Future<$0.CreateDocumentRequest> request) async {
-    return createDocument(call, await request);
   }
 
   $async.Future<$1.Document> updateDocument_Pre($grpc.ServiceCall call,
@@ -357,18 +398,32 @@ abstract class FirestoreServiceBase extends $grpc.Service {
     yield* runQuery(call, await request);
   }
 
+  $async.Future<$0.PartitionQueryResponse> partitionQuery_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.PartitionQueryRequest> request) async {
+    return partitionQuery(call, await request);
+  }
+
   $async.Future<$0.ListCollectionIdsResponse> listCollectionIds_Pre(
       $grpc.ServiceCall call,
       $async.Future<$0.ListCollectionIdsRequest> request) async {
     return listCollectionIds(call, await request);
   }
 
+  $async.Future<$0.BatchWriteResponse> batchWrite_Pre($grpc.ServiceCall call,
+      $async.Future<$0.BatchWriteRequest> request) async {
+    return batchWrite(call, await request);
+  }
+
+  $async.Future<$1.Document> createDocument_Pre($grpc.ServiceCall call,
+      $async.Future<$0.CreateDocumentRequest> request) async {
+    return createDocument(call, await request);
+  }
+
   $async.Future<$1.Document> getDocument(
       $grpc.ServiceCall call, $0.GetDocumentRequest request);
   $async.Future<$0.ListDocumentsResponse> listDocuments(
       $grpc.ServiceCall call, $0.ListDocumentsRequest request);
-  $async.Future<$1.Document> createDocument(
-      $grpc.ServiceCall call, $0.CreateDocumentRequest request);
   $async.Future<$1.Document> updateDocument(
       $grpc.ServiceCall call, $0.UpdateDocumentRequest request);
   $async.Future<$2.Empty> deleteDocument(
@@ -383,10 +438,16 @@ abstract class FirestoreServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.RollbackRequest request);
   $async.Stream<$0.RunQueryResponse> runQuery(
       $grpc.ServiceCall call, $0.RunQueryRequest request);
+  $async.Future<$0.PartitionQueryResponse> partitionQuery(
+      $grpc.ServiceCall call, $0.PartitionQueryRequest request);
   $async.Stream<$0.WriteResponse> write(
       $grpc.ServiceCall call, $async.Stream<$0.WriteRequest> request);
   $async.Stream<$0.ListenResponse> listen(
       $grpc.ServiceCall call, $async.Stream<$0.ListenRequest> request);
   $async.Future<$0.ListCollectionIdsResponse> listCollectionIds(
       $grpc.ServiceCall call, $0.ListCollectionIdsRequest request);
+  $async.Future<$0.BatchWriteResponse> batchWrite(
+      $grpc.ServiceCall call, $0.BatchWriteRequest request);
+  $async.Future<$1.Document> createDocument(
+      $grpc.ServiceCall call, $0.CreateDocumentRequest request);
 }
