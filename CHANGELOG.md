@@ -1,3 +1,7 @@
+## [0.8.3] - 26 October 2020.
+
+* Update dependencies and regenerate RPC stubs
+
 ## [0.8.2] - 16 June 2020.
 
 * Add anonymous sign-in (thanks @bierbaumtim)
