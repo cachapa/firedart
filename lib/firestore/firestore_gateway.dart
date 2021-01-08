@@ -10,39 +10,82 @@ import '../firedart.dart';
 import 'models.dart';
 import 'token_authenticator.dart';
 
+class _FirestoreGatewayStreamCache {
+  void Function(String userInfo) onDone;
+  String userInfo;
+
+  StreamController<ListenRequest> _listenRequestStreamController;
+  StreamController<ListenResponse> _listenResponseStreamController;
+  Map<String, Document> _documentMap;
+
+  Stream<ListenResponse> get stream => _listenResponseStreamController.stream;
+  Map<String, Document> get documentMap => _documentMap;
+
+  _FirestoreGatewayStreamCache({this.onDone, this.userInfo});
+
+  void setListenRequest(ListenRequest request, FirestoreClient client, String database) {
+    // Close the request stream if this function is called for a second time;
+    _listenRequestStreamController?.close();
+
+    _documentMap = <String, Document>{};
+    _listenRequestStreamController =
+        StreamController<ListenRequest>(onListen: _handleListenOnRequestStream, onCancel: _handleCancelOnRequestStream);
+    _listenResponseStreamController = StreamController<ListenResponse>.broadcast(
+        onListen: _handleListenOnResponseStream, onCancel: _handleCancelOnResponseStream);
+    _listenResponseStreamController.addStream(client.listen(_listenRequestStreamController.stream,
+        options: CallOptions(metadata: {'google-cloud-resource-prefix': database})));
+    _listenRequestStreamController.add(request);
+  }
+
+  void _handleListenOnRequestStream() {
+    print('request stream listen');
+  }
+
+  void _handleCancelOnRequestStream() {
+    print('request stream cancel');
+  }
+
+  void _handleListenOnResponseStream() {
+    print('response stream first listen');
+  }
+
+  void _handleCancelOnResponseStream() {
+    print('response stream cancel, calling done for $userInfo');
+    onDone?.call(userInfo);
+  }
+}
+
 class FirestoreGateway {
   final FirebaseAuth auth;
   final String database;
 
+  final Map<String, _FirestoreGatewayStreamCache> _listenRequestStreamMap;
+
   FirestoreClient _client;
-  StreamController<ListenRequest> streamController;
-  Stream<ListenResponse> stream;
 
   FirestoreGateway(String projectId, {String databaseId, this.auth})
-      : database =
-            'projects/$projectId/databases/${databaseId ?? '(default)'}/documents' {
+      : database = 'projects/$projectId/databases/${databaseId ?? '(default)'}/documents',
+        _listenRequestStreamMap = <String, _FirestoreGatewayStreamCache>{} {
     _setupClient();
   }
 
-  Future<Page<Document>> getCollection(
-      String path, int pageSize, String nextPageToken) async {
+  Future<Page<Document>> getCollection(String path, int pageSize, String nextPageToken) async {
     var request = ListDocumentsRequest()
       ..parent = path.substring(0, path.lastIndexOf('/'))
       ..collectionId = path.substring(path.lastIndexOf('/') + 1)
       ..pageSize = pageSize
       ..pageToken = nextPageToken;
-    var response =
-        await _client.listDocuments(request).catchError(_handleError);
-    var documents =
-        response.documents.map((rawDocument) => Document(this, rawDocument));
+    var response = await _client.listDocuments(request).catchError(_handleError);
+    var documents = response.documents.map((rawDocument) => Document(this, rawDocument));
     return Page(documents, response.nextPageToken);
   }
 
   Stream<List<Document>> streamCollection(String path) {
-    _initStream();
+    if (_listenRequestStreamMap.containsKey(path)) {
+      return _mapCollectionStream(_listenRequestStreamMap[path]);
+    }
 
-    var selector = StructuredQuery_CollectionSelector()
-      ..collectionId = path.substring(path.lastIndexOf('/') + 1);
+    var selector = StructuredQuery_CollectionSelector()..collectionId = path.substring(path.lastIndexOf('/') + 1);
     var query = StructuredQuery()..from.add(selector);
     final queryTarget = Target_QueryTarget()
       ..parent = path.substring(0, path.lastIndexOf('/'))
@@ -52,25 +95,15 @@ class FirestoreGateway {
       ..database = database
       ..addTarget = target;
 
-    streamController.add(request);
+    final listenRequestStream = _FirestoreGatewayStreamCache(onDone: _handleDone, userInfo: path);
+    _listenRequestStreamMap[path] = listenRequestStream;
 
-    var map = <String, Document>{};
-    return stream
-        .where((response) =>
-            response.hasDocumentChange() || response.hasDocumentDelete())
-        .map((response) {
-      if (response.hasDocumentChange()) {
-        map[response.documentChange.document.name] =
-            Document(this, response.documentChange.document);
-      } else {
-        map.remove(response.documentDelete.document);
-      }
-      return map.values.toList();
-    });
+    listenRequestStream.setListenRequest(request, _client, database);
+
+    return _mapCollectionStream(listenRequestStream);
   }
 
-  Future<Document> createDocument(
-      String path, String documentId, fs.Document document) async {
+  Future<Document> createDocument(String path, String documentId, fs.Document document) async {
     var split = path.split('/');
     var parent = split.sublist(0, split.length - 1).join('/');
     var collectionId = split.last;
@@ -81,20 +114,16 @@ class FirestoreGateway {
       ..documentId = documentId ?? ''
       ..document = document;
 
-    var response =
-        await _client.createDocument(request).catchError(_handleError);
+    var response = await _client.createDocument(request).catchError(_handleError);
     return Document(this, response);
   }
 
   Future<Document> getDocument(path) async {
-    var rawDocument = await _client
-        .getDocument(GetDocumentRequest()..name = path)
-        .catchError(_handleError);
+    var rawDocument = await _client.getDocument(GetDocumentRequest()..name = path).catchError(_handleError);
     return Document(this, rawDocument);
   }
 
-  Future<void> updateDocument(
-      String path, fs.Document document, bool update) async {
+  Future<void> updateDocument(String path, fs.Document document, bool update) async {
     document.name = path;
 
     var request = UpdateDocumentRequest()..document = document;
@@ -108,12 +137,13 @@ class FirestoreGateway {
     await _client.updateDocument(request).catchError(_handleError);
   }
 
-  Future<void> deleteDocument(String path) => _client
-      .deleteDocument(DeleteDocumentRequest()..name = path)
-      .catchError(_handleError);
+  Future<void> deleteDocument(String path) =>
+      _client.deleteDocument(DeleteDocumentRequest()..name = path).catchError(_handleError);
 
   Stream<Document> streamDocument(String path) {
-    _initStream();
+    if (_listenRequestStreamMap.containsKey(path)) {
+      return _mapDocumentStream(_listenRequestStreamMap[path]);
+    }
 
     final documentsTarget = Target_DocumentsTarget()..documents.add(path);
     final target = Target()..documents = documentsTarget;
@@ -121,35 +151,25 @@ class FirestoreGateway {
       ..database = database
       ..addTarget = target;
 
-    streamController.add(request);
+    final listenRequestStream = _FirestoreGatewayStreamCache(onDone: _handleDone, userInfo: path);
+    _listenRequestStreamMap[path] = listenRequestStream;
 
-    return stream
-        .where((response) => (response.hasDocumentChange() &&
-                response.documentChange.document.name == path ||
-            (response.hasDocumentDelete() || response.hasDocumentRemove()) &&
-                response.documentDelete.document == path))
-        .map((response) => response.hasDocumentChange()
-            ? Document(this, response.documentChange.document)
-            : null);
+    listenRequestStream.setListenRequest(request, _client, database);
+
+    return _mapDocumentStream(listenRequestStream);
   }
 
-  Future<List<Document>> runQuery(
-      StructuredQuery structuredQuery, String fullPath) async {
+  Future<List<Document>> runQuery(StructuredQuery structuredQuery, String fullPath) async {
     final runQuery = RunQueryRequest()
       ..structuredQuery = structuredQuery
       ..parent = fullPath.substring(0, fullPath.lastIndexOf('/'));
     final response = _client.runQuery(runQuery);
-    return await response
-        .where((event) => event.hasDocument())
-        .map((event) => Document(this, event.document))
-        .toList();
+    return await response.where((event) => event.hasDocument()).map((event) => Document(this, event.document)).toList();
   }
 
   void _setupClient() {
     _client = FirestoreClient(ClientChannel('firestore.googleapis.com'),
         options: TokenAuthenticator.from(auth)?.toCallOptions);
-    streamController = null;
-    stream = null;
   }
 
   void _handleError(e) {
@@ -161,18 +181,33 @@ class FirestoreGateway {
           StatusCode.unavailable,
           StatusCode.dataLoss,
         ].contains(e.code)) {
+      print('setup client because of error');
       _setupClient();
     }
     throw e;
   }
 
-  void _initStream() {
-    streamController ??= StreamController<ListenRequest>();
-    stream ??= _client
-        .listen(streamController.stream,
-            options: CallOptions(
-                metadata: {'google-cloud-resource-prefix': database}))
-        .handleError(_handleError)
-        .asBroadcastStream();
+  void _handleDone(String path) {
+    _listenRequestStreamMap.remove(path);
   }
+
+  Stream<List<Document>> _mapCollectionStream(_FirestoreGatewayStreamCache listenRequestStream) {
+    return listenRequestStream.stream
+        .where((response) => response.hasDocumentChange() || response.hasDocumentDelete())
+        .map((response) {
+      if (response.hasDocumentChange()) {
+        listenRequestStream.documentMap[response.documentChange.document.name] = Document(this, response.documentChange.document);
+      } else {
+        listenRequestStream.documentMap.remove(response.documentDelete.document);
+      }
+      return listenRequestStream.documentMap.values.toList();
+    });
+  }
+
+  Stream<Document> _mapDocumentStream(_FirestoreGatewayStreamCache listenRequestStream) {
+    return listenRequestStream
+        .stream
+        .map((response) => response.hasDocumentChange() ? Document(this, response.documentChange.document) : null);
+  }
+
 }
