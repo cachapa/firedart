@@ -18,6 +18,8 @@ class _FirestoreGatewayStreamCache {
   StreamController<ListenResponse> _listenResponseStreamController;
   Map<String, Document> _documentMap;
 
+  bool _shouldCleanup;
+
   Stream<ListenResponse> get stream => _listenResponseStreamController.stream;
   Map<String, Document> get documentMap => _documentMap;
 
@@ -38,20 +40,33 @@ class _FirestoreGatewayStreamCache {
   }
 
   void _handleListenOnRequestStream() {
-    print('request stream listen');
+    //print('request stream listen');
   }
 
   void _handleCancelOnRequestStream() {
-    print('request stream cancel');
+    //print('request stream cancel');
   }
 
   void _handleListenOnResponseStream() {
-    print('response stream first listen');
+    //print('response stream first listen');
+    _shouldCleanup = false;
   }
 
   void _handleCancelOnResponseStream() {
-    print('response stream cancel, calling done for $userInfo');
+    //print('response stream cancel');
+    // Clean this up in the future
+    _shouldCleanup = true;
+    Future.microtask(_handleDone);
+  }
+
+  void _handleDone() {
+    if (!_shouldCleanup) {
+      return;
+    }
+    print('we should cleanup, calling done for $userInfo');
     onDone?.call(userInfo);
+    // Clean up stream resources
+    _listenRequestStreamController.close();
   }
 }
 
@@ -193,7 +208,7 @@ class FirestoreGateway {
 
   Stream<List<Document>> _mapCollectionStream(_FirestoreGatewayStreamCache listenRequestStream) {
     return listenRequestStream.stream
-        .where((response) => response.hasDocumentChange() || response.hasDocumentDelete())
+        .where((response) => response.hasDocumentChange() || response.hasDocumentRemove() || response.hasDocumentDelete())
         .map((response) {
       if (response.hasDocumentChange()) {
         listenRequestStream.documentMap[response.documentChange.document.name] = Document(this, response.documentChange.document);
@@ -207,6 +222,7 @@ class FirestoreGateway {
   Stream<Document> _mapDocumentStream(_FirestoreGatewayStreamCache listenRequestStream) {
     return listenRequestStream
         .stream
+        .where((response) => response.hasDocumentChange() || response.hasDocumentRemove() || response.hasDocumentDelete())
         .map((response) => response.hasDocumentChange() ? Document(this, response.documentChange.document) : null);
   }
 
