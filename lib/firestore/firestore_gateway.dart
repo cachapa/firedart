@@ -13,6 +13,7 @@ import 'token_authenticator.dart';
 class _FirestoreGatewayStreamCache {
   void Function(String userInfo) onDone;
   String userInfo;
+  void Function(Object e) onError;
 
   StreamController<ListenRequest> _listenRequestStreamController;
   StreamController<ListenResponse> _listenResponseStreamController;
@@ -23,7 +24,9 @@ class _FirestoreGatewayStreamCache {
   Stream<ListenResponse> get stream => _listenResponseStreamController.stream;
   Map<String, Document> get documentMap => _documentMap;
 
-  _FirestoreGatewayStreamCache({this.onDone, this.userInfo});
+  _FirestoreGatewayStreamCache({this.onDone, this.userInfo, this.onError}) {
+    onError = _handleErrorStub;
+  }
 
   void setListenRequest(ListenRequest request, FirestoreClient client, String database) {
     // Close the request stream if this function is called for a second time;
@@ -33,8 +36,10 @@ class _FirestoreGatewayStreamCache {
     _listenRequestStreamController = StreamController<ListenRequest>();
     _listenResponseStreamController = StreamController<ListenResponse>.broadcast(
         onListen: _handleListenOnResponseStream, onCancel: _handleCancelOnResponseStream);
-    _listenResponseStreamController.addStream(client.listen(_listenRequestStreamController.stream,
-        options: CallOptions(metadata: {'google-cloud-resource-prefix': database})));
+    _listenResponseStreamController.addStream(client
+        .listen(_listenRequestStreamController.stream,
+            options: CallOptions(metadata: {'google-cloud-resource-prefix': database}))
+        .handleError(onError));
     _listenRequestStreamController.add(request);
   }
 
@@ -55,6 +60,10 @@ class _FirestoreGatewayStreamCache {
     onDone?.call(userInfo);
     // Clean up stream resources
     _listenRequestStreamController.close();
+  }
+
+  void _handleErrorStub(e) {
+    throw e;
   }
 }
 
@@ -98,7 +107,8 @@ class FirestoreGateway {
       ..database = database
       ..addTarget = target;
 
-    final listenRequestStream = _FirestoreGatewayStreamCache(onDone: _handleDone, userInfo: path);
+    final listenRequestStream =
+        _FirestoreGatewayStreamCache(onDone: _handleDone, userInfo: path, onError: _handleError);
     _listenRequestStreamMap[path] = listenRequestStream;
 
     listenRequestStream.setListenRequest(request, _client, database);
@@ -154,7 +164,8 @@ class FirestoreGateway {
       ..database = database
       ..addTarget = target;
 
-    final listenRequestStream = _FirestoreGatewayStreamCache(onDone: _handleDone, userInfo: path);
+    final listenRequestStream =
+        _FirestoreGatewayStreamCache(onDone: _handleDone, userInfo: path, onError: _handleError);
     _listenRequestStreamMap[path] = listenRequestStream;
 
     listenRequestStream.setListenRequest(request, _client, database);
@@ -171,6 +182,7 @@ class FirestoreGateway {
   }
 
   void _setupClient() {
+    _listenRequestStreamMap.clear();
     _client = FirestoreClient(ClientChannel('firestore.googleapis.com'),
         options: TokenAuthenticator.from(auth)?.toCallOptions);
   }
