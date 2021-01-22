@@ -30,8 +30,7 @@ class _FirestoreGatewayStreamCache {
     _listenRequestStreamController?.close();
 
     _documentMap = <String, Document>{};
-    _listenRequestStreamController =
-        StreamController<ListenRequest>(onListen: _handleListenOnRequestStream, onCancel: _handleCancelOnRequestStream);
+    _listenRequestStreamController = StreamController<ListenRequest>();
     _listenResponseStreamController = StreamController<ListenResponse>.broadcast(
         onListen: _handleListenOnResponseStream, onCancel: _handleCancelOnResponseStream);
     _listenResponseStreamController.addStream(client.listen(_listenRequestStreamController.stream,
@@ -39,21 +38,11 @@ class _FirestoreGatewayStreamCache {
     _listenRequestStreamController.add(request);
   }
 
-  void _handleListenOnRequestStream() {
-    //print('request stream listen');
-  }
-
-  void _handleCancelOnRequestStream() {
-    //print('request stream cancel');
-  }
-
   void _handleListenOnResponseStream() {
-    //print('response stream first listen');
     _shouldCleanup = false;
   }
 
   void _handleCancelOnResponseStream() {
-    //print('response stream cancel');
     // Clean this up in the future
     _shouldCleanup = true;
     Future.microtask(_handleDone);
@@ -63,7 +52,6 @@ class _FirestoreGatewayStreamCache {
     if (!_shouldCleanup) {
       return;
     }
-    print('we should cleanup, calling done for $userInfo');
     onDone?.call(userInfo);
     // Clean up stream resources
     _listenRequestStreamController.close();
@@ -196,7 +184,6 @@ class FirestoreGateway {
           StatusCode.unavailable,
           StatusCode.dataLoss,
         ].contains(e.code)) {
-      print('setup client because of error');
       _setupClient();
     }
     throw e;
@@ -208,10 +195,12 @@ class FirestoreGateway {
 
   Stream<List<Document>> _mapCollectionStream(_FirestoreGatewayStreamCache listenRequestStream) {
     return listenRequestStream.stream
-        .where((response) => response.hasDocumentChange() || response.hasDocumentRemove() || response.hasDocumentDelete())
+        .where(
+            (response) => response.hasDocumentChange() || response.hasDocumentRemove() || response.hasDocumentDelete())
         .map((response) {
       if (response.hasDocumentChange()) {
-        listenRequestStream.documentMap[response.documentChange.document.name] = Document(this, response.documentChange.document);
+        listenRequestStream.documentMap[response.documentChange.document.name] =
+            Document(this, response.documentChange.document);
       } else {
         listenRequestStream.documentMap.remove(response.documentDelete.document);
       }
@@ -220,10 +209,9 @@ class FirestoreGateway {
   }
 
   Stream<Document> _mapDocumentStream(_FirestoreGatewayStreamCache listenRequestStream) {
-    return listenRequestStream
-        .stream
-        .where((response) => response.hasDocumentChange() || response.hasDocumentRemove() || response.hasDocumentDelete())
+    return listenRequestStream.stream
+        .where(
+            (response) => response.hasDocumentChange() || response.hasDocumentRemove() || response.hasDocumentDelete())
         .map((response) => response.hasDocumentChange() ? Document(this, response.documentChange.document) : null);
   }
-
 }
