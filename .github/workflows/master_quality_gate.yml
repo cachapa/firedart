@@ -1,10 +1,13 @@
 name: Quality Gate
 
-on: pull_request
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
-
+    timeout-minutes: 10
     runs-on: ubuntu-latest
 
     container:
