@@ -1,10 +1,13 @@
 name: Quality Gate
 
-on: pull_request
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
-
+    timeout-minutes: 10
     runs-on: ubuntu-latest
 
     container:
@@ -24,6 +27,6 @@ jobs:
       - name: Get dependencies
         run: pub get
       - name: Static code analysis
-        run: dartanalyzer --fatal-infos --fatal-warnings .
+        run: dart analyze --fatal-infos .
       - name: Run tests
         run: pub run test
