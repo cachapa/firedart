@@ -25,7 +25,7 @@ class _FirestoreGatewayStreamCache {
   Map<String, Document> get documentMap => _documentMap;
 
   _FirestoreGatewayStreamCache({this.onDone, this.userInfo, this.onError}) {
-    onError = _handleErrorStub;
+    onError ??= _handleErrorStub;
   }
 
   void setListenRequest(
@@ -207,12 +207,14 @@ class FirestoreGateway {
   }
 
   void _handleError(e) {
+    print('Handling error $e using FirestoreGateway._handleError');
     if (e is GrpcError &&
         [
           StatusCode.unknown,
           StatusCode.unimplemented,
           StatusCode.internal,
           StatusCode.unavailable,
+          StatusCode.unauthenticated,
           StatusCode.dataLoss,
         ].contains(e.code)) {
       _setupClient();
