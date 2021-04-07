@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/query.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -39,7 +39,19 @@ class StructuredQuery_CollectionSelector extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_CollectionSelector._() : super();
-  factory StructuredQuery_CollectionSelector() => create();
+  factory StructuredQuery_CollectionSelector({
+    $core.String? collectionId,
+    $core.bool? allDescendants,
+  }) {
+    final _result = create();
+    if (collectionId != null) {
+      _result.collectionId = collectionId;
+    }
+    if (allDescendants != null) {
+      _result.allDescendants = allDescendants;
+    }
+    return _result;
+  }
   factory StructuredQuery_CollectionSelector.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -56,8 +68,9 @@ class StructuredQuery_CollectionSelector extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_CollectionSelector copyWith(
           void Function(StructuredQuery_CollectionSelector) updates) =>
-      super.copyWith((message) => updates(message
-          as StructuredQuery_CollectionSelector)); // ignore: deprecated_member_use
+      super.copyWith((message) =>
+              updates(message as StructuredQuery_CollectionSelector))
+          as StructuredQuery_CollectionSelector; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_CollectionSelector create() =>
@@ -69,7 +82,7 @@ class StructuredQuery_CollectionSelector extends $pb.GeneratedMessage {
   static StructuredQuery_CollectionSelector getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_CollectionSelector>(
           create);
-  static StructuredQuery_CollectionSelector _defaultInstance;
+  static StructuredQuery_CollectionSelector? _defaultInstance;
 
   @$pb.TagNumber(2)
   $core.String get collectionId => $_getSZ(0);
@@ -132,7 +145,23 @@ class StructuredQuery_Filter extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_Filter._() : super();
-  factory StructuredQuery_Filter() => create();
+  factory StructuredQuery_Filter({
+    StructuredQuery_CompositeFilter? compositeFilter,
+    StructuredQuery_FieldFilter? fieldFilter,
+    StructuredQuery_UnaryFilter? unaryFilter,
+  }) {
+    final _result = create();
+    if (compositeFilter != null) {
+      _result.compositeFilter = compositeFilter;
+    }
+    if (fieldFilter != null) {
+      _result.fieldFilter = fieldFilter;
+    }
+    if (unaryFilter != null) {
+      _result.unaryFilter = unaryFilter;
+    }
+    return _result;
+  }
   factory StructuredQuery_Filter.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -149,8 +178,8 @@ class StructuredQuery_Filter extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_Filter copyWith(
           void Function(StructuredQuery_Filter) updates) =>
-      super.copyWith((message) => updates(
-          message as StructuredQuery_Filter)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as StructuredQuery_Filter))
+          as StructuredQuery_Filter; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_Filter create() => StructuredQuery_Filter._();
@@ -160,10 +189,10 @@ class StructuredQuery_Filter extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_Filter getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_Filter>(create);
-  static StructuredQuery_Filter _defaultInstance;
+  static StructuredQuery_Filter? _defaultInstance;
 
   StructuredQuery_Filter_FilterType whichFilterType() =>
-      _StructuredQuery_Filter_FilterTypeByTag[$_whichOneof(0)];
+      _StructuredQuery_Filter_FilterTypeByTag[$_whichOneof(0)]!;
   void clearFilterType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -232,7 +261,19 @@ class StructuredQuery_CompositeFilter extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_CompositeFilter._() : super();
-  factory StructuredQuery_CompositeFilter() => create();
+  factory StructuredQuery_CompositeFilter({
+    StructuredQuery_CompositeFilter_Operator? op,
+    $core.Iterable<StructuredQuery_Filter>? filters,
+  }) {
+    final _result = create();
+    if (op != null) {
+      _result.op = op;
+    }
+    if (filters != null) {
+      _result.filters.addAll(filters);
+    }
+    return _result;
+  }
   factory StructuredQuery_CompositeFilter.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -249,8 +290,9 @@ class StructuredQuery_CompositeFilter extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_CompositeFilter copyWith(
           void Function(StructuredQuery_CompositeFilter) updates) =>
-      super.copyWith((message) => updates(message
-          as StructuredQuery_CompositeFilter)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as StructuredQuery_CompositeFilter))
+          as StructuredQuery_CompositeFilter; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_CompositeFilter create() =>
@@ -262,7 +304,7 @@ class StructuredQuery_CompositeFilter extends $pb.GeneratedMessage {
   static StructuredQuery_CompositeFilter getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_CompositeFilter>(
           create);
-  static StructuredQuery_CompositeFilter _defaultInstance;
+  static StructuredQuery_CompositeFilter? _defaultInstance;
 
   @$pb.TagNumber(1)
   StructuredQuery_CompositeFilter_Operator get op => $_getN(0);
@@ -304,7 +346,23 @@ class StructuredQuery_FieldFilter extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_FieldFilter._() : super();
-  factory StructuredQuery_FieldFilter() => create();
+  factory StructuredQuery_FieldFilter({
+    StructuredQuery_FieldReference? field_1,
+    StructuredQuery_FieldFilter_Operator? op,
+    $1.Value? value,
+  }) {
+    final _result = create();
+    if (field_1 != null) {
+      _result.field_1 = field_1;
+    }
+    if (op != null) {
+      _result.op = op;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory StructuredQuery_FieldFilter.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -321,8 +379,9 @@ class StructuredQuery_FieldFilter extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_FieldFilter copyWith(
           void Function(StructuredQuery_FieldFilter) updates) =>
-      super.copyWith((message) => updates(message
-          as StructuredQuery_FieldFilter)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as StructuredQuery_FieldFilter))
+          as StructuredQuery_FieldFilter; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_FieldFilter create() =>
@@ -333,7 +392,7 @@ class StructuredQuery_FieldFilter extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_FieldFilter getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_FieldFilter>(create);
-  static StructuredQuery_FieldFilter _defaultInstance;
+  static StructuredQuery_FieldFilter? _defaultInstance;
 
   @$pb.TagNumber(1)
   StructuredQuery_FieldReference get field_1 => $_getN(0);
@@ -406,7 +465,19 @@ class StructuredQuery_UnaryFilter extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_UnaryFilter._() : super();
-  factory StructuredQuery_UnaryFilter() => create();
+  factory StructuredQuery_UnaryFilter({
+    StructuredQuery_UnaryFilter_Operator? op,
+    StructuredQuery_FieldReference? field_2,
+  }) {
+    final _result = create();
+    if (op != null) {
+      _result.op = op;
+    }
+    if (field_2 != null) {
+      _result.field_2 = field_2;
+    }
+    return _result;
+  }
   factory StructuredQuery_UnaryFilter.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -423,8 +494,9 @@ class StructuredQuery_UnaryFilter extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_UnaryFilter copyWith(
           void Function(StructuredQuery_UnaryFilter) updates) =>
-      super.copyWith((message) => updates(message
-          as StructuredQuery_UnaryFilter)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as StructuredQuery_UnaryFilter))
+          as StructuredQuery_UnaryFilter; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_UnaryFilter create() =>
@@ -435,10 +507,10 @@ class StructuredQuery_UnaryFilter extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_UnaryFilter getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_UnaryFilter>(create);
-  static StructuredQuery_UnaryFilter _defaultInstance;
+  static StructuredQuery_UnaryFilter? _defaultInstance;
 
   StructuredQuery_UnaryFilter_OperandType whichOperandType() =>
-      _StructuredQuery_UnaryFilter_OperandTypeByTag[$_whichOneof(0)];
+      _StructuredQuery_UnaryFilter_OperandTypeByTag[$_whichOneof(0)]!;
   void clearOperandType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -493,7 +565,19 @@ class StructuredQuery_Order extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_Order._() : super();
-  factory StructuredQuery_Order() => create();
+  factory StructuredQuery_Order({
+    StructuredQuery_FieldReference? field_1,
+    StructuredQuery_Direction? direction,
+  }) {
+    final _result = create();
+    if (field_1 != null) {
+      _result.field_1 = field_1;
+    }
+    if (direction != null) {
+      _result.direction = direction;
+    }
+    return _result;
+  }
   factory StructuredQuery_Order.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -510,8 +594,8 @@ class StructuredQuery_Order extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_Order copyWith(
           void Function(StructuredQuery_Order) updates) =>
-      super.copyWith((message) => updates(
-          message as StructuredQuery_Order)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as StructuredQuery_Order))
+          as StructuredQuery_Order; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_Order create() => StructuredQuery_Order._();
@@ -521,7 +605,7 @@ class StructuredQuery_Order extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_Order getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_Order>(create);
-  static StructuredQuery_Order _defaultInstance;
+  static StructuredQuery_Order? _defaultInstance;
 
   @$pb.TagNumber(1)
   StructuredQuery_FieldReference get field_1 => $_getN(0);
@@ -568,7 +652,15 @@ class StructuredQuery_FieldReference extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_FieldReference._() : super();
-  factory StructuredQuery_FieldReference() => create();
+  factory StructuredQuery_FieldReference({
+    $core.String? fieldPath,
+  }) {
+    final _result = create();
+    if (fieldPath != null) {
+      _result.fieldPath = fieldPath;
+    }
+    return _result;
+  }
   factory StructuredQuery_FieldReference.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -585,8 +677,9 @@ class StructuredQuery_FieldReference extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_FieldReference copyWith(
           void Function(StructuredQuery_FieldReference) updates) =>
-      super.copyWith((message) => updates(message
-          as StructuredQuery_FieldReference)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as StructuredQuery_FieldReference))
+          as StructuredQuery_FieldReference; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_FieldReference create() =>
@@ -597,7 +690,7 @@ class StructuredQuery_FieldReference extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_FieldReference getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_FieldReference>(create);
-  static StructuredQuery_FieldReference _defaultInstance;
+  static StructuredQuery_FieldReference? _defaultInstance;
 
   @$pb.TagNumber(2)
   $core.String get fieldPath => $_getSZ(0);
@@ -632,7 +725,15 @@ class StructuredQuery_Projection extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery_Projection._() : super();
-  factory StructuredQuery_Projection() => create();
+  factory StructuredQuery_Projection({
+    $core.Iterable<StructuredQuery_FieldReference>? fields,
+  }) {
+    final _result = create();
+    if (fields != null) {
+      _result.fields.addAll(fields);
+    }
+    return _result;
+  }
   factory StructuredQuery_Projection.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -649,8 +750,9 @@ class StructuredQuery_Projection extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   StructuredQuery_Projection copyWith(
           void Function(StructuredQuery_Projection) updates) =>
-      super.copyWith((message) => updates(message
-          as StructuredQuery_Projection)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as StructuredQuery_Projection))
+          as StructuredQuery_Projection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_Projection create() => StructuredQuery_Projection._();
@@ -660,7 +762,7 @@ class StructuredQuery_Projection extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery_Projection getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery_Projection>(create);
-  static StructuredQuery_Projection _defaultInstance;
+  static StructuredQuery_Projection? _defaultInstance;
 
   @$pb.TagNumber(2)
   $core.List<StructuredQuery_FieldReference> get fields => $_getList(0);
@@ -691,7 +793,43 @@ class StructuredQuery extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   StructuredQuery._() : super();
-  factory StructuredQuery() => create();
+  factory StructuredQuery({
+    StructuredQuery_Projection? select,
+    $core.Iterable<StructuredQuery_CollectionSelector>? from,
+    StructuredQuery_Filter? where,
+    $core.Iterable<StructuredQuery_Order>? orderBy,
+    $0.Int32Value? limit,
+    $core.int? offset,
+    Cursor? startAt,
+    Cursor? endAt,
+  }) {
+    final _result = create();
+    if (select != null) {
+      _result.select = select;
+    }
+    if (from != null) {
+      _result.from.addAll(from);
+    }
+    if (where != null) {
+      _result.where = where;
+    }
+    if (orderBy != null) {
+      _result.orderBy.addAll(orderBy);
+    }
+    if (limit != null) {
+      _result.limit = limit;
+    }
+    if (offset != null) {
+      _result.offset = offset;
+    }
+    if (startAt != null) {
+      _result.startAt = startAt;
+    }
+    if (endAt != null) {
+      _result.endAt = endAt;
+    }
+    return _result;
+  }
   factory StructuredQuery.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -706,8 +844,8 @@ class StructuredQuery extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   StructuredQuery copyWith(void Function(StructuredQuery) updates) =>
-      super.copyWith((message) =>
-          updates(message as StructuredQuery)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as StructuredQuery))
+          as StructuredQuery; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StructuredQuery create() => StructuredQuery._();
@@ -717,7 +855,7 @@ class StructuredQuery extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static StructuredQuery getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StructuredQuery>(create);
-  static StructuredQuery _defaultInstance;
+  static StructuredQuery? _defaultInstance;
 
   @$pb.TagNumber(1)
   StructuredQuery_Projection get select => $_getN(0);
@@ -830,7 +968,19 @@ class Cursor extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Cursor._() : super();
-  factory Cursor() => create();
+  factory Cursor({
+    $core.Iterable<$1.Value>? values,
+    $core.bool? before,
+  }) {
+    final _result = create();
+    if (values != null) {
+      _result.values.addAll(values);
+    }
+    if (before != null) {
+      _result.before = before;
+    }
+    return _result;
+  }
   factory Cursor.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -844,8 +994,9 @@ class Cursor extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Cursor copyWith(void Function(Cursor) updates) => super.copyWith(
-      (message) => updates(message as Cursor)); // ignore: deprecated_member_use
+  Cursor copyWith(void Function(Cursor) updates) =>
+      super.copyWith((message) => updates(message as Cursor))
+          as Cursor; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Cursor create() => Cursor._();
@@ -854,7 +1005,7 @@ class Cursor extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Cursor getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Cursor>(create);
-  static Cursor _defaultInstance;
+  static Cursor? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$1.Value> get values => $_getList(0);

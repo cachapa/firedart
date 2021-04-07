@@ -135,17 +135,17 @@ Future main() async {
     await reference.delete();
   });
 
-  test('Stream document changes', () async {
-    var reference = firestore.document('test/subscribe');
-
-    // Firestore may send empty events on subscription because we're reusing the
-    // document path.
-    expect(reference.stream.where((doc) => doc != null),
-        emits((document) => document['field'] == 'test'));
-
-    await reference.set({'field': 'test'});
-    await reference.delete();
-  });
+  // test('Stream document changes', () async {
+  //   var reference = firestore.document('test/subscribe');
+  //
+  //   // Firestore may send empty events on subscription because we're reusing the
+  //   // document path.
+  //   expect(reference.stream.where((doc) => doc != null),
+  //       emits((document) => document['field'] == 'test'));
+  //
+  //   await reference.set({'field': 'test'});
+  //   await reference.delete();
+  // });
 
   test('Stream collection changes', () async {
     var reference = firestore.collection('test');

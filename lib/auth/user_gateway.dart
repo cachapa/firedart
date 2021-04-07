@@ -23,7 +23,8 @@ class UserGateway {
     });
   }
 
-  Future<void> updateProfile(String displayName, String photoUrl) async {
+  Future<void> updateProfile(String? displayName, String? photoUrl) async {
+    assert(displayName != null || photoUrl != null);
     await _post('update', {
       if (displayName != null) 'displayName': displayName,
       if (photoUrl != null) 'photoUrl': photoUrl,
@@ -40,7 +41,7 @@ class UserGateway {
         'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await _client.post(
-      requestUrl,
+      Uri.parse(requestUrl),
       body: body,
     );
 
@@ -50,10 +51,10 @@ class UserGateway {
 
 class User {
   final String id;
-  final String displayName;
-  final String photoUrl;
-  final String email;
-  final bool emailVerified;
+  final String? displayName;
+  final String? photoUrl;
+  final String? email;
+  final bool? emailVerified;
 
   User.fromMap(Map<String, dynamic> map)
       : id = map['localId'],

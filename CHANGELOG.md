@@ -1,3 +1,8 @@
+## [0.9.0+1] - 07 April 2021.
+
+* Migrate code to NNBD
+* Update dependencies and regenerate RPC stubs
+
 ## [0.8.3] - 26 October 2020.
 
 * Update dependencies and regenerate RPC stubs

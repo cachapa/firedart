@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/firestore.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
@@ -97,131 +97,99 @@ class FirestoreClient extends $grpc.Client {
           ($0.CreateDocumentRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Document.fromBuffer(value));
 
-  FirestoreClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
-      : super(channel, options: options);
+  FirestoreClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$1.Document> getDocument($0.GetDocumentRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$getDocument, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getDocument, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListDocumentsResponse> listDocuments(
       $0.ListDocumentsRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$listDocuments, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$listDocuments, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Document> updateDocument(
       $0.UpdateDocumentRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$updateDocument, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateDocument, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Empty> deleteDocument(
       $0.DeleteDocumentRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$deleteDocument, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$deleteDocument, request, options: options);
   }
 
   $grpc.ResponseStream<$0.BatchGetDocumentsResponse> batchGetDocuments(
       $0.BatchGetDocumentsRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
         _$batchGetDocuments, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.BeginTransactionResponse> beginTransaction(
       $0.BeginTransactionRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$beginTransaction, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$beginTransaction, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.CommitResponse> commit($0.CommitRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(_$commit, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$commit, request, options: options);
   }
 
   $grpc.ResponseFuture<$2.Empty> rollback($0.RollbackRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(_$rollback, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$rollback, request, options: options);
   }
 
   $grpc.ResponseStream<$0.RunQueryResponse> runQuery($0.RunQueryRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(_$runQuery, $async.Stream.fromIterable([request]),
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$runQuery, $async.Stream.fromIterable([request]),
         options: options);
-    return $grpc.ResponseStream(call);
   }
 
   $grpc.ResponseFuture<$0.PartitionQueryResponse> partitionQuery(
       $0.PartitionQueryRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$partitionQuery, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$partitionQuery, request, options: options);
   }
 
   $grpc.ResponseStream<$0.WriteResponse> write(
       $async.Stream<$0.WriteRequest> request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(_$write, request, options: options);
-    return $grpc.ResponseStream(call);
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$write, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ListenResponse> listen(
       $async.Stream<$0.ListenRequest> request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(_$listen, request, options: options);
-    return $grpc.ResponseStream(call);
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$listen, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListCollectionIdsResponse> listCollectionIds(
       $0.ListCollectionIdsRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$listCollectionIds, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$listCollectionIds, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.BatchWriteResponse> batchWrite(
       $0.BatchWriteRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$batchWrite, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$batchWrite, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Document> createDocument(
       $0.CreateDocumentRequest request,
-      {$grpc.CallOptions options}) {
-    final call = $createCall(
-        _$createDocument, $async.Stream.fromIterable([request]),
-        options: options);
-    return $grpc.ResponseFuture(call);
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$createDocument, request, options: options);
   }
 }
 

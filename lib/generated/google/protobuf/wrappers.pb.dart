@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/wrappers.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -33,7 +33,15 @@ class DoubleValue extends $pb.GeneratedMessage with $mixin.DoubleValueMixin {
     ..hasRequiredFields = false;
 
   DoubleValue._() : super();
-  factory DoubleValue() => create();
+  factory DoubleValue({
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory DoubleValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -48,8 +56,8 @@ class DoubleValue extends $pb.GeneratedMessage with $mixin.DoubleValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DoubleValue copyWith(void Function(DoubleValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as DoubleValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DoubleValue))
+          as DoubleValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DoubleValue create() => DoubleValue._();
@@ -58,7 +66,7 @@ class DoubleValue extends $pb.GeneratedMessage with $mixin.DoubleValueMixin {
   @$core.pragma('dart2js:noInline')
   static DoubleValue getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DoubleValue>(create);
-  static DoubleValue _defaultInstance;
+  static DoubleValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
@@ -94,7 +102,15 @@ class FloatValue extends $pb.GeneratedMessage with $mixin.FloatValueMixin {
     ..hasRequiredFields = false;
 
   FloatValue._() : super();
-  factory FloatValue() => create();
+  factory FloatValue({
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory FloatValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -109,8 +125,8 @@ class FloatValue extends $pb.GeneratedMessage with $mixin.FloatValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   FloatValue copyWith(void Function(FloatValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as FloatValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as FloatValue))
+          as FloatValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FloatValue create() => FloatValue._();
@@ -119,7 +135,7 @@ class FloatValue extends $pb.GeneratedMessage with $mixin.FloatValueMixin {
   @$core.pragma('dart2js:noInline')
   static FloatValue getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<FloatValue>(create);
-  static FloatValue _defaultInstance;
+  static FloatValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
@@ -154,7 +170,15 @@ class Int64Value extends $pb.GeneratedMessage with $mixin.Int64ValueMixin {
     ..hasRequiredFields = false;
 
   Int64Value._() : super();
-  factory Int64Value() => create();
+  factory Int64Value({
+    $fixnum.Int64? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory Int64Value.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -169,8 +193,8 @@ class Int64Value extends $pb.GeneratedMessage with $mixin.Int64ValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Int64Value copyWith(void Function(Int64Value) updates) =>
-      super.copyWith((message) =>
-          updates(message as Int64Value)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as Int64Value))
+          as Int64Value; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Int64Value create() => Int64Value._();
@@ -179,7 +203,7 @@ class Int64Value extends $pb.GeneratedMessage with $mixin.Int64ValueMixin {
   @$core.pragma('dart2js:noInline')
   static Int64Value getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<Int64Value>(create);
-  static Int64Value _defaultInstance;
+  static Int64Value? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get value => $_getI64(0);
@@ -216,7 +240,15 @@ class UInt64Value extends $pb.GeneratedMessage with $mixin.UInt64ValueMixin {
     ..hasRequiredFields = false;
 
   UInt64Value._() : super();
-  factory UInt64Value() => create();
+  factory UInt64Value({
+    $fixnum.Int64? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory UInt64Value.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -231,8 +263,8 @@ class UInt64Value extends $pb.GeneratedMessage with $mixin.UInt64ValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   UInt64Value copyWith(void Function(UInt64Value) updates) =>
-      super.copyWith((message) =>
-          updates(message as UInt64Value)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as UInt64Value))
+          as UInt64Value; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UInt64Value create() => UInt64Value._();
@@ -241,7 +273,7 @@ class UInt64Value extends $pb.GeneratedMessage with $mixin.UInt64ValueMixin {
   @$core.pragma('dart2js:noInline')
   static UInt64Value getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<UInt64Value>(create);
-  static UInt64Value _defaultInstance;
+  static UInt64Value? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get value => $_getI64(0);
@@ -277,7 +309,15 @@ class Int32Value extends $pb.GeneratedMessage with $mixin.Int32ValueMixin {
     ..hasRequiredFields = false;
 
   Int32Value._() : super();
-  factory Int32Value() => create();
+  factory Int32Value({
+    $core.int? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory Int32Value.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -292,8 +332,8 @@ class Int32Value extends $pb.GeneratedMessage with $mixin.Int32ValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Int32Value copyWith(void Function(Int32Value) updates) =>
-      super.copyWith((message) =>
-          updates(message as Int32Value)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as Int32Value))
+          as Int32Value; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Int32Value create() => Int32Value._();
@@ -302,7 +342,7 @@ class Int32Value extends $pb.GeneratedMessage with $mixin.Int32ValueMixin {
   @$core.pragma('dart2js:noInline')
   static Int32Value getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<Int32Value>(create);
-  static Int32Value _defaultInstance;
+  static Int32Value? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get value => $_getIZ(0);
@@ -338,7 +378,15 @@ class UInt32Value extends $pb.GeneratedMessage with $mixin.UInt32ValueMixin {
     ..hasRequiredFields = false;
 
   UInt32Value._() : super();
-  factory UInt32Value() => create();
+  factory UInt32Value({
+    $core.int? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory UInt32Value.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -353,8 +401,8 @@ class UInt32Value extends $pb.GeneratedMessage with $mixin.UInt32ValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   UInt32Value copyWith(void Function(UInt32Value) updates) =>
-      super.copyWith((message) =>
-          updates(message as UInt32Value)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as UInt32Value))
+          as UInt32Value; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UInt32Value create() => UInt32Value._();
@@ -363,7 +411,7 @@ class UInt32Value extends $pb.GeneratedMessage with $mixin.UInt32ValueMixin {
   @$core.pragma('dart2js:noInline')
   static UInt32Value getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<UInt32Value>(create);
-  static UInt32Value _defaultInstance;
+  static UInt32Value? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get value => $_getIZ(0);
@@ -398,7 +446,15 @@ class BoolValue extends $pb.GeneratedMessage with $mixin.BoolValueMixin {
     ..hasRequiredFields = false;
 
   BoolValue._() : super();
-  factory BoolValue() => create();
+  factory BoolValue({
+    $core.bool? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory BoolValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -413,8 +469,8 @@ class BoolValue extends $pb.GeneratedMessage with $mixin.BoolValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BoolValue copyWith(void Function(BoolValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as BoolValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BoolValue))
+          as BoolValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BoolValue create() => BoolValue._();
@@ -423,7 +479,7 @@ class BoolValue extends $pb.GeneratedMessage with $mixin.BoolValueMixin {
   @$core.pragma('dart2js:noInline')
   static BoolValue getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BoolValue>(create);
-  static BoolValue _defaultInstance;
+  static BoolValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get value => $_getBF(0);
@@ -458,7 +514,15 @@ class StringValue extends $pb.GeneratedMessage with $mixin.StringValueMixin {
     ..hasRequiredFields = false;
 
   StringValue._() : super();
-  factory StringValue() => create();
+  factory StringValue({
+    $core.String? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory StringValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -473,8 +537,8 @@ class StringValue extends $pb.GeneratedMessage with $mixin.StringValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   StringValue copyWith(void Function(StringValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as StringValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as StringValue))
+          as StringValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StringValue create() => StringValue._();
@@ -483,7 +547,7 @@ class StringValue extends $pb.GeneratedMessage with $mixin.StringValueMixin {
   @$core.pragma('dart2js:noInline')
   static StringValue getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<StringValue>(create);
-  static StringValue _defaultInstance;
+  static StringValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get value => $_getSZ(0);
@@ -519,7 +583,15 @@ class BytesValue extends $pb.GeneratedMessage with $mixin.BytesValueMixin {
     ..hasRequiredFields = false;
 
   BytesValue._() : super();
-  factory BytesValue() => create();
+  factory BytesValue({
+    $core.List<$core.int>? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
   factory BytesValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -534,8 +606,8 @@ class BytesValue extends $pb.GeneratedMessage with $mixin.BytesValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BytesValue copyWith(void Function(BytesValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as BytesValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BytesValue))
+          as BytesValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BytesValue create() => BytesValue._();
@@ -544,7 +616,7 @@ class BytesValue extends $pb.GeneratedMessage with $mixin.BytesValueMixin {
   @$core.pragma('dart2js:noInline')
   static BytesValue getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BytesValue>(create);
-  static BytesValue _defaultInstance;
+  static BytesValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get value => $_getN(0);

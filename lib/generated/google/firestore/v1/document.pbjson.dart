@@ -2,9 +2,14 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/document.proto
 //
-// @dart = 2.3
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+
+@$core.Deprecated('Use documentDescriptor instead')
 const Document$json = const {
   '1': 'Document',
   '2': const [
@@ -37,6 +42,7 @@ const Document$json = const {
   '3': const [Document_FieldsEntry$json],
 };
 
+@$core.Deprecated('Use documentDescriptor instead')
 const Document_FieldsEntry$json = const {
   '1': 'FieldsEntry',
   '2': const [
@@ -53,6 +59,10 @@ const Document_FieldsEntry$json = const {
   '7': const {'7': true},
 };
 
+/// Descriptor for `Document`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List documentDescriptor = $convert.base64Decode(
+    'CghEb2N1bWVudBISCgRuYW1lGAEgASgJUgRuYW1lEkEKBmZpZWxkcxgCIAMoCzIpLmdvb2dsZS5maXJlc3RvcmUudjEuRG9jdW1lbnQuRmllbGRzRW50cnlSBmZpZWxkcxI7CgtjcmVhdGVfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCmNyZWF0ZVRpbWUSOwoLdXBkYXRlX3RpbWUYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wUgp1cGRhdGVUaW1lGlUKC0ZpZWxkc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EjAKBXZhbHVlGAIgASgLMhouZ29vZ2xlLmZpcmVzdG9yZS52MS5WYWx1ZVIFdmFsdWU6AjgB');
+@$core.Deprecated('Use valueDescriptor instead')
 const Value$json = const {
   '1': 'Value',
   '2': const [
@@ -155,6 +165,10 @@ const Value$json = const {
   ],
 };
 
+/// Descriptor for `Value`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List valueDescriptor = $convert.base64Decode(
+    'CgVWYWx1ZRI7CgpudWxsX3ZhbHVlGAsgASgOMhouZ29vZ2xlLnByb3RvYnVmLk51bGxWYWx1ZUgAUgludWxsVmFsdWUSJQoNYm9vbGVhbl92YWx1ZRgBIAEoCEgAUgxib29sZWFuVmFsdWUSJQoNaW50ZWdlcl92YWx1ZRgCIAEoA0gAUgxpbnRlZ2VyVmFsdWUSIwoMZG91YmxlX3ZhbHVlGAMgASgBSABSC2RvdWJsZVZhbHVlEkUKD3RpbWVzdGFtcF92YWx1ZRgKIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAFIOdGltZXN0YW1wVmFsdWUSIwoMc3RyaW5nX3ZhbHVlGBEgASgJSABSC3N0cmluZ1ZhbHVlEiEKC2J5dGVzX3ZhbHVlGBIgASgMSABSCmJ5dGVzVmFsdWUSKQoPcmVmZXJlbmNlX3ZhbHVlGAUgASgJSABSDnJlZmVyZW5jZVZhbHVlEj0KD2dlb19wb2ludF92YWx1ZRgIIAEoCzITLmdvb2dsZS50eXBlLkxhdExuZ0gAUg1nZW9Qb2ludFZhbHVlEkIKC2FycmF5X3ZhbHVlGAkgASgLMh8uZ29vZ2xlLmZpcmVzdG9yZS52MS5BcnJheVZhbHVlSABSCmFycmF5VmFsdWUSPAoJbWFwX3ZhbHVlGAYgASgLMh0uZ29vZ2xlLmZpcmVzdG9yZS52MS5NYXBWYWx1ZUgAUghtYXBWYWx1ZUIMCgp2YWx1ZV90eXBl');
+@$core.Deprecated('Use arrayValueDescriptor instead')
 const ArrayValue$json = const {
   '1': 'ArrayValue',
   '2': const [
@@ -169,6 +183,10 @@ const ArrayValue$json = const {
   ],
 };
 
+/// Descriptor for `ArrayValue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List arrayValueDescriptor = $convert.base64Decode(
+    'CgpBcnJheVZhbHVlEjIKBnZhbHVlcxgBIAMoCzIaLmdvb2dsZS5maXJlc3RvcmUudjEuVmFsdWVSBnZhbHVlcw==');
+@$core.Deprecated('Use mapValueDescriptor instead')
 const MapValue$json = const {
   '1': 'MapValue',
   '2': const [
@@ -184,6 +202,7 @@ const MapValue$json = const {
   '3': const [MapValue_FieldsEntry$json],
 };
 
+@$core.Deprecated('Use mapValueDescriptor instead')
 const MapValue_FieldsEntry$json = const {
   '1': 'FieldsEntry',
   '2': const [
@@ -199,3 +218,7 @@ const MapValue_FieldsEntry$json = const {
   ],
   '7': const {'7': true},
 };
+
+/// Descriptor for `MapValue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mapValueDescriptor = $convert.base64Decode(
+    'CghNYXBWYWx1ZRJBCgZmaWVsZHMYASADKAsyKS5nb29nbGUuZmlyZXN0b3JlLnYxLk1hcFZhbHVlLkZpZWxkc0VudHJ5UgZmaWVsZHMaVQoLRmllbGRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSMAoFdmFsdWUYAiABKAsyGi5nb29nbGUuZmlyZXN0b3JlLnYxLlZhbHVlUgV2YWx1ZToCOAE=');

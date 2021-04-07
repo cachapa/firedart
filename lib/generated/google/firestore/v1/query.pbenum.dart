@@ -2,10 +2,10 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/query.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME,UNUSED_SHOWN_NAME
+// ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
@@ -38,7 +38,7 @@ class StructuredQuery_Direction extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, StructuredQuery_Direction> _byValue =
       $pb.ProtobufEnum.initByValue(values);
-  static StructuredQuery_Direction valueOf($core.int value) => _byValue[value];
+  static StructuredQuery_Direction? valueOf($core.int value) => _byValue[value];
 
   const StructuredQuery_Direction._($core.int v, $core.String n) : super(v, n);
 }
@@ -65,7 +65,7 @@ class StructuredQuery_CompositeFilter_Operator extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, StructuredQuery_CompositeFilter_Operator>
       _byValue = $pb.ProtobufEnum.initByValue(values);
-  static StructuredQuery_CompositeFilter_Operator valueOf($core.int value) =>
+  static StructuredQuery_CompositeFilter_Operator? valueOf($core.int value) =>
       _byValue[value];
 
   const StructuredQuery_CompositeFilter_Operator._($core.int v, $core.String n)
@@ -157,7 +157,7 @@ class StructuredQuery_FieldFilter_Operator extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, StructuredQuery_FieldFilter_Operator>
       _byValue = $pb.ProtobufEnum.initByValue(values);
-  static StructuredQuery_FieldFilter_Operator valueOf($core.int value) =>
+  static StructuredQuery_FieldFilter_Operator? valueOf($core.int value) =>
       _byValue[value];
 
   const StructuredQuery_FieldFilter_Operator._($core.int v, $core.String n)
@@ -207,7 +207,7 @@ class StructuredQuery_UnaryFilter_Operator extends $pb.ProtobufEnum {
 
   static final $core.Map<$core.int, StructuredQuery_UnaryFilter_Operator>
       _byValue = $pb.ProtobufEnum.initByValue(values);
-  static StructuredQuery_UnaryFilter_Operator valueOf($core.int value) =>
+  static StructuredQuery_UnaryFilter_Operator? valueOf($core.int value) =>
       _byValue[value];
 
   const StructuredQuery_UnaryFilter_Operator._($core.int v, $core.String n)

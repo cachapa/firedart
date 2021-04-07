@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/write.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -52,7 +52,35 @@ class Write extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Write._() : super();
-  factory Write() => create();
+  factory Write({
+    $0.Document? update,
+    $core.String? delete,
+    $1.DocumentMask? updateMask,
+    $1.Precondition? currentDocument,
+    DocumentTransform? transform,
+    $core.Iterable<DocumentTransform_FieldTransform>? updateTransforms,
+  }) {
+    final _result = create();
+    if (update != null) {
+      _result.update = update;
+    }
+    if (delete != null) {
+      _result.delete = delete;
+    }
+    if (updateMask != null) {
+      _result.updateMask = updateMask;
+    }
+    if (currentDocument != null) {
+      _result.currentDocument = currentDocument;
+    }
+    if (transform != null) {
+      _result.transform = transform;
+    }
+    if (updateTransforms != null) {
+      _result.updateTransforms.addAll(updateTransforms);
+    }
+    return _result;
+  }
   factory Write.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -66,8 +94,9 @@ class Write extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Write copyWith(void Function(Write) updates) => super.copyWith(
-      (message) => updates(message as Write)); // ignore: deprecated_member_use
+  Write copyWith(void Function(Write) updates) =>
+      super.copyWith((message) => updates(message as Write))
+          as Write; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Write create() => Write._();
@@ -76,9 +105,9 @@ class Write extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Write getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Write>(create);
-  static Write _defaultInstance;
+  static Write? _defaultInstance;
 
-  Write_Operation whichOperation() => _Write_OperationByTag[$_whichOneof(0)];
+  Write_Operation whichOperation() => _Write_OperationByTag[$_whichOneof(0)]!;
   void clearOperation() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -209,7 +238,39 @@ class DocumentTransform_FieldTransform extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   DocumentTransform_FieldTransform._() : super();
-  factory DocumentTransform_FieldTransform() => create();
+  factory DocumentTransform_FieldTransform({
+    $core.String? fieldPath,
+    DocumentTransform_FieldTransform_ServerValue? setToServerValue,
+    $0.Value? increment,
+    $0.Value? maximum,
+    $0.Value? minimum,
+    $0.ArrayValue? appendMissingElements,
+    $0.ArrayValue? removeAllFromArray,
+  }) {
+    final _result = create();
+    if (fieldPath != null) {
+      _result.fieldPath = fieldPath;
+    }
+    if (setToServerValue != null) {
+      _result.setToServerValue = setToServerValue;
+    }
+    if (increment != null) {
+      _result.increment = increment;
+    }
+    if (maximum != null) {
+      _result.maximum = maximum;
+    }
+    if (minimum != null) {
+      _result.minimum = minimum;
+    }
+    if (appendMissingElements != null) {
+      _result.appendMissingElements = appendMissingElements;
+    }
+    if (removeAllFromArray != null) {
+      _result.removeAllFromArray = removeAllFromArray;
+    }
+    return _result;
+  }
   factory DocumentTransform_FieldTransform.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -226,8 +287,9 @@ class DocumentTransform_FieldTransform extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   DocumentTransform_FieldTransform copyWith(
           void Function(DocumentTransform_FieldTransform) updates) =>
-      super.copyWith((message) => updates(message
-          as DocumentTransform_FieldTransform)); // ignore: deprecated_member_use
+      super.copyWith(
+              (message) => updates(message as DocumentTransform_FieldTransform))
+          as DocumentTransform_FieldTransform; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DocumentTransform_FieldTransform create() =>
@@ -239,10 +301,10 @@ class DocumentTransform_FieldTransform extends $pb.GeneratedMessage {
   static DocumentTransform_FieldTransform getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DocumentTransform_FieldTransform>(
           create);
-  static DocumentTransform_FieldTransform _defaultInstance;
+  static DocumentTransform_FieldTransform? _defaultInstance;
 
   DocumentTransform_FieldTransform_TransformType whichTransformType() =>
-      _DocumentTransform_FieldTransform_TransformTypeByTag[$_whichOneof(0)];
+      _DocumentTransform_FieldTransform_TransformTypeByTag[$_whichOneof(0)]!;
   void clearTransformType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -366,7 +428,19 @@ class DocumentTransform extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   DocumentTransform._() : super();
-  factory DocumentTransform() => create();
+  factory DocumentTransform({
+    $core.String? document,
+    $core.Iterable<DocumentTransform_FieldTransform>? fieldTransforms,
+  }) {
+    final _result = create();
+    if (document != null) {
+      _result.document = document;
+    }
+    if (fieldTransforms != null) {
+      _result.fieldTransforms.addAll(fieldTransforms);
+    }
+    return _result;
+  }
   factory DocumentTransform.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -381,8 +455,8 @@ class DocumentTransform extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DocumentTransform copyWith(void Function(DocumentTransform) updates) =>
-      super.copyWith((message) => updates(
-          message as DocumentTransform)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DocumentTransform))
+          as DocumentTransform; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DocumentTransform create() => DocumentTransform._();
@@ -392,7 +466,7 @@ class DocumentTransform extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DocumentTransform getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DocumentTransform>(create);
-  static DocumentTransform _defaultInstance;
+  static DocumentTransform? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get document => $_getSZ(0);
@@ -434,7 +508,19 @@ class WriteResult extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   WriteResult._() : super();
-  factory WriteResult() => create();
+  factory WriteResult({
+    $2.Timestamp? updateTime,
+    $core.Iterable<$0.Value>? transformResults,
+  }) {
+    final _result = create();
+    if (updateTime != null) {
+      _result.updateTime = updateTime;
+    }
+    if (transformResults != null) {
+      _result.transformResults.addAll(transformResults);
+    }
+    return _result;
+  }
   factory WriteResult.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -449,8 +535,8 @@ class WriteResult extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   WriteResult copyWith(void Function(WriteResult) updates) =>
-      super.copyWith((message) =>
-          updates(message as WriteResult)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as WriteResult))
+          as WriteResult; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteResult create() => WriteResult._();
@@ -459,7 +545,7 @@ class WriteResult extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static WriteResult getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<WriteResult>(create);
-  static WriteResult _defaultInstance;
+  static WriteResult? _defaultInstance;
 
   @$pb.TagNumber(1)
   $2.Timestamp get updateTime => $_getN(0);
@@ -502,7 +588,23 @@ class DocumentChange extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   DocumentChange._() : super();
-  factory DocumentChange() => create();
+  factory DocumentChange({
+    $0.Document? document,
+    $core.Iterable<$core.int>? targetIds,
+    $core.Iterable<$core.int>? removedTargetIds,
+  }) {
+    final _result = create();
+    if (document != null) {
+      _result.document = document;
+    }
+    if (targetIds != null) {
+      _result.targetIds.addAll(targetIds);
+    }
+    if (removedTargetIds != null) {
+      _result.removedTargetIds.addAll(removedTargetIds);
+    }
+    return _result;
+  }
   factory DocumentChange.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -517,8 +619,8 @@ class DocumentChange extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DocumentChange copyWith(void Function(DocumentChange) updates) =>
-      super.copyWith((message) =>
-          updates(message as DocumentChange)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DocumentChange))
+          as DocumentChange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DocumentChange create() => DocumentChange._();
@@ -528,7 +630,7 @@ class DocumentChange extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DocumentChange getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DocumentChange>(create);
-  static DocumentChange _defaultInstance;
+  static DocumentChange? _defaultInstance;
 
   @$pb.TagNumber(1)
   $0.Document get document => $_getN(0);
@@ -578,7 +680,23 @@ class DocumentDelete extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   DocumentDelete._() : super();
-  factory DocumentDelete() => create();
+  factory DocumentDelete({
+    $core.String? document,
+    $2.Timestamp? readTime,
+    $core.Iterable<$core.int>? removedTargetIds,
+  }) {
+    final _result = create();
+    if (document != null) {
+      _result.document = document;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    if (removedTargetIds != null) {
+      _result.removedTargetIds.addAll(removedTargetIds);
+    }
+    return _result;
+  }
   factory DocumentDelete.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -593,8 +711,8 @@ class DocumentDelete extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DocumentDelete copyWith(void Function(DocumentDelete) updates) =>
-      super.copyWith((message) =>
-          updates(message as DocumentDelete)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DocumentDelete))
+          as DocumentDelete; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DocumentDelete create() => DocumentDelete._();
@@ -604,7 +722,7 @@ class DocumentDelete extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DocumentDelete getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DocumentDelete>(create);
-  static DocumentDelete _defaultInstance;
+  static DocumentDelete? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get document => $_getSZ(0);
@@ -663,7 +781,23 @@ class DocumentRemove extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   DocumentRemove._() : super();
-  factory DocumentRemove() => create();
+  factory DocumentRemove({
+    $core.String? document,
+    $core.Iterable<$core.int>? removedTargetIds,
+    $2.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (document != null) {
+      _result.document = document;
+    }
+    if (removedTargetIds != null) {
+      _result.removedTargetIds.addAll(removedTargetIds);
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory DocumentRemove.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -678,8 +812,8 @@ class DocumentRemove extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DocumentRemove copyWith(void Function(DocumentRemove) updates) =>
-      super.copyWith((message) =>
-          updates(message as DocumentRemove)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DocumentRemove))
+          as DocumentRemove; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DocumentRemove create() => DocumentRemove._();
@@ -689,7 +823,7 @@ class DocumentRemove extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DocumentRemove getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DocumentRemove>(create);
-  static DocumentRemove _defaultInstance;
+  static DocumentRemove? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get document => $_getSZ(0);
@@ -746,7 +880,19 @@ class ExistenceFilter extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ExistenceFilter._() : super();
-  factory ExistenceFilter() => create();
+  factory ExistenceFilter({
+    $core.int? targetId,
+    $core.int? count,
+  }) {
+    final _result = create();
+    if (targetId != null) {
+      _result.targetId = targetId;
+    }
+    if (count != null) {
+      _result.count = count;
+    }
+    return _result;
+  }
   factory ExistenceFilter.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -761,8 +907,8 @@ class ExistenceFilter extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ExistenceFilter copyWith(void Function(ExistenceFilter) updates) =>
-      super.copyWith((message) =>
-          updates(message as ExistenceFilter)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ExistenceFilter))
+          as ExistenceFilter; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ExistenceFilter create() => ExistenceFilter._();
@@ -772,7 +918,7 @@ class ExistenceFilter extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ExistenceFilter getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ExistenceFilter>(create);
-  static ExistenceFilter _defaultInstance;
+  static ExistenceFilter? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get targetId => $_getIZ(0);

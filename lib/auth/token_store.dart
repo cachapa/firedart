@@ -1,19 +1,18 @@
 abstract class TokenStore {
-  Token _token;
+  Token? _token;
 
-  String get userId => _token._userId;
+  String? get userId => _token?._userId;
 
-  String get idToken => _token._idToken;
+  String? get idToken => _token?._idToken;
 
-  String get refreshToken => _token._refreshToken;
+  String? get refreshToken => _token?._refreshToken;
 
-  DateTime get expiry => _token._expiry;
+  DateTime? get expiry => _token?._expiry;
 
   bool get hasToken => _token != null;
 
   void setToken(
       String userId, String idToken, String refreshToken, int expiresIn) {
-    assert(idToken != null && refreshToken != null && expiresIn != null);
     var expiry = DateTime.now().add(Duration(seconds: expiresIn));
     _token = Token(userId, idToken, refreshToken, expiry);
     write(_token);
@@ -25,8 +24,9 @@ abstract class TokenStore {
 
   /// Force refresh - useful for testing
   void expireToken() {
-    _token = Token(
-        _token._userId, _token._idToken, _token._refreshToken, DateTime.now());
+    assert(_token != null);
+    _token = Token(_token!._userId, _token!._idToken, _token!._refreshToken,
+        DateTime.now());
     write(_token);
   }
 
@@ -36,10 +36,10 @@ abstract class TokenStore {
   }
 
   /// Restore the refresh token from storage, returns null if token isn't stored
-  Token read();
+  Token? read();
 
   /// Persist the refresh token
-  void write(Token token);
+  void write(Token? token);
 
   void delete();
 }
@@ -48,10 +48,10 @@ abstract class TokenStore {
 /// persistence isn't available but it's fine signing in for each session.
 class VolatileStore extends TokenStore {
   @override
-  Token read() => null;
+  Token? read() => null;
 
   @override
-  void write(Token token) {}
+  void write(Token? token) {}
 
   @override
   void delete() {}

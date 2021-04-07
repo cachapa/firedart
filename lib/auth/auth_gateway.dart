@@ -42,7 +42,7 @@ class AuthGateway {
         'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await client.post(
-      requestUrl,
+      Uri.parse(requestUrl),
       body: body,
     );
 

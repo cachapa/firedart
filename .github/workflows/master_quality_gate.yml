@@ -10,11 +10,9 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
-    container:
-      image:  google/dart:latest
-
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
       - name: Load test credentials
         run: |
           echo "const apiKey = '${{ secrets.test_api_key }}';" > test/test_config.dart
@@ -23,10 +21,10 @@ jobs:
           echo "const password = '${{ secrets.test_password }}';" >> test/test_config.dart
 
       - name: Verify code formatting
-        run: dartfmt --dry-run --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
       - name: Get dependencies
         run: pub get
       - name: Static code analysis
-        run: dart analyze --fatal-infos .
+        run: dart analyze --fatal-infos
       - name: Run tests
         run: pub run test

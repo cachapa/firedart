@@ -5,20 +5,20 @@ import 'models.dart';
 
 class Firestore {
   /* Singleton interface */
-  static Firestore _instance;
+  static Firestore? _instance;
 
-  static Firestore initialize(String projectId, {String databaseId}) {
+  static Firestore initialize(String projectId, {String? databaseId}) {
     if (_instance != null) {
       throw Exception('Firestore instance was already initialized');
     }
-    FirebaseAuth auth;
+    FirebaseAuth? auth;
     try {
       auth = FirebaseAuth.instance;
     } catch (e) {
       // FirebaseAuth isn't initialized
     }
     _instance = Firestore(projectId, databaseId: databaseId, auth: auth);
-    return _instance;
+    return _instance!;
   }
 
   static Firestore get instance {
@@ -26,13 +26,13 @@ class Firestore {
       throw Exception(
           "Firestore hasn't been initialized. Please call Firestore.initialize() before using it.");
     }
-    return _instance;
+    return _instance!;
   }
 
   /* Instance interface */
   final FirestoreGateway _gateway;
 
-  Firestore(String projectId, {String databaseId, FirebaseAuth auth})
+  Firestore(String projectId, {String? databaseId, FirebaseAuth? auth})
       : _gateway =
             FirestoreGateway(projectId, databaseId: databaseId, auth: auth),
         assert(projectId.isNotEmpty);

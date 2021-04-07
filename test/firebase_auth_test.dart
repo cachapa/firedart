@@ -5,8 +5,8 @@ import 'package:test/test.dart';
 import 'test_config.dart';
 
 Future main() async {
-  TokenStore tokenStore;
-  FirebaseAuth auth;
+  late TokenStore tokenStore;
+  late FirebaseAuth auth;
 
   setUp(() {
     tokenStore = VolatileStore();

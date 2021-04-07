@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/protobuf/struct.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -40,7 +40,15 @@ class Struct extends $pb.GeneratedMessage with $mixin.StructMixin {
     ..hasRequiredFields = false;
 
   Struct._() : super();
-  factory Struct() => create();
+  factory Struct({
+    $core.Map<$core.String, Value>? fields,
+  }) {
+    final _result = create();
+    if (fields != null) {
+      _result.fields.addAll(fields);
+    }
+    return _result;
+  }
   factory Struct.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -54,8 +62,9 @@ class Struct extends $pb.GeneratedMessage with $mixin.StructMixin {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Struct copyWith(void Function(Struct) updates) => super.copyWith(
-      (message) => updates(message as Struct)); // ignore: deprecated_member_use
+  Struct copyWith(void Function(Struct) updates) =>
+      super.copyWith((message) => updates(message as Struct))
+          as Struct; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Struct create() => Struct._();
@@ -64,7 +73,7 @@ class Struct extends $pb.GeneratedMessage with $mixin.StructMixin {
   @$core.pragma('dart2js:noInline')
   static Struct getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Struct>(create);
-  static Struct _defaultInstance;
+  static Struct? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.Map<$core.String, Value> get fields => $_getMap(0);
@@ -121,7 +130,35 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
     ..hasRequiredFields = false;
 
   Value._() : super();
-  factory Value() => create();
+  factory Value({
+    NullValue? nullValue,
+    $core.double? numberValue,
+    $core.String? stringValue,
+    $core.bool? boolValue,
+    Struct? structValue,
+    ListValue? listValue,
+  }) {
+    final _result = create();
+    if (nullValue != null) {
+      _result.nullValue = nullValue;
+    }
+    if (numberValue != null) {
+      _result.numberValue = numberValue;
+    }
+    if (stringValue != null) {
+      _result.stringValue = stringValue;
+    }
+    if (boolValue != null) {
+      _result.boolValue = boolValue;
+    }
+    if (structValue != null) {
+      _result.structValue = structValue;
+    }
+    if (listValue != null) {
+      _result.listValue = listValue;
+    }
+    return _result;
+  }
   factory Value.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -135,8 +172,9 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Value copyWith(void Function(Value) updates) => super.copyWith(
-      (message) => updates(message as Value)); // ignore: deprecated_member_use
+  Value copyWith(void Function(Value) updates) =>
+      super.copyWith((message) => updates(message as Value))
+          as Value; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Value create() => Value._();
@@ -145,9 +183,9 @@ class Value extends $pb.GeneratedMessage with $mixin.ValueMixin {
   @$core.pragma('dart2js:noInline')
   static Value getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Value>(create);
-  static Value _defaultInstance;
+  static Value? _defaultInstance;
 
-  Value_Kind whichKind() => _Value_KindByTag[$_whichOneof(0)];
+  Value_Kind whichKind() => _Value_KindByTag[$_whichOneof(0)]!;
   void clearKind() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -249,7 +287,15 @@ class ListValue extends $pb.GeneratedMessage with $mixin.ListValueMixin {
     ..hasRequiredFields = false;
 
   ListValue._() : super();
-  factory ListValue() => create();
+  factory ListValue({
+    $core.Iterable<Value>? values,
+  }) {
+    final _result = create();
+    if (values != null) {
+      _result.values.addAll(values);
+    }
+    return _result;
+  }
   factory ListValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -264,8 +310,8 @@ class ListValue extends $pb.GeneratedMessage with $mixin.ListValueMixin {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ListValue copyWith(void Function(ListValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as ListValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListValue))
+          as ListValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListValue create() => ListValue._();
@@ -274,7 +320,7 @@ class ListValue extends $pb.GeneratedMessage with $mixin.ListValueMixin {
   @$core.pragma('dart2js:noInline')
   static ListValue getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListValue>(create);
-  static ListValue _defaultInstance;
+  static ListValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Value> get values => $_getList(0);

@@ -29,4 +29,4 @@ $PROTOC $GOOGLEAPIS/google/firestore/v1/document.proto
 
 $PROTOC $GOOGLEAPIS/google/type/latlng.proto
 
-dartfmt -w lib/generated
+dart format lib/generated

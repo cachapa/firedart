@@ -29,9 +29,10 @@ abstract class Reference {
   }
 
   @override
-  bool operator ==(other) {
-    return runtimeType == other.runtimeType && fullPath == other.fullPath;
-  }
+  bool operator ==(other) =>
+      other is Reference &&
+      runtimeType == other.runtimeType &&
+      fullPath == other.fullPath;
 
   @override
   String toString() {
@@ -72,8 +73,8 @@ class CollectionReference extends Reference {
     dynamic isGreaterThan,
     dynamic isGreaterThanOrEqualTo,
     dynamic arrayContains,
-    List<dynamic> arrayContainsAny,
-    List<dynamic> whereIn,
+    List<dynamic>? arrayContainsAny,
+    List<dynamic>? whereIn,
     bool isNull = false,
   }) {
     return QueryReference(gateway, path).where(fieldPath,
@@ -130,9 +131,9 @@ class DocumentReference extends Reference {
   Future<Document> get() => _gateway.getDocument(fullPath);
 
   @Deprecated('Use the stream getter instead')
-  Stream<Document> subscribe() => stream;
+  Stream<Document?> subscribe() => stream;
 
-  Stream<Document> get stream => _gateway.streamDocument(fullPath);
+  Stream<Document?> get stream => _gateway.streamDocument(fullPath);
 
   /// Check if a document exists.
   Future<bool> get exists async {
@@ -188,7 +189,7 @@ class Document {
 
   dynamic operator [](String key) {
     if (!_rawDocument.fields.containsKey(key)) return null;
-    return TypeUtil.decode(_rawDocument.fields[key], _gateway);
+    return TypeUtil.decode(_rawDocument.fields[key]!, _gateway);
   }
 
   @override
@@ -251,8 +252,8 @@ class QueryReference extends Reference {
   final StructuredQuery _structuredQuery = StructuredQuery();
 
   QueryReference(FirestoreGateway gateway, String path) : super(gateway, path) {
-    _structuredQuery
-      ..from.add(StructuredQuery_CollectionSelector()..collectionId = id);
+    _structuredQuery.from
+        .add(StructuredQuery_CollectionSelector()..collectionId = id);
   }
 
   QueryReference where(
@@ -263,8 +264,8 @@ class QueryReference extends Reference {
     dynamic isGreaterThan,
     dynamic isGreaterThanOrEqualTo,
     dynamic arrayContains,
-    List<dynamic> arrayContainsAny,
-    List<dynamic> whereIn,
+    List<dynamic>? arrayContainsAny,
+    List<dynamic>? whereIn,
     bool isNull = false,
   }) {
     if (isEqualTo != null) {
@@ -335,7 +336,7 @@ class QueryReference extends Reference {
   Future<List<Document>> get() => _gateway.runQuery(_structuredQuery, fullPath);
 
   void _addFilter(String fieldPath, dynamic value,
-      {StructuredQuery_FieldFilter_Operator operator}) {
+      {StructuredQuery_FieldFilter_Operator? operator}) {
     var queryFilter = StructuredQuery_Filter();
     if (value == null || operator == null) {
       var filter = StructuredQuery_UnaryFilter();

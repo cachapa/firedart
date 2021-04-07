@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/firestore.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -58,7 +58,27 @@ class GetDocumentRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   GetDocumentRequest._() : super();
-  factory GetDocumentRequest() => create();
+  factory GetDocumentRequest({
+    $core.String? name,
+    $3.DocumentMask? mask,
+    $core.List<$core.int>? transaction,
+    $4.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (mask != null) {
+      _result.mask = mask;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory GetDocumentRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -73,8 +93,8 @@ class GetDocumentRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   GetDocumentRequest copyWith(void Function(GetDocumentRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as GetDocumentRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as GetDocumentRequest))
+          as GetDocumentRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetDocumentRequest create() => GetDocumentRequest._();
@@ -84,10 +104,10 @@ class GetDocumentRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static GetDocumentRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<GetDocumentRequest>(create);
-  static GetDocumentRequest _defaultInstance;
+  static GetDocumentRequest? _defaultInstance;
 
   GetDocumentRequest_ConsistencySelector whichConsistencySelector() =>
-      _GetDocumentRequest_ConsistencySelectorByTag[$_whichOneof(0)];
+      _GetDocumentRequest_ConsistencySelectorByTag[$_whichOneof(0)]!;
   void clearConsistencySelector() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -188,7 +208,47 @@ class ListDocumentsRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ListDocumentsRequest._() : super();
-  factory ListDocumentsRequest() => create();
+  factory ListDocumentsRequest({
+    $core.String? parent,
+    $core.String? collectionId,
+    $core.int? pageSize,
+    $core.String? pageToken,
+    $core.String? orderBy,
+    $3.DocumentMask? mask,
+    $core.List<$core.int>? transaction,
+    $4.Timestamp? readTime,
+    $core.bool? showMissing,
+  }) {
+    final _result = create();
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    if (collectionId != null) {
+      _result.collectionId = collectionId;
+    }
+    if (pageSize != null) {
+      _result.pageSize = pageSize;
+    }
+    if (pageToken != null) {
+      _result.pageToken = pageToken;
+    }
+    if (orderBy != null) {
+      _result.orderBy = orderBy;
+    }
+    if (mask != null) {
+      _result.mask = mask;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    if (showMissing != null) {
+      _result.showMissing = showMissing;
+    }
+    return _result;
+  }
   factory ListDocumentsRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -204,8 +264,8 @@ class ListDocumentsRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ListDocumentsRequest copyWith(void Function(ListDocumentsRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as ListDocumentsRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListDocumentsRequest))
+          as ListDocumentsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListDocumentsRequest create() => ListDocumentsRequest._();
@@ -215,10 +275,10 @@ class ListDocumentsRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListDocumentsRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ListDocumentsRequest>(create);
-  static ListDocumentsRequest _defaultInstance;
+  static ListDocumentsRequest? _defaultInstance;
 
   ListDocumentsRequest_ConsistencySelector whichConsistencySelector() =>
-      _ListDocumentsRequest_ConsistencySelectorByTag[$_whichOneof(0)];
+      _ListDocumentsRequest_ConsistencySelectorByTag[$_whichOneof(0)]!;
   void clearConsistencySelector() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -356,7 +416,19 @@ class ListDocumentsResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ListDocumentsResponse._() : super();
-  factory ListDocumentsResponse() => create();
+  factory ListDocumentsResponse({
+    $core.Iterable<$1.Document>? documents,
+    $core.String? nextPageToken,
+  }) {
+    final _result = create();
+    if (documents != null) {
+      _result.documents.addAll(documents);
+    }
+    if (nextPageToken != null) {
+      _result.nextPageToken = nextPageToken;
+    }
+    return _result;
+  }
   factory ListDocumentsResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -373,8 +445,8 @@ class ListDocumentsResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   ListDocumentsResponse copyWith(
           void Function(ListDocumentsResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as ListDocumentsResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListDocumentsResponse))
+          as ListDocumentsResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListDocumentsResponse create() => ListDocumentsResponse._();
@@ -384,7 +456,7 @@ class ListDocumentsResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListDocumentsResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ListDocumentsResponse>(create);
-  static ListDocumentsResponse _defaultInstance;
+  static ListDocumentsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$1.Document> get documents => $_getList(0);
@@ -434,7 +506,31 @@ class CreateDocumentRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   CreateDocumentRequest._() : super();
-  factory CreateDocumentRequest() => create();
+  factory CreateDocumentRequest({
+    $core.String? parent,
+    $core.String? collectionId,
+    $core.String? documentId,
+    $1.Document? document,
+    $3.DocumentMask? mask,
+  }) {
+    final _result = create();
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    if (collectionId != null) {
+      _result.collectionId = collectionId;
+    }
+    if (documentId != null) {
+      _result.documentId = documentId;
+    }
+    if (document != null) {
+      _result.document = document;
+    }
+    if (mask != null) {
+      _result.mask = mask;
+    }
+    return _result;
+  }
   factory CreateDocumentRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -451,8 +547,8 @@ class CreateDocumentRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   CreateDocumentRequest copyWith(
           void Function(CreateDocumentRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as CreateDocumentRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as CreateDocumentRequest))
+          as CreateDocumentRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CreateDocumentRequest create() => CreateDocumentRequest._();
@@ -462,7 +558,7 @@ class CreateDocumentRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static CreateDocumentRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<CreateDocumentRequest>(create);
-  static CreateDocumentRequest _defaultInstance;
+  static CreateDocumentRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
@@ -551,7 +647,27 @@ class UpdateDocumentRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   UpdateDocumentRequest._() : super();
-  factory UpdateDocumentRequest() => create();
+  factory UpdateDocumentRequest({
+    $1.Document? document,
+    $3.DocumentMask? updateMask,
+    $3.DocumentMask? mask,
+    $3.Precondition? currentDocument,
+  }) {
+    final _result = create();
+    if (document != null) {
+      _result.document = document;
+    }
+    if (updateMask != null) {
+      _result.updateMask = updateMask;
+    }
+    if (mask != null) {
+      _result.mask = mask;
+    }
+    if (currentDocument != null) {
+      _result.currentDocument = currentDocument;
+    }
+    return _result;
+  }
   factory UpdateDocumentRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -568,8 +684,8 @@ class UpdateDocumentRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   UpdateDocumentRequest copyWith(
           void Function(UpdateDocumentRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as UpdateDocumentRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as UpdateDocumentRequest))
+          as UpdateDocumentRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UpdateDocumentRequest create() => UpdateDocumentRequest._();
@@ -579,7 +695,7 @@ class UpdateDocumentRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static UpdateDocumentRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<UpdateDocumentRequest>(create);
-  static UpdateDocumentRequest _defaultInstance;
+  static UpdateDocumentRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $1.Document get document => $_getN(0);
@@ -662,7 +778,19 @@ class DeleteDocumentRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   DeleteDocumentRequest._() : super();
-  factory DeleteDocumentRequest() => create();
+  factory DeleteDocumentRequest({
+    $core.String? name,
+    $3.Precondition? currentDocument,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (currentDocument != null) {
+      _result.currentDocument = currentDocument;
+    }
+    return _result;
+  }
   factory DeleteDocumentRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -679,8 +807,8 @@ class DeleteDocumentRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   DeleteDocumentRequest copyWith(
           void Function(DeleteDocumentRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as DeleteDocumentRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as DeleteDocumentRequest))
+          as DeleteDocumentRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DeleteDocumentRequest create() => DeleteDocumentRequest._();
@@ -690,7 +818,7 @@ class DeleteDocumentRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DeleteDocumentRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<DeleteDocumentRequest>(create);
-  static DeleteDocumentRequest _defaultInstance;
+  static DeleteDocumentRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -766,7 +894,35 @@ class BatchGetDocumentsRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   BatchGetDocumentsRequest._() : super();
-  factory BatchGetDocumentsRequest() => create();
+  factory BatchGetDocumentsRequest({
+    $core.String? database,
+    $core.Iterable<$core.String>? documents,
+    $3.DocumentMask? mask,
+    $core.List<$core.int>? transaction,
+    $3.TransactionOptions? newTransaction,
+    $4.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (documents != null) {
+      _result.documents.addAll(documents);
+    }
+    if (mask != null) {
+      _result.mask = mask;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    if (newTransaction != null) {
+      _result.newTransaction = newTransaction;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory BatchGetDocumentsRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -783,8 +939,8 @@ class BatchGetDocumentsRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   BatchGetDocumentsRequest copyWith(
           void Function(BatchGetDocumentsRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as BatchGetDocumentsRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BatchGetDocumentsRequest))
+          as BatchGetDocumentsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BatchGetDocumentsRequest create() => BatchGetDocumentsRequest._();
@@ -794,10 +950,10 @@ class BatchGetDocumentsRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BatchGetDocumentsRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BatchGetDocumentsRequest>(create);
-  static BatchGetDocumentsRequest _defaultInstance;
+  static BatchGetDocumentsRequest? _defaultInstance;
 
   BatchGetDocumentsRequest_ConsistencySelector whichConsistencySelector() =>
-      _BatchGetDocumentsRequest_ConsistencySelectorByTag[$_whichOneof(0)];
+      _BatchGetDocumentsRequest_ConsistencySelectorByTag[$_whichOneof(0)]!;
   void clearConsistencySelector() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -903,7 +1059,27 @@ class BatchGetDocumentsResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   BatchGetDocumentsResponse._() : super();
-  factory BatchGetDocumentsResponse() => create();
+  factory BatchGetDocumentsResponse({
+    $1.Document? found,
+    $core.String? missing,
+    $core.List<$core.int>? transaction,
+    $4.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (found != null) {
+      _result.found = found;
+    }
+    if (missing != null) {
+      _result.missing = missing;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory BatchGetDocumentsResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -920,8 +1096,8 @@ class BatchGetDocumentsResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   BatchGetDocumentsResponse copyWith(
           void Function(BatchGetDocumentsResponse) updates) =>
-      super.copyWith((message) => updates(message
-          as BatchGetDocumentsResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BatchGetDocumentsResponse))
+          as BatchGetDocumentsResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BatchGetDocumentsResponse create() => BatchGetDocumentsResponse._();
@@ -931,10 +1107,10 @@ class BatchGetDocumentsResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BatchGetDocumentsResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BatchGetDocumentsResponse>(create);
-  static BatchGetDocumentsResponse _defaultInstance;
+  static BatchGetDocumentsResponse? _defaultInstance;
 
   BatchGetDocumentsResponse_Result whichResult() =>
-      _BatchGetDocumentsResponse_ResultByTag[$_whichOneof(0)];
+      _BatchGetDocumentsResponse_ResultByTag[$_whichOneof(0)]!;
   void clearResult() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -1014,7 +1190,19 @@ class BeginTransactionRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   BeginTransactionRequest._() : super();
-  factory BeginTransactionRequest() => create();
+  factory BeginTransactionRequest({
+    $core.String? database,
+    $3.TransactionOptions? options,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (options != null) {
+      _result.options = options;
+    }
+    return _result;
+  }
   factory BeginTransactionRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1031,8 +1219,8 @@ class BeginTransactionRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   BeginTransactionRequest copyWith(
           void Function(BeginTransactionRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as BeginTransactionRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BeginTransactionRequest))
+          as BeginTransactionRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeginTransactionRequest create() => BeginTransactionRequest._();
@@ -1042,7 +1230,7 @@ class BeginTransactionRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BeginTransactionRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BeginTransactionRequest>(create);
-  static BeginTransactionRequest _defaultInstance;
+  static BeginTransactionRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get database => $_getSZ(0);
@@ -1090,7 +1278,15 @@ class BeginTransactionResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   BeginTransactionResponse._() : super();
-  factory BeginTransactionResponse() => create();
+  factory BeginTransactionResponse({
+    $core.List<$core.int>? transaction,
+  }) {
+    final _result = create();
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    return _result;
+  }
   factory BeginTransactionResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1107,8 +1303,8 @@ class BeginTransactionResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   BeginTransactionResponse copyWith(
           void Function(BeginTransactionResponse) updates) =>
-      super.copyWith((message) => updates(message
-          as BeginTransactionResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BeginTransactionResponse))
+          as BeginTransactionResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BeginTransactionResponse create() => BeginTransactionResponse._();
@@ -1118,7 +1314,7 @@ class BeginTransactionResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BeginTransactionResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BeginTransactionResponse>(create);
-  static BeginTransactionResponse _defaultInstance;
+  static BeginTransactionResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get transaction => $_getN(0);
@@ -1158,7 +1354,23 @@ class CommitRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   CommitRequest._() : super();
-  factory CommitRequest() => create();
+  factory CommitRequest({
+    $core.String? database,
+    $core.Iterable<$5.Write>? writes,
+    $core.List<$core.int>? transaction,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (writes != null) {
+      _result.writes.addAll(writes);
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    return _result;
+  }
   factory CommitRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1173,8 +1385,8 @@ class CommitRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   CommitRequest copyWith(void Function(CommitRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as CommitRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as CommitRequest))
+          as CommitRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CommitRequest create() => CommitRequest._();
@@ -1184,7 +1396,7 @@ class CommitRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static CommitRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<CommitRequest>(create);
-  static CommitRequest _defaultInstance;
+  static CommitRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get database => $_getSZ(0);
@@ -1237,7 +1449,19 @@ class CommitResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   CommitResponse._() : super();
-  factory CommitResponse() => create();
+  factory CommitResponse({
+    $core.Iterable<$5.WriteResult>? writeResults,
+    $4.Timestamp? commitTime,
+  }) {
+    final _result = create();
+    if (writeResults != null) {
+      _result.writeResults.addAll(writeResults);
+    }
+    if (commitTime != null) {
+      _result.commitTime = commitTime;
+    }
+    return _result;
+  }
   factory CommitResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1252,8 +1476,8 @@ class CommitResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   CommitResponse copyWith(void Function(CommitResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as CommitResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as CommitResponse))
+          as CommitResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CommitResponse create() => CommitResponse._();
@@ -1263,7 +1487,7 @@ class CommitResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static CommitResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<CommitResponse>(create);
-  static CommitResponse _defaultInstance;
+  static CommitResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$5.WriteResult> get writeResults => $_getList(0);
@@ -1307,7 +1531,19 @@ class RollbackRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   RollbackRequest._() : super();
-  factory RollbackRequest() => create();
+  factory RollbackRequest({
+    $core.String? database,
+    $core.List<$core.int>? transaction,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    return _result;
+  }
   factory RollbackRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1322,8 +1558,8 @@ class RollbackRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   RollbackRequest copyWith(void Function(RollbackRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as RollbackRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as RollbackRequest))
+          as RollbackRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RollbackRequest create() => RollbackRequest._();
@@ -1333,7 +1569,7 @@ class RollbackRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static RollbackRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<RollbackRequest>(create);
-  static RollbackRequest _defaultInstance;
+  static RollbackRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get database => $_getSZ(0);
@@ -1411,7 +1647,31 @@ class RunQueryRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   RunQueryRequest._() : super();
-  factory RunQueryRequest() => create();
+  factory RunQueryRequest({
+    $core.String? parent,
+    $6.StructuredQuery? structuredQuery,
+    $core.List<$core.int>? transaction,
+    $3.TransactionOptions? newTransaction,
+    $4.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    if (structuredQuery != null) {
+      _result.structuredQuery = structuredQuery;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    if (newTransaction != null) {
+      _result.newTransaction = newTransaction;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory RunQueryRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1426,8 +1686,8 @@ class RunQueryRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   RunQueryRequest copyWith(void Function(RunQueryRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as RunQueryRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as RunQueryRequest))
+          as RunQueryRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RunQueryRequest create() => RunQueryRequest._();
@@ -1437,14 +1697,14 @@ class RunQueryRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static RunQueryRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<RunQueryRequest>(create);
-  static RunQueryRequest _defaultInstance;
+  static RunQueryRequest? _defaultInstance;
 
   RunQueryRequest_QueryType whichQueryType() =>
-      _RunQueryRequest_QueryTypeByTag[$_whichOneof(0)];
+      _RunQueryRequest_QueryTypeByTag[$_whichOneof(0)]!;
   void clearQueryType() => clearField($_whichOneof(0));
 
   RunQueryRequest_ConsistencySelector whichConsistencySelector() =>
-      _RunQueryRequest_ConsistencySelectorByTag[$_whichOneof(1)];
+      _RunQueryRequest_ConsistencySelectorByTag[$_whichOneof(1)]!;
   void clearConsistencySelector() => clearField($_whichOneof(1));
 
   @$pb.TagNumber(1)
@@ -1538,7 +1798,27 @@ class RunQueryResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   RunQueryResponse._() : super();
-  factory RunQueryResponse() => create();
+  factory RunQueryResponse({
+    $1.Document? document,
+    $core.List<$core.int>? transaction,
+    $4.Timestamp? readTime,
+    $core.int? skippedResults,
+  }) {
+    final _result = create();
+    if (document != null) {
+      _result.document = document;
+    }
+    if (transaction != null) {
+      _result.transaction = transaction;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    if (skippedResults != null) {
+      _result.skippedResults = skippedResults;
+    }
+    return _result;
+  }
   factory RunQueryResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1553,8 +1833,8 @@ class RunQueryResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   RunQueryResponse copyWith(void Function(RunQueryResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as RunQueryResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as RunQueryResponse))
+          as RunQueryResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RunQueryResponse create() => RunQueryResponse._();
@@ -1564,7 +1844,7 @@ class RunQueryResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static RunQueryResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<RunQueryResponse>(create);
-  static RunQueryResponse _defaultInstance;
+  static RunQueryResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $1.Document get document => $_getN(0);
@@ -1655,7 +1935,31 @@ class PartitionQueryRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   PartitionQueryRequest._() : super();
-  factory PartitionQueryRequest() => create();
+  factory PartitionQueryRequest({
+    $core.String? parent,
+    $6.StructuredQuery? structuredQuery,
+    $fixnum.Int64? partitionCount,
+    $core.String? pageToken,
+    $core.int? pageSize,
+  }) {
+    final _result = create();
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    if (structuredQuery != null) {
+      _result.structuredQuery = structuredQuery;
+    }
+    if (partitionCount != null) {
+      _result.partitionCount = partitionCount;
+    }
+    if (pageToken != null) {
+      _result.pageToken = pageToken;
+    }
+    if (pageSize != null) {
+      _result.pageSize = pageSize;
+    }
+    return _result;
+  }
   factory PartitionQueryRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1672,8 +1976,8 @@ class PartitionQueryRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   PartitionQueryRequest copyWith(
           void Function(PartitionQueryRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as PartitionQueryRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PartitionQueryRequest))
+          as PartitionQueryRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PartitionQueryRequest create() => PartitionQueryRequest._();
@@ -1683,10 +1987,10 @@ class PartitionQueryRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PartitionQueryRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PartitionQueryRequest>(create);
-  static PartitionQueryRequest _defaultInstance;
+  static PartitionQueryRequest? _defaultInstance;
 
   PartitionQueryRequest_QueryType whichQueryType() =>
-      _PartitionQueryRequest_QueryTypeByTag[$_whichOneof(0)];
+      _PartitionQueryRequest_QueryTypeByTag[$_whichOneof(0)]!;
   void clearQueryType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -1774,7 +2078,19 @@ class PartitionQueryResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   PartitionQueryResponse._() : super();
-  factory PartitionQueryResponse() => create();
+  factory PartitionQueryResponse({
+    $core.Iterable<$6.Cursor>? partitions,
+    $core.String? nextPageToken,
+  }) {
+    final _result = create();
+    if (partitions != null) {
+      _result.partitions.addAll(partitions);
+    }
+    if (nextPageToken != null) {
+      _result.nextPageToken = nextPageToken;
+    }
+    return _result;
+  }
   factory PartitionQueryResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1791,8 +2107,8 @@ class PartitionQueryResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   PartitionQueryResponse copyWith(
           void Function(PartitionQueryResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as PartitionQueryResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as PartitionQueryResponse))
+          as PartitionQueryResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PartitionQueryResponse create() => PartitionQueryResponse._();
@@ -1802,7 +2118,7 @@ class PartitionQueryResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PartitionQueryResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<PartitionQueryResponse>(create);
-  static PartitionQueryResponse _defaultInstance;
+  static PartitionQueryResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$6.Cursor> get partitions => $_getList(0);
@@ -1853,7 +2169,31 @@ class WriteRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   WriteRequest._() : super();
-  factory WriteRequest() => create();
+  factory WriteRequest({
+    $core.String? database,
+    $core.String? streamId,
+    $core.Iterable<$5.Write>? writes,
+    $core.List<$core.int>? streamToken,
+    $core.Map<$core.String, $core.String>? labels,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (streamId != null) {
+      _result.streamId = streamId;
+    }
+    if (writes != null) {
+      _result.writes.addAll(writes);
+    }
+    if (streamToken != null) {
+      _result.streamToken = streamToken;
+    }
+    if (labels != null) {
+      _result.labels.addAll(labels);
+    }
+    return _result;
+  }
   factory WriteRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1868,8 +2208,8 @@ class WriteRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   WriteRequest copyWith(void Function(WriteRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as WriteRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as WriteRequest))
+          as WriteRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteRequest create() => WriteRequest._();
@@ -1879,7 +2219,7 @@ class WriteRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static WriteRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<WriteRequest>(create);
-  static WriteRequest _defaultInstance;
+  static WriteRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get database => $_getSZ(0);
@@ -1954,7 +2294,27 @@ class WriteResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   WriteResponse._() : super();
-  factory WriteResponse() => create();
+  factory WriteResponse({
+    $core.String? streamId,
+    $core.List<$core.int>? streamToken,
+    $core.Iterable<$5.WriteResult>? writeResults,
+    $4.Timestamp? commitTime,
+  }) {
+    final _result = create();
+    if (streamId != null) {
+      _result.streamId = streamId;
+    }
+    if (streamToken != null) {
+      _result.streamToken = streamToken;
+    }
+    if (writeResults != null) {
+      _result.writeResults.addAll(writeResults);
+    }
+    if (commitTime != null) {
+      _result.commitTime = commitTime;
+    }
+    return _result;
+  }
   factory WriteResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -1969,8 +2329,8 @@ class WriteResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   WriteResponse copyWith(void Function(WriteResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as WriteResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as WriteResponse))
+          as WriteResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteResponse create() => WriteResponse._();
@@ -1980,7 +2340,7 @@ class WriteResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static WriteResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<WriteResponse>(create);
-  static WriteResponse _defaultInstance;
+  static WriteResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get streamId => $_getSZ(0);
@@ -2063,7 +2423,27 @@ class ListenRequest extends $pb.GeneratedMessage {
         ..hasRequiredFields = false;
 
   ListenRequest._() : super();
-  factory ListenRequest() => create();
+  factory ListenRequest({
+    $core.String? database,
+    Target? addTarget,
+    $core.int? removeTarget,
+    $core.Map<$core.String, $core.String>? labels,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (addTarget != null) {
+      _result.addTarget = addTarget;
+    }
+    if (removeTarget != null) {
+      _result.removeTarget = removeTarget;
+    }
+    if (labels != null) {
+      _result.labels.addAll(labels);
+    }
+    return _result;
+  }
   factory ListenRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2078,8 +2458,8 @@ class ListenRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ListenRequest copyWith(void Function(ListenRequest) updates) =>
-      super.copyWith((message) =>
-          updates(message as ListenRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListenRequest))
+          as ListenRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListenRequest create() => ListenRequest._();
@@ -2089,10 +2469,10 @@ class ListenRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListenRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ListenRequest>(create);
-  static ListenRequest _defaultInstance;
+  static ListenRequest? _defaultInstance;
 
   ListenRequest_TargetChange whichTargetChange() =>
-      _ListenRequest_TargetChangeByTag[$_whichOneof(0)];
+      _ListenRequest_TargetChangeByTag[$_whichOneof(0)]!;
   void clearTargetChange() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -2179,7 +2559,31 @@ class ListenResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ListenResponse._() : super();
-  factory ListenResponse() => create();
+  factory ListenResponse({
+    TargetChange? targetChange,
+    $5.DocumentChange? documentChange,
+    $5.DocumentDelete? documentDelete,
+    $5.ExistenceFilter? filter,
+    $5.DocumentRemove? documentRemove,
+  }) {
+    final _result = create();
+    if (targetChange != null) {
+      _result.targetChange = targetChange;
+    }
+    if (documentChange != null) {
+      _result.documentChange = documentChange;
+    }
+    if (documentDelete != null) {
+      _result.documentDelete = documentDelete;
+    }
+    if (filter != null) {
+      _result.filter = filter;
+    }
+    if (documentRemove != null) {
+      _result.documentRemove = documentRemove;
+    }
+    return _result;
+  }
   factory ListenResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2194,8 +2598,8 @@ class ListenResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ListenResponse copyWith(void Function(ListenResponse) updates) =>
-      super.copyWith((message) =>
-          updates(message as ListenResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListenResponse))
+          as ListenResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListenResponse create() => ListenResponse._();
@@ -2205,10 +2609,10 @@ class ListenResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListenResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ListenResponse>(create);
-  static ListenResponse _defaultInstance;
+  static ListenResponse? _defaultInstance;
 
   ListenResponse_ResponseType whichResponseType() =>
-      _ListenResponse_ResponseTypeByTag[$_whichOneof(0)];
+      _ListenResponse_ResponseTypeByTag[$_whichOneof(0)]!;
   void clearResponseType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(2)
@@ -2300,7 +2704,15 @@ class Target_DocumentsTarget extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Target_DocumentsTarget._() : super();
-  factory Target_DocumentsTarget() => create();
+  factory Target_DocumentsTarget({
+    $core.Iterable<$core.String>? documents,
+  }) {
+    final _result = create();
+    if (documents != null) {
+      _result.documents.addAll(documents);
+    }
+    return _result;
+  }
   factory Target_DocumentsTarget.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2317,8 +2729,8 @@ class Target_DocumentsTarget extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   Target_DocumentsTarget copyWith(
           void Function(Target_DocumentsTarget) updates) =>
-      super.copyWith((message) => updates(
-          message as Target_DocumentsTarget)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as Target_DocumentsTarget))
+          as Target_DocumentsTarget; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Target_DocumentsTarget create() => Target_DocumentsTarget._();
@@ -2328,7 +2740,7 @@ class Target_DocumentsTarget extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Target_DocumentsTarget getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<Target_DocumentsTarget>(create);
-  static Target_DocumentsTarget _defaultInstance;
+  static Target_DocumentsTarget? _defaultInstance;
 
   @$pb.TagNumber(2)
   $core.List<$core.String> get documents => $_getList(0);
@@ -2366,7 +2778,19 @@ class Target_QueryTarget extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Target_QueryTarget._() : super();
-  factory Target_QueryTarget() => create();
+  factory Target_QueryTarget({
+    $core.String? parent,
+    $6.StructuredQuery? structuredQuery,
+  }) {
+    final _result = create();
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    if (structuredQuery != null) {
+      _result.structuredQuery = structuredQuery;
+    }
+    return _result;
+  }
   factory Target_QueryTarget.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2381,8 +2805,8 @@ class Target_QueryTarget extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Target_QueryTarget copyWith(void Function(Target_QueryTarget) updates) =>
-      super.copyWith((message) => updates(
-          message as Target_QueryTarget)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as Target_QueryTarget))
+          as Target_QueryTarget; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Target_QueryTarget create() => Target_QueryTarget._();
@@ -2392,10 +2816,10 @@ class Target_QueryTarget extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Target_QueryTarget getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<Target_QueryTarget>(create);
-  static Target_QueryTarget _defaultInstance;
+  static Target_QueryTarget? _defaultInstance;
 
   Target_QueryTarget_QueryType whichQueryType() =>
-      _Target_QueryTarget_QueryTypeByTag[$_whichOneof(0)];
+      _Target_QueryTarget_QueryTypeByTag[$_whichOneof(0)]!;
   void clearQueryType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -2467,7 +2891,35 @@ class Target extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Target._() : super();
-  factory Target() => create();
+  factory Target({
+    Target_QueryTarget? query,
+    Target_DocumentsTarget? documents,
+    $core.List<$core.int>? resumeToken,
+    $core.int? targetId,
+    $core.bool? once,
+    $4.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (query != null) {
+      _result.query = query;
+    }
+    if (documents != null) {
+      _result.documents = documents;
+    }
+    if (resumeToken != null) {
+      _result.resumeToken = resumeToken;
+    }
+    if (targetId != null) {
+      _result.targetId = targetId;
+    }
+    if (once != null) {
+      _result.once = once;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory Target.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2481,8 +2933,9 @@ class Target extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Target copyWith(void Function(Target) updates) => super.copyWith(
-      (message) => updates(message as Target)); // ignore: deprecated_member_use
+  Target copyWith(void Function(Target) updates) =>
+      super.copyWith((message) => updates(message as Target))
+          as Target; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Target create() => Target._();
@@ -2491,14 +2944,14 @@ class Target extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Target getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Target>(create);
-  static Target _defaultInstance;
+  static Target? _defaultInstance;
 
   Target_TargetType whichTargetType() =>
-      _Target_TargetTypeByTag[$_whichOneof(0)];
+      _Target_TargetTypeByTag[$_whichOneof(0)]!;
   void clearTargetType() => clearField($_whichOneof(0));
 
   Target_ResumeType whichResumeType() =>
-      _Target_ResumeTypeByTag[$_whichOneof(1)];
+      _Target_ResumeTypeByTag[$_whichOneof(1)]!;
   void clearResumeType() => clearField($_whichOneof(1));
 
   @$pb.TagNumber(2)
@@ -2608,7 +3061,31 @@ class TargetChange extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   TargetChange._() : super();
-  factory TargetChange() => create();
+  factory TargetChange({
+    TargetChange_TargetChangeType? targetChangeType,
+    $core.Iterable<$core.int>? targetIds,
+    $7.Status? cause,
+    $core.List<$core.int>? resumeToken,
+    $4.Timestamp? readTime,
+  }) {
+    final _result = create();
+    if (targetChangeType != null) {
+      _result.targetChangeType = targetChangeType;
+    }
+    if (targetIds != null) {
+      _result.targetIds.addAll(targetIds);
+    }
+    if (cause != null) {
+      _result.cause = cause;
+    }
+    if (resumeToken != null) {
+      _result.resumeToken = resumeToken;
+    }
+    if (readTime != null) {
+      _result.readTime = readTime;
+    }
+    return _result;
+  }
   factory TargetChange.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2623,8 +3100,8 @@ class TargetChange extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   TargetChange copyWith(void Function(TargetChange) updates) =>
-      super.copyWith((message) =>
-          updates(message as TargetChange)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as TargetChange))
+          as TargetChange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static TargetChange create() => TargetChange._();
@@ -2634,7 +3111,7 @@ class TargetChange extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static TargetChange getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<TargetChange>(create);
-  static TargetChange _defaultInstance;
+  static TargetChange? _defaultInstance;
 
   @$pb.TagNumber(1)
   TargetChange_TargetChangeType get targetChangeType => $_getN(0);
@@ -2721,7 +3198,23 @@ class ListCollectionIdsRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ListCollectionIdsRequest._() : super();
-  factory ListCollectionIdsRequest() => create();
+  factory ListCollectionIdsRequest({
+    $core.String? parent,
+    $core.int? pageSize,
+    $core.String? pageToken,
+  }) {
+    final _result = create();
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    if (pageSize != null) {
+      _result.pageSize = pageSize;
+    }
+    if (pageToken != null) {
+      _result.pageToken = pageToken;
+    }
+    return _result;
+  }
   factory ListCollectionIdsRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2738,8 +3231,8 @@ class ListCollectionIdsRequest extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   ListCollectionIdsRequest copyWith(
           void Function(ListCollectionIdsRequest) updates) =>
-      super.copyWith((message) => updates(message
-          as ListCollectionIdsRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListCollectionIdsRequest))
+          as ListCollectionIdsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListCollectionIdsRequest create() => ListCollectionIdsRequest._();
@@ -2749,7 +3242,7 @@ class ListCollectionIdsRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListCollectionIdsRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ListCollectionIdsRequest>(create);
-  static ListCollectionIdsRequest _defaultInstance;
+  static ListCollectionIdsRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
@@ -2811,7 +3304,19 @@ class ListCollectionIdsResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ListCollectionIdsResponse._() : super();
-  factory ListCollectionIdsResponse() => create();
+  factory ListCollectionIdsResponse({
+    $core.Iterable<$core.String>? collectionIds,
+    $core.String? nextPageToken,
+  }) {
+    final _result = create();
+    if (collectionIds != null) {
+      _result.collectionIds.addAll(collectionIds);
+    }
+    if (nextPageToken != null) {
+      _result.nextPageToken = nextPageToken;
+    }
+    return _result;
+  }
   factory ListCollectionIdsResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2828,8 +3333,8 @@ class ListCollectionIdsResponse extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   ListCollectionIdsResponse copyWith(
           void Function(ListCollectionIdsResponse) updates) =>
-      super.copyWith((message) => updates(message
-          as ListCollectionIdsResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ListCollectionIdsResponse))
+          as ListCollectionIdsResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ListCollectionIdsResponse create() => ListCollectionIdsResponse._();
@@ -2839,7 +3344,7 @@ class ListCollectionIdsResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListCollectionIdsResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ListCollectionIdsResponse>(create);
-  static ListCollectionIdsResponse _defaultInstance;
+  static ListCollectionIdsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.String> get collectionIds => $_getList(0);
@@ -2884,7 +3389,23 @@ class BatchWriteRequest extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   BatchWriteRequest._() : super();
-  factory BatchWriteRequest() => create();
+  factory BatchWriteRequest({
+    $core.String? database,
+    $core.Iterable<$5.Write>? writes,
+    $core.Map<$core.String, $core.String>? labels,
+  }) {
+    final _result = create();
+    if (database != null) {
+      _result.database = database;
+    }
+    if (writes != null) {
+      _result.writes.addAll(writes);
+    }
+    if (labels != null) {
+      _result.labels.addAll(labels);
+    }
+    return _result;
+  }
   factory BatchWriteRequest.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2899,8 +3420,8 @@ class BatchWriteRequest extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BatchWriteRequest copyWith(void Function(BatchWriteRequest) updates) =>
-      super.copyWith((message) => updates(
-          message as BatchWriteRequest)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BatchWriteRequest))
+          as BatchWriteRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BatchWriteRequest create() => BatchWriteRequest._();
@@ -2910,7 +3431,7 @@ class BatchWriteRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BatchWriteRequest getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BatchWriteRequest>(create);
-  static BatchWriteRequest _defaultInstance;
+  static BatchWriteRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get database => $_getSZ(0);
@@ -2952,7 +3473,19 @@ class BatchWriteResponse extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   BatchWriteResponse._() : super();
-  factory BatchWriteResponse() => create();
+  factory BatchWriteResponse({
+    $core.Iterable<$5.WriteResult>? writeResults,
+    $core.Iterable<$7.Status>? status,
+  }) {
+    final _result = create();
+    if (writeResults != null) {
+      _result.writeResults.addAll(writeResults);
+    }
+    if (status != null) {
+      _result.status.addAll(status);
+    }
+    return _result;
+  }
   factory BatchWriteResponse.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -2967,8 +3500,8 @@ class BatchWriteResponse extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BatchWriteResponse copyWith(void Function(BatchWriteResponse) updates) =>
-      super.copyWith((message) => updates(
-          message as BatchWriteResponse)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as BatchWriteResponse))
+          as BatchWriteResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static BatchWriteResponse create() => BatchWriteResponse._();
@@ -2978,7 +3511,7 @@ class BatchWriteResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static BatchWriteResponse getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<BatchWriteResponse>(create);
-  static BatchWriteResponse _defaultInstance;
+  static BatchWriteResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$5.WriteResult> get writeResults => $_getList(0);

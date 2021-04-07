@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/document.proto
 //
-// @dart = 2.3
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -44,7 +44,27 @@ class Document extends $pb.GeneratedMessage {
         ..hasRequiredFields = false;
 
   Document._() : super();
-  factory Document() => create();
+  factory Document({
+    $core.String? name,
+    $core.Map<$core.String, Value>? fields,
+    $0.Timestamp? createTime,
+    $0.Timestamp? updateTime,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (fields != null) {
+      _result.fields.addAll(fields);
+    }
+    if (createTime != null) {
+      _result.createTime = createTime;
+    }
+    if (updateTime != null) {
+      _result.updateTime = updateTime;
+    }
+    return _result;
+  }
   factory Document.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -59,8 +79,8 @@ class Document extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Document copyWith(void Function(Document) updates) =>
-      super.copyWith((message) =>
-          updates(message as Document)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as Document))
+          as Document; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Document create() => Document._();
@@ -69,7 +89,7 @@ class Document extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Document getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Document>(create);
-  static Document _defaultInstance;
+  static Document? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -183,7 +203,55 @@ class Value extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   Value._() : super();
-  factory Value() => create();
+  factory Value({
+    $core.bool? booleanValue,
+    $fixnum.Int64? integerValue,
+    $core.double? doubleValue,
+    $core.String? referenceValue,
+    MapValue? mapValue,
+    $1.LatLng? geoPointValue,
+    ArrayValue? arrayValue,
+    $0.Timestamp? timestampValue,
+    $2.NullValue? nullValue,
+    $core.String? stringValue,
+    $core.List<$core.int>? bytesValue,
+  }) {
+    final _result = create();
+    if (booleanValue != null) {
+      _result.booleanValue = booleanValue;
+    }
+    if (integerValue != null) {
+      _result.integerValue = integerValue;
+    }
+    if (doubleValue != null) {
+      _result.doubleValue = doubleValue;
+    }
+    if (referenceValue != null) {
+      _result.referenceValue = referenceValue;
+    }
+    if (mapValue != null) {
+      _result.mapValue = mapValue;
+    }
+    if (geoPointValue != null) {
+      _result.geoPointValue = geoPointValue;
+    }
+    if (arrayValue != null) {
+      _result.arrayValue = arrayValue;
+    }
+    if (timestampValue != null) {
+      _result.timestampValue = timestampValue;
+    }
+    if (nullValue != null) {
+      _result.nullValue = nullValue;
+    }
+    if (stringValue != null) {
+      _result.stringValue = stringValue;
+    }
+    if (bytesValue != null) {
+      _result.bytesValue = bytesValue;
+    }
+    return _result;
+  }
   factory Value.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -197,8 +265,9 @@ class Value extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Value copyWith(void Function(Value) updates) => super.copyWith(
-      (message) => updates(message as Value)); // ignore: deprecated_member_use
+  Value copyWith(void Function(Value) updates) =>
+      super.copyWith((message) => updates(message as Value))
+          as Value; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Value create() => Value._();
@@ -207,9 +276,9 @@ class Value extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Value getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Value>(create);
-  static Value _defaultInstance;
+  static Value? _defaultInstance;
 
-  Value_ValueType whichValueType() => _Value_ValueTypeByTag[$_whichOneof(0)];
+  Value_ValueType whichValueType() => _Value_ValueTypeByTag[$_whichOneof(0)]!;
   void clearValueType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -373,7 +442,15 @@ class ArrayValue extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   ArrayValue._() : super();
-  factory ArrayValue() => create();
+  factory ArrayValue({
+    $core.Iterable<Value>? values,
+  }) {
+    final _result = create();
+    if (values != null) {
+      _result.values.addAll(values);
+    }
+    return _result;
+  }
   factory ArrayValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -388,8 +465,8 @@ class ArrayValue extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ArrayValue copyWith(void Function(ArrayValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as ArrayValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as ArrayValue))
+          as ArrayValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ArrayValue create() => ArrayValue._();
@@ -398,7 +475,7 @@ class ArrayValue extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ArrayValue getDefault() => _defaultInstance ??=
       $pb.GeneratedMessage.$_defaultFor<ArrayValue>(create);
-  static ArrayValue _defaultInstance;
+  static ArrayValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Value> get values => $_getList(0);
@@ -427,7 +504,15 @@ class MapValue extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   MapValue._() : super();
-  factory MapValue() => create();
+  factory MapValue({
+    $core.Map<$core.String, Value>? fields,
+  }) {
+    final _result = create();
+    if (fields != null) {
+      _result.fields.addAll(fields);
+    }
+    return _result;
+  }
   factory MapValue.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
@@ -442,8 +527,8 @@ class MapValue extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MapValue copyWith(void Function(MapValue) updates) =>
-      super.copyWith((message) =>
-          updates(message as MapValue)); // ignore: deprecated_member_use
+      super.copyWith((message) => updates(message as MapValue))
+          as MapValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MapValue create() => MapValue._();
@@ -452,7 +537,7 @@ class MapValue extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static MapValue getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MapValue>(create);
-  static MapValue _defaultInstance;
+  static MapValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.Map<$core.String, Value> get fields => $_getMap(0);
