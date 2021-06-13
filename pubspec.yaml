@@ -7,7 +7,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  http: ^0.13.1
+  http: ^0.13.3
   grpc: ^3.0.0
   protobuf: ^2.0.0
   fixnum: ^1.0.0
@@ -15,5 +15,5 @@ dependencies:
   universal_io: ^2.0.4
 
 dev_dependencies:
-  test: ^1.16.8
-  pedantic: ^1.10.0
+  test: ^1.17.7
+  pedantic: ^1.11.0
