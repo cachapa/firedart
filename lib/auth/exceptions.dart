@@ -1,4 +1,3 @@
-
 class SignedOutException implements Exception {
   @override
   String toString() =>
