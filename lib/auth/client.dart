@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:firedart/auth/token_provider.dart';
+import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 
 class VerboseClient extends http.BaseClient {
@@ -51,22 +51,21 @@ class KeyClient extends http.BaseClient {
         ..headers.addAll(request.headers)
         ..bodyBytes = (request as http.Request).bodyBytes;
     }
-    return client.send(request);
+    return clientViaApiKey(apiKey).send(request);
   }
 }
 
 class UserClient extends http.BaseClient {
   final KeyClient client;
-  final TokenProvider tokenProvider;
 
-  UserClient(this.client, this.tokenProvider);
+  UserClient(this.client);
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     var body = (request as http.Request).bodyFields;
     request = http.Request(request.method, request.url)
       ..headers['content-type'] = 'application/x-www-form-urlencoded'
-      ..bodyFields = {...body, 'idToken': await tokenProvider.idToken};
+      ..bodyFields = {...body};
     return client.send(request);
   }
 }
