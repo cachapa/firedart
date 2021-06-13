@@ -80,8 +80,8 @@ class Firestore {
   }
 
   Future<void> delete() async {
-    firebaseAccount?.delete();
-    signOut();
+    await firebaseAccount?.delete();
+    await signOut();
   }
 
   /* Instance interface */

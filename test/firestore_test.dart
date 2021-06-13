@@ -8,7 +8,6 @@ import 'package:test/test.dart';
 import 'test_config.dart';
 
 Future main() async {
-  var tokenStore = VolatileStore();
   var client = Client();
 
   var auth = FirebaseAuth(client, apiKey);

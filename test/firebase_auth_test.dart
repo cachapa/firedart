@@ -6,11 +6,9 @@ import 'package:test/test.dart';
 import 'test_config.dart';
 
 Future main() async {
-  late TokenStore tokenStore;
   late Firestore firestore;
 
   setUp(() {
-    tokenStore = VolatileStore();
     firestore = Firestore.initialize(apiKey, projectId);
   });
 
@@ -20,7 +18,7 @@ Future main() async {
 
   test('Sign In', () async {
     expect(await firestore.isSignedIn(), false);
-    final account = await firestore.signInWithPassword(email, password);
+    await firestore.signInWithPassword(email, password);
     expect(await firestore.isSignedIn(), true);
     await firestore.signOut();
     expect(await firestore.isSignedIn(), false);
@@ -28,7 +26,7 @@ Future main() async {
 
   test('Sign In Anonymously', () async {
     expect(await firestore.isSignedIn(), false);
-    final account = await firestore.signUpAnonymous();
+    await firestore.signUpAnonymous();
     expect(await firestore.isSignedIn(), true);
     await firestore.delete();
     expect(await firestore.isSignedIn(), false);
@@ -70,7 +68,7 @@ Future main() async {
   });
 
   test('Get user', () async {
-    final user = await firestore.signInWithPassword(email, password);
+    await firestore.signInWithPassword(email, password);
     var userDetails = await firestore.getUser();
     expect(userDetails?.email, email);
   });
