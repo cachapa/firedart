@@ -75,21 +75,6 @@ Future main() async {
     expect(userDetails?.email, email);
   });
 
-  test('Refresh token when expired', () async {
-    final user = await firestore.signInWithPassword(email, password);
-    tokenStore.expireToken();
-    var userDetails = await firestore.getUser();
-    expect(userDetails?.email, isNotEmpty);
-    expect(await firestore.isSignedIn(), true);
-  });
-
-  test('Sign out on bad refresh token', () async {
-    final user = await firestore.signInWithPassword(email, password);
-    tokenStore.setToken('user_id', 'bad_token', 'bad_token', 0);
-    await expectLater(firestore.getUser(), throwsA(isA<AuthException>()));
-    expect(await firestore.isSignedIn(), false);
-  });
-
   test('Emit signedIn events', () async {
     // var stream = firestore.signInState;
     // var expect = expectLater(

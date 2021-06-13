@@ -190,19 +190,4 @@ Future main() async {
     expect(doc['list'], [1, 'text']);
     expect(doc['map'], {'int': 1, 'string': 'text'});
   });
-
-  test('Refresh token when expired', () async {
-    tokenStore.expireToken();
-    var map = await firestore.collection('test').get();
-    expect(await firestore.isSignedIn(), true);
-    expect(map, isNot(null));
-  });
-
-  test('Sign out on bad refresh token', () async {
-    tokenStore.setToken('user_id', 'bad_token', 'bad_token', 0);
-    try {
-      await firestore.collection('test').get();
-    } catch (_) {}
-    expect(await firestore.isSignedIn(), false);
-  });
 }
