@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:firebase_auth_rest/firebase_auth_rest.dart';
 import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_provider.dart';
 
-import 'exceptions.dart';
 import 'user_gateway.dart';
 
 class AuthGateway {
@@ -47,7 +47,8 @@ class AuthGateway {
     );
 
     if (response.statusCode != 200) {
-      throw AuthException(response.body);
+      var errorData = ErrorData(message: response.body);
+      throw AuthException(errorData);
     }
 
     return json.decode(response.body);

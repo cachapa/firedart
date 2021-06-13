@@ -1,15 +1,19 @@
 import 'dart:convert';
 
+import 'package:firebase_auth_rest/firebase_auth_rest.dart';
 import 'package:firedart/firedart.dart';
+import 'package:http/http.dart';
 import 'package:test/test.dart';
 
 import 'test_config.dart';
 
 Future main() async {
   var tokenStore = VolatileStore();
-  var auth = FirebaseAuth(apiKey, tokenStore);
+  var client = Client();
+
+  var auth = FirebaseAuth(client, apiKey);
   var firestore = Firestore(projectId, auth: auth);
-  await auth.signIn(email, password);
+  await auth.signInWithPassword(email, password);
 
   test('Create reference', () async {
     // Ensure document exists
@@ -190,7 +194,7 @@ Future main() async {
   test('Refresh token when expired', () async {
     tokenStore.expireToken();
     var map = await firestore.collection('test').get();
-    expect(auth.isSignedIn, true);
+    expect(await firestore.isSignedIn(), true);
     expect(map, isNot(null));
   });
 
@@ -199,6 +203,6 @@ Future main() async {
     try {
       await firestore.collection('test').get();
     } catch (_) {}
-    expect(auth.isSignedIn, false);
+    expect(await firestore.isSignedIn(), false);
   });
 }

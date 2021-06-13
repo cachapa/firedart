@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_auth_rest/firebase_auth_rest.dart';
 import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_store.dart';
 
@@ -72,7 +73,8 @@ class TokenProvider {
         break;
       case 400:
         signOut();
-        throw AuthException(response.body);
+        var errorData = ErrorData(message: response.body);
+        throw AuthException(errorData);
     }
   }
 
