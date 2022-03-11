@@ -10,6 +10,7 @@ class VerboseClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    print("VerboseClient send");
     print('--> ${request.method} ${request.url}');
     print(request.headers);
     print((request as http.Request).body);
@@ -65,6 +66,7 @@ class UserClient extends http.BaseClient {
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     var body = (request as http.Request).bodyFields;
     request = http.Request(request.method, request.url)
+      ..headers.addAll(request.headers)
       ..headers['content-type'] = 'application/x-www-form-urlencoded'
       ..bodyFields = {...body, 'idToken': await tokenProvider.idToken};
     return client.send(request);
