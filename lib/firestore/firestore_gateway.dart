@@ -208,7 +208,6 @@ class FirestoreGateway {
   }
 
   void _handleError(e) {
-    print('Handling error $e using FirestoreGateway._handleError');
     if (e is GrpcError &&
         [
           StatusCode.unknown,
