@@ -7,7 +7,6 @@ import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
 import 'package:grpc/grpc.dart';
 
 import '../firedart.dart';
-import 'models.dart';
 import 'token_authenticator.dart';
 
 class _FirestoreGatewayStreamCache {
@@ -80,11 +79,15 @@ class FirestoreGateway {
 
   late FirestoreClient _client;
 
-  FirestoreGateway(String projectId, {String? databaseId, this.auth})
-      : database =
+  FirestoreGateway(
+    String projectId, {
+    String? databaseId,
+    this.auth,
+    Emulator? emulator,
+  })  : database =
             'projects/$projectId/databases/${databaseId ?? '(default)'}/documents',
         _listenRequestStreamMap = <String, _FirestoreGatewayStreamCache>{} {
-    _setupClient();
+    _setupClient(emulator: emulator);
   }
 
   Future<Page<Document>> getCollection(
@@ -201,10 +204,25 @@ class FirestoreGateway {
         .toList();
   }
 
-  void _setupClient() {
+  void _setupClient({Emulator? emulator}) {
     _listenRequestStreamMap.clear();
-    _client = FirestoreClient(ClientChannel('firestore.googleapis.com'),
-        options: TokenAuthenticator.from(auth)?.toCallOptions);
+    _client = emulator == null
+        ? FirestoreClient(
+            ClientChannel(
+              'firestore.googleapis.com',
+              options: ChannelOptions(),
+            ),
+            options: TokenAuthenticator.from(auth)?.toCallOptions,
+          )
+        : FirestoreClient(
+            ClientChannel(
+              emulator.host,
+              port: emulator.port,
+              options: ChannelOptions(
+                credentials: ChannelCredentials.insecure(),
+              ),
+            ),
+          );
   }
 
   void _handleError(e) {
