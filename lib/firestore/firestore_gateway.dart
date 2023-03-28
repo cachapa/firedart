@@ -7,7 +7,9 @@ import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
 import 'package:grpc/grpc.dart';
 
 import '../firedart.dart';
-import 'token_authenticator.dart';
+
+typedef RequestAuthenticator = Future<void>? Function(
+    Map<String, String> metadata, String uri);
 
 class _FirestoreGatewayStreamCache {
   void Function(String userInfo)? onDone;
@@ -72,7 +74,8 @@ class _FirestoreGatewayStreamCache {
 }
 
 class FirestoreGateway {
-  final FirebaseAuth? auth;
+  final RequestAuthenticator? _authenticator;
+
   final String database;
 
   final Map<String, _FirestoreGatewayStreamCache> _listenRequestStreamMap;
@@ -82,9 +85,10 @@ class FirestoreGateway {
   FirestoreGateway(
     String projectId, {
     String? databaseId,
-    this.auth,
+    RequestAuthenticator? authenticator,
     Emulator? emulator,
-  })  : database =
+  })  : _authenticator = authenticator,
+        database =
             'projects/$projectId/databases/${databaseId ?? '(default)'}/documents',
         _listenRequestStreamMap = <String, _FirestoreGatewayStreamCache>{} {
     _setupClient(emulator: emulator);
@@ -212,7 +216,9 @@ class FirestoreGateway {
               'firestore.googleapis.com',
               options: ChannelOptions(),
             ),
-            options: TokenAuthenticator.from(auth)?.toCallOptions,
+            options: _authenticator != null
+                ? CallOptions(providers: [_authenticator!])
+                : null,
           )
         : FirestoreClient(
             ClientChannel(
