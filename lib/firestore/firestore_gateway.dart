@@ -209,6 +209,9 @@ class FirestoreGateway {
   }
 
   void _setupClient({Emulator? emulator}) {
+    final callOptions = _authenticator != null
+        ? CallOptions(providers: [_authenticator!])
+        : null;
     _listenRequestStreamMap.clear();
     _client = emulator == null
         ? FirestoreClient(
@@ -216,9 +219,7 @@ class FirestoreGateway {
               'firestore.googleapis.com',
               options: ChannelOptions(),
             ),
-            options: _authenticator != null
-                ? CallOptions(providers: [_authenticator!])
-                : null,
+            options: callOptions,
           )
         : FirestoreClient(
             ClientChannel(
@@ -228,6 +229,7 @@ class FirestoreGateway {
                 credentials: ChannelCredentials.insecure(),
               ),
             ),
+            options: callOptions,
           );
   }
 

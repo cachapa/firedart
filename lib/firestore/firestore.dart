@@ -27,7 +27,9 @@ class Firestore {
     }
     final RequestAuthenticator? authenticator;
     if (useApplicationDefaultAuth) {
-      authenticator = ApplicationDefaultAuthenticator().authenticate;
+      authenticator = ApplicationDefaultAuthenticator(
+        useEmulator: emulator != null,
+      ).authenticate;
     } else {
       FirebaseAuth? auth;
       try {
