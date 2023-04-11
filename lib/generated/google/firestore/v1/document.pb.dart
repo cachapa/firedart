@@ -16,32 +16,43 @@ import '../../type/latlng.pb.dart' as $1;
 import '../../protobuf/struct.pbenum.dart' as $2;
 
 class Document extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Document',
-          package: const $pb.PackageName(
-              const $core.bool.fromEnvironment('protobuf.omit_message_names')
-                  ? ''
-                  : 'google.firestore.v1'),
-          createEmptyInstance: create)
-        ..aOS(
-            1,
-            const $core.bool.fromEnvironment('protobuf.omit_field_names')
-                ? ''
-                : 'name')
-        ..m<$core.String, Value>(
-            2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fields',
-            entryClassName: 'Document.FieldsEntry',
-            keyFieldType: $pb.PbFieldType.OS,
-            valueFieldType: $pb.PbFieldType.OM,
-            valueCreator: Value.create,
-            packageName: const $pb.PackageName('google.firestore.v1'))
-        ..aOM<$0.Timestamp>(
-            3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createTime',
-            subBuilder: $0.Timestamp.create)
-        ..aOM<$0.Timestamp>(
-            4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updateTime',
-            subBuilder: $0.Timestamp.create)
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'Document',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'name')
+    ..m<$core.String, Value>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'fields',
+        entryClassName: 'Document.FieldsEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OM,
+        valueCreator: Value.create,
+        packageName: const $pb.PackageName('google.firestore.v1'))
+    ..aOM<$0.Timestamp>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'createTime',
+        subBuilder: $0.Timestamp.create)
+    ..aOM<$0.Timestamp>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'updateTime',
+        subBuilder: $0.Timestamp.create)
+    ..hasRequiredFields = false;
 
   Document._() : super();
   factory Document({
@@ -192,14 +203,54 @@ class Value extends $pb.GeneratedMessage {
             : 'doubleValue',
         $pb.PbFieldType.OD)
     ..aOS(
-        5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'referenceValue')
-    ..aOM<MapValue>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mapValue', subBuilder: MapValue.create)
-    ..aOM<$1.LatLng>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'geoPointValue', subBuilder: $1.LatLng.create)
-    ..aOM<ArrayValue>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'arrayValue', subBuilder: ArrayValue.create)
-    ..aOM<$0.Timestamp>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestampValue', subBuilder: $0.Timestamp.create)
-    ..e<$2.NullValue>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nullValue', $pb.PbFieldType.OE, defaultOrMaker: $2.NullValue.NULL_VALUE, valueOf: $2.NullValue.valueOf, enumValues: $2.NullValue.values)
-    ..aOS(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stringValue')
-    ..a<$core.List<$core.int>>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bytesValue', $pb.PbFieldType.OY)
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'referenceValue')
+    ..aOM<MapValue>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'mapValue',
+        subBuilder: MapValue.create)
+    ..aOM<$1.LatLng>(
+        8,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'geoPointValue',
+        subBuilder: $1.LatLng.create)
+    ..aOM<ArrayValue>(
+        9,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'arrayValue',
+        subBuilder: ArrayValue.create)
+    ..aOM<$0.Timestamp>(
+        10,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'timestampValue',
+        subBuilder: $0.Timestamp.create)
+    ..e<$2.NullValue>(
+        11,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'nullValue',
+        $pb.PbFieldType.OE,
+        defaultOrMaker: $2.NullValue.NULL_VALUE,
+        valueOf: $2.NullValue.valueOf,
+        enumValues: $2.NullValue.values)
+    ..aOS(
+        17,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'stringValue')
+    ..a<$core.List<$core.int>>(
+        18,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'bytesValue',
+        $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   Value._() : super();
