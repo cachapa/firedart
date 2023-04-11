@@ -1,3 +1,7 @@
+## 0.9.1+1
+
+- Update license
+
 ## 0.9.1
 
 - Add support for Firebase emulator (@willhlas)
