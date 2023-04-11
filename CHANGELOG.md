@@ -1,3 +1,9 @@
+## [0.9.1] - 11 April 2023.
+
+* Add support for Firebase emulator
+* Add confirmation email locale parameter
+* Update dependencies
+
 ## [0.9.0+1] - 07 April 2021.
 
 * Migrate code to NNBD
