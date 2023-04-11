@@ -35,6 +35,9 @@ abstract class Reference {
       fullPath == other.fullPath;
 
   @override
+  int get hashCode => Object.hash(runtimeType, fullPath);
+
+  @override
   String toString() {
     return '$runtimeType: $path';
   }

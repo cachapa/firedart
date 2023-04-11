@@ -9,14 +9,11 @@ class UserGateway {
   UserGateway(KeyClient client, TokenProvider tokenProvider)
       : _client = UserClient(client, tokenProvider);
 
-  Future<void> requestEmailVerification({String? langCode}) async {
-    Map<String, String>? headers;
-    if (langCode != null) {
-      headers = {'X-Firebase-Locale': langCode};
-    }
-    await _post(
-        'sendOobCode', {'requestType': 'VERIFY_EMAIL'}, headers: headers);
-  }
+  Future<void> requestEmailVerification({String? langCode}) => _post(
+        'sendOobCode',
+        {'requestType': 'VERIFY_EMAIL'},
+        headers: {if (langCode != null) 'X-Firebase-Locale': langCode},
+      );
 
   Future<User> getUser() async {
     var map = await _post('lookup', {});
@@ -70,8 +67,7 @@ class User {
         email = map['email'],
         emailVerified = map['emailVerified'];
 
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'localId': id,
         'displayName': displayName,
         'photoUrl': photoUrl,

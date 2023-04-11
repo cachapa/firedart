@@ -65,9 +65,8 @@ class FirebaseAuth {
 
   Future<void> resetPassword(String email) => _authGateway.resetPassword(email);
 
-  Future<void> requestEmailVerification({String? langCode}) async {
-    await _userGateway.requestEmailVerification(langCode:langCode);
-  }
+  Future<void> requestEmailVerification({String? langCode}) =>
+      _userGateway.requestEmailVerification(langCode: langCode);
 
   Future<void> changePassword(String password) =>
       _userGateway.changePassword(password);
