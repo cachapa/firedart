@@ -10,7 +10,6 @@ class VerboseClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    print("VerboseClient send");
     print('--> ${request.method} ${request.url}');
     print(request.headers);
     print((request as http.Request).body);
