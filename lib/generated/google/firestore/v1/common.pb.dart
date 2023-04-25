@@ -352,7 +352,10 @@ class TransactionOptions extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [2, 3])
     ..aOM<TransactionOptions_ReadOnly>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readOnly',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readOnly',
         subBuilder: TransactionOptions_ReadOnly.create)
     ..aOM<TransactionOptions_ReadWrite>(
         3,

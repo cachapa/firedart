@@ -165,7 +165,7 @@ class FirestoreGateway {
 
     if (update) {
       var mask = DocumentMask();
-      document.fields.keys.forEach((key) => mask.fieldPaths.add(key));
+      document.fields.keys.forEach(mask.fieldPaths.add);
       request.updateMask = mask;
     }
 

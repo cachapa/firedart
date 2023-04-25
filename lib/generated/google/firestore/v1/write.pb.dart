@@ -26,7 +26,10 @@ class Write extends $pb.GeneratedMessage {
     6: Write_Operation.transform,
     0: Write_Operation.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Write',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'Write',
       package: const $pb.PackageName(
           const $core.bool.fromEnvironment('protobuf.omit_message_names')
               ? ''
@@ -34,7 +37,10 @@ class Write extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [1, 2, 6])
     ..aOM<$0.Document>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'update',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'update',
         subBuilder: $0.Document.create)
     ..aOS(
         2,
@@ -42,13 +48,30 @@ class Write extends $pb.GeneratedMessage {
             ? ''
             : 'delete')
     ..aOM<$1.DocumentMask>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updateMask',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'updateMask',
         subBuilder: $1.DocumentMask.create)
     ..aOM<$1.Precondition>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentDocument',
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'currentDocument',
         subBuilder: $1.Precondition.create)
-    ..aOM<DocumentTransform>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transform', subBuilder: DocumentTransform.create)
-    ..pc<DocumentTransform_FieldTransform>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updateTransforms', $pb.PbFieldType.PM, subBuilder: DocumentTransform_FieldTransform.create)
+    ..aOM<DocumentTransform>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'transform',
+        subBuilder: DocumentTransform.create)
+    ..pc<DocumentTransform_FieldTransform>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'updateTransforms',
+        $pb.PbFieldType.PM,
+        subBuilder: DocumentTransform_FieldTransform.create)
     ..hasRequiredFields = false;
 
   Write._() : super();
@@ -226,15 +249,40 @@ class DocumentTransform_FieldTransform extends $pb.GeneratedMessage {
             ? ''
             : 'setToServerValue',
         $pb.PbFieldType.OE,
-        defaultOrMaker:
-            DocumentTransform_FieldTransform_ServerValue.SERVER_VALUE_UNSPECIFIED,
+        defaultOrMaker: DocumentTransform_FieldTransform_ServerValue
+            .SERVER_VALUE_UNSPECIFIED,
         valueOf: DocumentTransform_FieldTransform_ServerValue.valueOf,
         enumValues: DocumentTransform_FieldTransform_ServerValue.values)
-    ..aOM<$0.Value>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'increment', subBuilder: $0.Value.create)
-    ..aOM<$0.Value>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maximum', subBuilder: $0.Value.create)
-    ..aOM<$0.Value>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minimum', subBuilder: $0.Value.create)
-    ..aOM<$0.ArrayValue>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appendMissingElements', subBuilder: $0.ArrayValue.create)
-    ..aOM<$0.ArrayValue>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'removeAllFromArray', subBuilder: $0.ArrayValue.create)
+    ..aOM<$0.Value>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'increment',
+        subBuilder: $0.Value.create)
+    ..aOM<$0.Value>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'maximum',
+        subBuilder: $0.Value.create)
+    ..aOM<$0.Value>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'minimum',
+        subBuilder: $0.Value.create)
+    ..aOM<$0.ArrayValue>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'appendMissingElements',
+        subBuilder: $0.ArrayValue.create)
+    ..aOM<$0.ArrayValue>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'removeAllFromArray',
+        subBuilder: $0.ArrayValue.create)
     ..hasRequiredFields = false;
 
   DocumentTransform_FieldTransform._() : super();
@@ -496,7 +544,10 @@ class WriteResult extends $pb.GeneratedMessage {
               : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..aOM<$2.Timestamp>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updateTime',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'updateTime',
         subBuilder: $2.Timestamp.create)
     ..pc<$0.Value>(
         2,
@@ -575,8 +626,11 @@ class DocumentChange extends $pb.GeneratedMessage {
               ? ''
               : 'google.firestore.v1'),
       createEmptyInstance: create)
-    ..aOM<$0.Document>(1,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'document',
+    ..aOM<$0.Document>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'document',
         subBuilder: $0.Document.create)
     ..p<$core.int>(
         5,
@@ -584,7 +638,12 @@ class DocumentChange extends $pb.GeneratedMessage {
             ? ''
             : 'targetIds',
         $pb.PbFieldType.P3)
-    ..p<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'removedTargetIds', $pb.PbFieldType.P3)
+    ..p<$core.int>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'removedTargetIds',
+        $pb.PbFieldType.P3)
     ..hasRequiredFields = false;
 
   DocumentChange._() : super();
@@ -669,7 +728,10 @@ class DocumentDelete extends $pb.GeneratedMessage {
             ? ''
             : 'document')
     ..aOM<$2.Timestamp>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime',
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
         subBuilder: $2.Timestamp.create)
     ..p<$core.int>(
         6,
@@ -775,8 +837,11 @@ class DocumentRemove extends $pb.GeneratedMessage {
             ? ''
             : 'removedTargetIds',
         $pb.PbFieldType.P3)
-    ..aOM<$2.Timestamp>(4,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime',
+    ..aOM<$2.Timestamp>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
         subBuilder: $2.Timestamp.create)
     ..hasRequiredFields = false;
 

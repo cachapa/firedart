@@ -9,8 +9,11 @@ class UserGateway {
   UserGateway(KeyClient client, TokenProvider tokenProvider)
       : _client = UserClient(client, tokenProvider);
 
-  Future<void> requestEmailVerification() =>
-      _post('sendOobCode', {'requestType': 'VERIFY_EMAIL'});
+  Future<void> requestEmailVerification({String? langCode}) => _post(
+        'sendOobCode',
+        {'requestType': 'VERIFY_EMAIL'},
+        headers: {if (langCode != null) 'X-Firebase-Locale': langCode},
+      );
 
   Future<User> getUser() async {
     var map = await _post('lookup', {});
@@ -35,14 +38,15 @@ class UserGateway {
     await _post('delete', {});
   }
 
-  Future<Map<String, dynamic>> _post<T>(
-      String method, Map<String, String> body) async {
+  Future<Map<String, dynamic>> _post<T>(String method, Map<String, String> body,
+      {Map<String, String>? headers}) async {
     var requestUrl =
         'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
     var response = await _client.post(
       Uri.parse(requestUrl),
       body: body,
+      headers: headers,
     );
 
     return json.decode(response.body);

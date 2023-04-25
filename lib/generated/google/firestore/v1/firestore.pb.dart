@@ -46,7 +46,10 @@ class GetDocumentRequest extends $pb.GeneratedMessage {
             ? ''
             : 'name')
     ..aOM<$3.DocumentMask>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mask',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'mask',
         subBuilder: $3.DocumentMask.create)
     ..a<$core.List<$core.int>>(
         3,
@@ -54,7 +57,12 @@ class GetDocumentRequest extends $pb.GeneratedMessage {
             ? ''
             : 'transaction',
         $pb.PbFieldType.OY)
-    ..aOM<$4.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
+    ..aOM<$4.Timestamp>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   GetDocumentRequest._() : super();
@@ -199,12 +207,38 @@ class ListDocumentsRequest extends $pb.GeneratedMessage {
             : 'pageSize',
         $pb.PbFieldType.O3)
     ..aOS(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pageToken')
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'orderBy')
-    ..aOM<$3.DocumentMask>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mask', subBuilder: $3.DocumentMask.create)
-    ..a<$core.List<$core.int>>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transaction', $pb.PbFieldType.OY)
-    ..aOM<$4.Timestamp>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
-    ..aOB(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'showMissing')
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pageToken')
+    ..aOS(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'orderBy')
+    ..aOM<$3.DocumentMask>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'mask',
+        subBuilder: $3.DocumentMask.create)
+    ..a<$core.List<$core.int>>(
+        8,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'transaction',
+        $pb.PbFieldType.OY)
+    ..aOM<$4.Timestamp>(
+        10,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
+    ..aOB(
+        12,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'showMissing')
     ..hasRequiredFields = false;
 
   ListDocumentsRequest._() : super();
@@ -411,8 +445,11 @@ class ListDocumentsResponse extends $pb.GeneratedMessage {
             : 'documents',
         $pb.PbFieldType.PM,
         subBuilder: $1.Document.create)
-    ..aOS(2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextPageToken')
+    ..aOS(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'nextPageToken')
     ..hasRequiredFields = false;
 
   ListDocumentsResponse._() : super();
@@ -500,9 +537,17 @@ class CreateDocumentRequest extends $pb.GeneratedMessage {
             ? ''
             : 'documentId')
     ..aOM<$1.Document>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'document',
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'document',
         subBuilder: $1.Document.create)
-    ..aOM<$3.DocumentMask>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mask', subBuilder: $3.DocumentMask.create)
+    ..aOM<$3.DocumentMask>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'mask',
+        subBuilder: $3.DocumentMask.create)
     ..hasRequiredFields = false;
 
   CreateDocumentRequest._() : super();
@@ -626,23 +671,38 @@ class CreateDocumentRequest extends $pb.GeneratedMessage {
 }
 
 class UpdateDocumentRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateDocumentRequest',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'UpdateDocumentRequest',
       package: const $pb.PackageName(
           const $core.bool.fromEnvironment('protobuf.omit_message_names')
               ? ''
               : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..aOM<$1.Document>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'document',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'document',
         subBuilder: $1.Document.create)
     ..aOM<$3.DocumentMask>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updateMask',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'updateMask',
         subBuilder: $3.DocumentMask.create)
     ..aOM<$3.DocumentMask>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mask',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'mask',
         subBuilder: $3.DocumentMask.create)
     ..aOM<$3.Precondition>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentDocument',
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'currentDocument',
         subBuilder: $3.Precondition.create)
     ..hasRequiredFields = false;
 
@@ -883,14 +943,30 @@ class BatchGetDocumentsRequest extends $pb.GeneratedMessage {
         const $core.bool.fromEnvironment('protobuf.omit_field_names')
             ? ''
             : 'documents')
-    ..aOM<$3.DocumentMask>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mask',
+    ..aOM<$3.DocumentMask>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'mask',
         subBuilder: $3.DocumentMask.create)
     ..a<$core.List<$core.int>>(
         4,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transaction',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'transaction',
         $pb.PbFieldType.OY)
-    ..aOM<$3.TransactionOptions>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newTransaction', subBuilder: $3.TransactionOptions.create)
-    ..aOM<$4.Timestamp>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
+    ..aOM<$3.TransactionOptions>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'newTransaction',
+        subBuilder: $3.TransactionOptions.create)
+    ..aOM<$4.Timestamp>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   BatchGetDocumentsRequest._() : super();
@@ -1046,7 +1122,10 @@ class BatchGetDocumentsResponse extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [1, 2])
     ..aOM<$1.Document>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'found',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'found',
         subBuilder: $1.Document.create)
     ..aOS(
         2,
@@ -1054,8 +1133,17 @@ class BatchGetDocumentsResponse extends $pb.GeneratedMessage {
             ? ''
             : 'missing')
     ..a<$core.List<$core.int>>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transaction', $pb.PbFieldType.OY)
-    ..aOM<$4.Timestamp>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'transaction',
+        $pb.PbFieldType.OY)
+    ..aOM<$4.Timestamp>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   BatchGetDocumentsResponse._() : super();
@@ -1345,11 +1433,17 @@ class CommitRequest extends $pb.GeneratedMessage {
             ? ''
             : 'database')
     ..pc<$5.Write>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'writes', $pb.PbFieldType.PM,
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'writes',
+        $pb.PbFieldType.PM,
         subBuilder: $5.Write.create)
     ..a<$core.List<$core.int>>(
         3,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transaction',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'transaction',
         $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
@@ -1444,7 +1538,10 @@ class CommitResponse extends $pb.GeneratedMessage {
         $pb.PbFieldType.PM,
         subBuilder: $5.WriteResult.create)
     ..aOM<$4.Timestamp>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'commitTime',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'commitTime',
         subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
@@ -1618,7 +1715,10 @@ class RunQueryRequest extends $pb.GeneratedMessage {
     7: RunQueryRequest_ConsistencySelector.readTime,
     0: RunQueryRequest_ConsistencySelector.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RunQueryRequest',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'RunQueryRequest',
       package: const $pb.PackageName(
           const $core.bool.fromEnvironment('protobuf.omit_message_names')
               ? ''
@@ -1632,7 +1732,10 @@ class RunQueryRequest extends $pb.GeneratedMessage {
             ? ''
             : 'parent')
     ..aOM<$6.StructuredQuery>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'structuredQuery',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'structuredQuery',
         subBuilder: $6.StructuredQuery.create)
     ..a<$core.List<$core.int>>(
         5,
@@ -1641,9 +1744,17 @@ class RunQueryRequest extends $pb.GeneratedMessage {
             : 'transaction',
         $pb.PbFieldType.OY)
     ..aOM<$3.TransactionOptions>(
-        6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newTransaction',
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'newTransaction',
         subBuilder: $3.TransactionOptions.create)
-    ..aOM<$4.Timestamp>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
+    ..aOM<$4.Timestamp>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   RunQueryRequest._() : super();
@@ -1784,7 +1895,11 @@ class RunQueryResponse extends $pb.GeneratedMessage {
               ? ''
               : 'google.firestore.v1'),
       createEmptyInstance: create)
-    ..aOM<$1.Document>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'document',
+    ..aOM<$1.Document>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'document',
         subBuilder: $1.Document.create)
     ..a<$core.List<$core.int>>(
         2,
@@ -1792,9 +1907,18 @@ class RunQueryResponse extends $pb.GeneratedMessage {
             ? ''
             : 'transaction',
         $pb.PbFieldType.OY)
-    ..aOM<$4.Timestamp>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime',
+    ..aOM<$4.Timestamp>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
         subBuilder: $4.Timestamp.create)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'skippedResults', $pb.PbFieldType.O3)
+    ..a<$core.int>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'skippedResults',
+        $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   RunQueryResponse._() : super();
@@ -1929,9 +2053,21 @@ class PartitionQueryRequest extends $pb.GeneratedMessage {
             : 'structuredQuery',
         subBuilder: $6.StructuredQuery.create)
     ..aInt64(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'partitionCount')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pageToken')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pageSize', $pb.PbFieldType.O3)
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'partitionCount')
+    ..aOS(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pageToken')
+    ..a<$core.int>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pageSize',
+        $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   PartitionQueryRequest._() : super();
@@ -2073,8 +2209,11 @@ class PartitionQueryResponse extends $pb.GeneratedMessage {
             : 'partitions',
         $pb.PbFieldType.PM,
         subBuilder: $6.Cursor.create)
-    ..aOS(2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextPageToken')
+    ..aOS(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'nextPageToken')
     ..hasRequiredFields = false;
 
   PartitionQueryResponse._() : super();
@@ -2137,10 +2276,14 @@ class PartitionQueryResponse extends $pb.GeneratedMessage {
 }
 
 class WriteRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteRequest',
-      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
           ? ''
-          : 'google.firestore.v1'),
+          : 'WriteRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..aOS(
         1,
@@ -2152,7 +2295,12 @@ class WriteRequest extends $pb.GeneratedMessage {
         const $core.bool.fromEnvironment('protobuf.omit_field_names')
             ? ''
             : 'streamId')
-    ..pc<$5.Write>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'writes', $pb.PbFieldType.PM,
+    ..pc<$5.Write>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'writes',
+        $pb.PbFieldType.PM,
         subBuilder: $5.Write.create)
     ..a<$core.List<$core.int>>(
         4,
@@ -2161,7 +2309,10 @@ class WriteRequest extends $pb.GeneratedMessage {
             : 'streamToken',
         $pb.PbFieldType.OY)
     ..m<$core.String, $core.String>(
-        5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labels',
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'labels',
         entryClassName: 'WriteRequest.LabelsEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OS,
@@ -2287,10 +2438,17 @@ class WriteResponse extends $pb.GeneratedMessage {
         $pb.PbFieldType.OY)
     ..pc<$5.WriteResult>(
         3,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'writeResults',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'writeResults',
         $pb.PbFieldType.PM,
         subBuilder: $5.WriteResult.create)
-    ..aOM<$4.Timestamp>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'commitTime', subBuilder: $4.Timestamp.create)
+    ..aOM<$4.Timestamp>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'commitTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   WriteResponse._() : super();
@@ -2393,34 +2551,43 @@ class ListenRequest extends $pb.GeneratedMessage {
     3: ListenRequest_TargetChange.removeTarget,
     0: ListenRequest_TargetChange.notSet
   };
-  static final $pb.BuilderInfo _i =
-      $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListenRequest',
-          package: const $pb.PackageName(
-              const $core.bool.fromEnvironment('protobuf.omit_message_names')
-                  ? ''
-                  : 'google.firestore.v1'),
-          createEmptyInstance: create)
-        ..oo(0, [2, 3])
-        ..aOS(
-            1,
-            const $core.bool.fromEnvironment('protobuf.omit_field_names')
-                ? ''
-                : 'database')
-        ..aOM<Target>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'addTarget',
-            subBuilder: Target.create)
-        ..a<$core.int>(
-            3,
-            const $core.bool.fromEnvironment('protobuf.omit_field_names')
-                ? ''
-                : 'removeTarget',
-            $pb.PbFieldType.O3)
-        ..m<$core.String, $core.String>(
-            4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labels',
-            entryClassName: 'ListenRequest.LabelsEntry',
-            keyFieldType: $pb.PbFieldType.OS,
-            valueFieldType: $pb.PbFieldType.OS,
-            packageName: const $pb.PackageName('google.firestore.v1'))
-        ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ListenRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
+      createEmptyInstance: create)
+    ..oo(0, [2, 3])
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'database')
+    ..aOM<Target>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'addTarget',
+        subBuilder: Target.create)
+    ..a<$core.int>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'removeTarget',
+        $pb.PbFieldType.O3)
+    ..m<$core.String, $core.String>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'labels',
+        entryClassName: 'ListenRequest.LabelsEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OS,
+        packageName: const $pb.PackageName('google.firestore.v1'))
+    ..hasRequiredFields = false;
 
   ListenRequest._() : super();
   factory ListenRequest({
@@ -2536,7 +2703,10 @@ class ListenResponse extends $pb.GeneratedMessage {
     6: ListenResponse_ResponseType.documentRemove,
     0: ListenResponse_ResponseType.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListenResponse',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ListenResponse',
       package: const $pb.PackageName(
           const $core.bool.fromEnvironment('protobuf.omit_message_names')
               ? ''
@@ -2544,18 +2714,35 @@ class ListenResponse extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [2, 3, 4, 5, 6])
     ..aOM<TargetChange>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetChange',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'targetChange',
         subBuilder: TargetChange.create)
     ..aOM<$5.DocumentChange>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'documentChange',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'documentChange',
         subBuilder: $5.DocumentChange.create)
     ..aOM<$5.DocumentDelete>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'documentDelete',
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'documentDelete',
         subBuilder: $5.DocumentDelete.create)
     ..aOM<$5.ExistenceFilter>(
-        5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filter',
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'filter',
         subBuilder: $5.ExistenceFilter.create)
-    ..aOM<$5.DocumentRemove>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'documentRemove', subBuilder: $5.DocumentRemove.create)
+    ..aOM<$5.DocumentRemove>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'documentRemove',
+        subBuilder: $5.DocumentRemove.create)
     ..hasRequiredFields = false;
 
   ListenResponse._() : super();
@@ -2878,16 +3065,40 @@ class Target extends $pb.GeneratedMessage {
     ..oo(0, [2, 3])
     ..oo(1, [4, 11])
     ..aOM<Target_QueryTarget>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'query',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'query',
         subBuilder: Target_QueryTarget.create)
     ..aOM<Target_DocumentsTarget>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'documents',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'documents',
         subBuilder: Target_DocumentsTarget.create)
     ..a<$core.List<$core.int>>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'resumeToken', $pb.PbFieldType.OY)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetId', $pb.PbFieldType.O3)
-    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'once')
-    ..aOM<$4.Timestamp>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'resumeToken',
+        $pb.PbFieldType.OY)
+    ..a<$core.int>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'targetId',
+        $pb.PbFieldType.O3)
+    ..aOB(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'once')
+    ..aOM<$4.Timestamp>(
+        11,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   Target._() : super();
@@ -3038,9 +3249,10 @@ class TargetChange extends $pb.GeneratedMessage {
       const $core.bool.fromEnvironment('protobuf.omit_message_names')
           ? ''
           : 'TargetChange',
-      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
-          ? ''
-          : 'google.firestore.v1'),
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..e<TargetChange_TargetChangeType>(
         1,
@@ -3053,11 +3265,28 @@ class TargetChange extends $pb.GeneratedMessage {
         enumValues: TargetChange_TargetChangeType.values)
     ..p<$core.int>(
         2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetIds',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'targetIds',
         $pb.PbFieldType.P3)
-    ..aOM<$7.Status>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cause', subBuilder: $7.Status.create)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'resumeToken', $pb.PbFieldType.OY)
-    ..aOM<$4.Timestamp>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'readTime', subBuilder: $4.Timestamp.create)
+    ..aOM<$7.Status>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'cause',
+        subBuilder: $7.Status.create)
+    ..a<$core.List<$core.int>>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'resumeToken',
+        $pb.PbFieldType.OY)
+    ..aOM<$4.Timestamp>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'readTime',
+        subBuilder: $4.Timestamp.create)
     ..hasRequiredFields = false;
 
   TargetChange._() : super();
@@ -3378,10 +3607,17 @@ class BatchWriteRequest extends $pb.GeneratedMessage {
             ? ''
             : 'database')
     ..pc<$5.Write>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'writes', $pb.PbFieldType.PM,
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'writes',
+        $pb.PbFieldType.PM,
         subBuilder: $5.Write.create)
     ..m<$core.String, $core.String>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labels',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'labels',
         entryClassName: 'BatchWriteRequest.LabelsEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OS,
@@ -3463,11 +3699,17 @@ class BatchWriteResponse extends $pb.GeneratedMessage {
               : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..pc<$5.WriteResult>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'writeResults', $pb.PbFieldType.PM,
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'writeResults',
+        $pb.PbFieldType.PM,
         subBuilder: $5.WriteResult.create)
     ..pc<$7.Status>(
         2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'status',
         $pb.PbFieldType.PM,
         subBuilder: $7.Status.create)
     ..hasRequiredFields = false;

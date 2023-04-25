@@ -128,19 +128,29 @@ class StructuredQuery_Filter extends $pb.GeneratedMessage {
       const $core.bool.fromEnvironment('protobuf.omit_message_names')
           ? ''
           : 'StructuredQuery.Filter',
-      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
-          ? ''
-          : 'google.firestore.v1'),
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..oo(0, [1, 2, 3])
     ..aOM<StructuredQuery_CompositeFilter>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compositeFilter',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'compositeFilter',
         subBuilder: StructuredQuery_CompositeFilter.create)
     ..aOM<StructuredQuery_FieldFilter>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fieldFilter',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'fieldFilter',
         subBuilder: StructuredQuery_FieldFilter.create)
     ..aOM<StructuredQuery_UnaryFilter>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unaryFilter',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'unaryFilter',
         subBuilder: StructuredQuery_UnaryFilter.create)
     ..hasRequiredFields = false;
 
@@ -243,19 +253,26 @@ class StructuredQuery_CompositeFilter extends $pb.GeneratedMessage {
       const $core.bool.fromEnvironment('protobuf.omit_message_names')
           ? ''
           : 'StructuredQuery.CompositeFilter',
-      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
-          ? ''
-          : 'google.firestore.v1'),
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..e<StructuredQuery_CompositeFilter_Operator>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'op', $pb.PbFieldType.OE,
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'op',
+        $pb.PbFieldType.OE,
         defaultOrMaker:
             StructuredQuery_CompositeFilter_Operator.OPERATOR_UNSPECIFIED,
         valueOf: StructuredQuery_CompositeFilter_Operator.valueOf,
         enumValues: StructuredQuery_CompositeFilter_Operator.values)
     ..pc<StructuredQuery_Filter>(
         2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filters',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'filters',
         $pb.PbFieldType.PM,
         subBuilder: StructuredQuery_Filter.create)
     ..hasRequiredFields = false;
@@ -333,16 +350,27 @@ class StructuredQuery_FieldFilter extends $pb.GeneratedMessage {
               : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..aOM<StructuredQuery_FieldReference>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'field',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'field',
         subBuilder: StructuredQuery_FieldReference.create)
     ..e<StructuredQuery_FieldFilter_Operator>(
         2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'op',
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'op',
         $pb.PbFieldType.OE,
-        defaultOrMaker: StructuredQuery_FieldFilter_Operator.OPERATOR_UNSPECIFIED,
+        defaultOrMaker:
+            StructuredQuery_FieldFilter_Operator.OPERATOR_UNSPECIFIED,
         valueOf: StructuredQuery_FieldFilter_Operator.valueOf,
         enumValues: StructuredQuery_FieldFilter_Operator.values)
-    ..aOM<$1.Value>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: $1.Value.create)
+    ..aOM<$1.Value>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'value',
+        subBuilder: $1.Value.create)
     ..hasRequiredFields = false;
 
   StructuredQuery_FieldFilter._() : super();
@@ -454,13 +482,20 @@ class StructuredQuery_UnaryFilter extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [2])
     ..e<StructuredQuery_UnaryFilter_Operator>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'op', $pb.PbFieldType.OE,
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'op',
+        $pb.PbFieldType.OE,
         defaultOrMaker:
             StructuredQuery_UnaryFilter_Operator.OPERATOR_UNSPECIFIED,
         valueOf: StructuredQuery_UnaryFilter_Operator.valueOf,
         enumValues: StructuredQuery_UnaryFilter_Operator.values)
     ..aOM<StructuredQuery_FieldReference>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'field',
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'field',
         subBuilder: StructuredQuery_FieldReference.create)
     ..hasRequiredFields = false;
 
@@ -551,7 +586,10 @@ class StructuredQuery_Order extends $pb.GeneratedMessage {
               : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..aOM<StructuredQuery_FieldReference>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'field',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'field',
         subBuilder: StructuredQuery_FieldReference.create)
     ..e<StructuredQuery_Direction>(
         2,
@@ -769,27 +807,65 @@ class StructuredQuery_Projection extends $pb.GeneratedMessage {
 }
 
 class StructuredQuery extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StructuredQuery',
-      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
           ? ''
-          : 'google.firestore.v1'),
+          : 'StructuredQuery',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'google.firestore.v1'),
       createEmptyInstance: create)
     ..aOM<StructuredQuery_Projection>(
-        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'select',
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'select',
         subBuilder: StructuredQuery_Projection.create)
     ..pc<StructuredQuery_CollectionSelector>(
-        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', $pb.PbFieldType.PM,
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'from',
+        $pb.PbFieldType.PM,
         subBuilder: StructuredQuery_CollectionSelector.create)
     ..aOM<StructuredQuery_Filter>(
-        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'where',
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'where',
         subBuilder: StructuredQuery_Filter.create)
     ..pc<StructuredQuery_Order>(
-        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'orderBy', $pb.PbFieldType.PM,
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'orderBy',
+        $pb.PbFieldType.PM,
         subBuilder: StructuredQuery_Order.create)
-    ..aOM<$0.Int32Value>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'limit', subBuilder: $0.Int32Value.create)
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'offset', $pb.PbFieldType.O3)
-    ..aOM<Cursor>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startAt', subBuilder: Cursor.create)
-    ..aOM<Cursor>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endAt', subBuilder: Cursor.create)
+    ..aOM<$0.Int32Value>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'limit',
+        subBuilder: $0.Int32Value.create)
+    ..a<$core.int>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'offset',
+        $pb.PbFieldType.O3)
+    ..aOM<Cursor>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'startAt',
+        subBuilder: Cursor.create)
+    ..aOM<Cursor>(
+        8,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'endAt',
+        subBuilder: Cursor.create)
     ..hasRequiredFields = false;
 
   StructuredQuery._() : super();
@@ -963,8 +1039,11 @@ class Cursor extends $pb.GeneratedMessage {
             : 'values',
         $pb.PbFieldType.PM,
         subBuilder: $1.Value.create)
-    ..aOB(2,
-        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'before')
+    ..aOB(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'before')
     ..hasRequiredFields = false;
 
   Cursor._() : super();

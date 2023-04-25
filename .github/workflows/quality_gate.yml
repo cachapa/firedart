@@ -3,7 +3,7 @@ name: Quality Gate
 on:
   push:
     branches:
-      - master
+      - '**'
 
 jobs:
   build:
@@ -23,8 +23,8 @@ jobs:
       - name: Verify code formatting
         run: dart format --set-exit-if-changed .
       - name: Get dependencies
-        run: pub get
+        run: dart pub get
       - name: Static code analysis
         run: dart analyze --fatal-infos
       - name: Run tests
-        run: pub run test
+        run: dart run test
