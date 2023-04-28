@@ -5,6 +5,9 @@ on:
     branches:
       - '**'
 
+env:
+  GOOGLE_APPLICATION_CREDENTIALS: test/service-account.json
+
 jobs:
   build:
     timeout-minutes: 10
@@ -15,6 +18,7 @@ jobs:
       - uses: dart-lang/setup-dart@v1
       - name: Load test credentials
         run: |
+          echo "${{ secrets.test_service_account }}" > test/service-account.json
           echo "const apiKey = '${{ secrets.test_api_key }}';" > test/test_config.dart
           echo "const projectId = '${{ secrets.test_project_id }}';" >> test/test_config.dart
           echo "const email = '${{ secrets.test_email }}';" >> test/test_config.dart
