@@ -1,3 +1,7 @@
+## 0.9.2
+
+- Add option to use application default auth (@Kirpal)
+
 ## 0.9.1+1
 
 - Update license

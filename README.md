@@ -1,6 +1,6 @@
 > **Note:** Development on this package is currently on hold. You're welcome to use it but be aware that there will be no support or ongoing updates for the time being.
 
-# firedart
+# firedart 🔥🎯
 
 [![pub package](https://img.shields.io/pub/v/firedart.svg)](https://pub.dartlang.org/packages/firedart)
 
