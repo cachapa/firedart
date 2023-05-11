@@ -1,5 +1,3 @@
-import 'package:grpc/grpc.dart';
-
 import '../firedart.dart';
 
 class TokenAuthenticator {
@@ -14,6 +12,4 @@ class TokenAuthenticator {
     var idToken = await auth.tokenProvider.idToken;
     metadata['authorization'] = 'Bearer $idToken';
   }
-
-  CallOptions get toCallOptions => CallOptions(providers: [authenticate]);
 }

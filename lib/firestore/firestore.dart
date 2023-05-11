@@ -1,4 +1,6 @@
 import 'package:firedart/auth/firebase_auth.dart';
+import 'package:firedart/firestore/application_default_authenticator.dart';
+import 'package:firedart/firestore/token_authenticator.dart';
 
 import 'firestore_gateway.dart';
 import 'models.dart';
@@ -16,22 +18,32 @@ class Firestore {
 
   static Firestore initialize(
     String projectId, {
+    bool useApplicationDefaultAuth = false,
     String? databaseId,
     Emulator? emulator,
   }) {
     if (_instance != null) {
       throw Exception('Firestore instance was already initialized');
     }
-    FirebaseAuth? auth;
-    try {
-      auth = FirebaseAuth.instance;
-    } catch (e) {
-      // FirebaseAuth isn't initialized
+    final RequestAuthenticator? authenticator;
+    if (useApplicationDefaultAuth) {
+      authenticator = ApplicationDefaultAuthenticator(
+        useEmulator: emulator != null,
+      ).authenticate;
+    } else {
+      FirebaseAuth? auth;
+      try {
+        auth = FirebaseAuth.instance;
+      } catch (e) {
+        // FirebaseAuth isn't initialized
+      }
+
+      authenticator = TokenAuthenticator.from(auth)?.authenticate;
     }
     _instance = Firestore(
       projectId,
       databaseId: databaseId,
-      auth: auth,
+      authenticator: authenticator,
       emulator: emulator,
     );
     return _instance!;
@@ -51,12 +63,12 @@ class Firestore {
   Firestore(
     String projectId, {
     String? databaseId,
-    FirebaseAuth? auth,
+    RequestAuthenticator? authenticator,
     Emulator? emulator,
   })  : _gateway = FirestoreGateway(
           projectId,
           databaseId: databaseId,
-          auth: auth,
+          authenticator: authenticator,
           emulator: emulator,
         ),
         assert(projectId.isNotEmpty);
