@@ -1,3 +1,7 @@
+## 0.9.2+1
+
+- Update documentation
+
 ## 0.9.2
 
 - Add option to use application default auth (@Kirpal)

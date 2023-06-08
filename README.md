@@ -77,7 +77,8 @@ You can also instantiate your own `Firestore` object. Please note that if your d
 
 ``` dart
 var firebaseAuth = FirebaseAuth.(apiKey, await HiveStore());
-var firestore = Firestore(projectId, auth: firebaseAuth);
+var auth = TokenAuthenticator.from(auth)?.authenticate;
+var firestore = Firestore(projectId, authenticator: firebaseAuth);
 
 await firebaseAuth.signIn(email, password);
 var map = await firestore.collection("users").get();
