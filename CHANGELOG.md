@@ -1,3 +1,7 @@
+## 0.9.3
+
+- Add support for signInWithCustomToken authentication (@eximius313)
+
 ## 0.9.2+1
 
 - Update documentation

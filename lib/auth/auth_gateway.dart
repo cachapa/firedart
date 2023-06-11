@@ -13,35 +13,42 @@ class AuthGateway {
   AuthGateway(this.client, this.tokenProvider);
 
   Future<User> signUp(String email, String password) async =>
-      _auth('signUp', {'email': email, 'password': password});
+      _auth('signUp', {'email': email, 'password': password})
+      .then(User.fromMap);
 
   Future<User> signIn(String email, String password) async =>
-      _auth('signInWithPassword', {'email': email, 'password': password});
+      _auth('signInWithPassword', {'email': email, 'password': password})
+      .then(User.fromMap);
 
-  Future<User> signInAnonymously() async => _auth('signUp', {});
+  Future<void> signInWithCustomToken(String token) async =>
+      _auth('signInWithCustomToken', {'token': token, 'returnSecureToken': 'true'});
+
+  Future<User> signInAnonymously() async => _auth('signUp', {})
+      .then(User.fromMap);
 
   Future<void> resetPassword(String email) => _post('sendOobCode', {
         'requestType': 'PASSWORD_RESET',
         'email': email,
       });
 
-  Future<User> _auth(String method, Map<String, String> payload) async {
-    var body = {
+  Future<Map<String, dynamic>> _auth(String method, Map<String, String> payload) async {
+    final body = {
       ...payload,
       'returnSecureToken': 'true',
     };
 
-    var map = await _post(method, body);
+    final map = await _post(method, body);
+
     tokenProvider.setToken(map);
-    return User.fromMap(map);
+    return map;
   }
 
   Future<Map<String, dynamic>> _post(
       String method, Map<String, String> body) async {
-    var requestUrl =
+    final requestUrl =
         'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
-    var response = await client.post(
+    final response = await client.post(
       Uri.parse(requestUrl),
       body: body,
     );
