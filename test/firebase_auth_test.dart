@@ -21,6 +21,14 @@ Future main() async {
     expect(auth.isSignedIn, false);
   });
 
+  test('Sign In with Custom Token', () async {
+    expect(auth.isSignedIn, false);
+    await auth.signInWithCustomToken(token);
+    expect(auth.isSignedIn, true);
+    auth.signOut();
+    expect(auth.isSignedIn, false);
+  });
+
   test('Sign In Anonymously', () async {
     expect(auth.isSignedIn, false);
     await auth.signInAnonymously();
