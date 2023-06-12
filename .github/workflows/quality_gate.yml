@@ -1,4 +1,4 @@
-name: Integration tests
+name: Quality gate
 
 on:
   pull_request:
@@ -10,10 +10,26 @@ env:
   GOOGLE_APPLICATION_CREDENTIALS: test/service-account.json
 
 jobs:
-  build:
+  format:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+      - run: dart format --set-exit-if-changed .
 
+  analyze:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+      - run: dart pub get
+      - run: dart analyze --fatal-infos
+
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
@@ -24,8 +40,5 @@ jobs:
           echo "const projectId = '${{ secrets.test_project_id }}';" >> test/test_config.dart
           echo "const email = '${{ secrets.test_email }}';" >> test/test_config.dart
           echo "const password = '${{ secrets.test_password }}';" >> test/test_config.dart
-
-      - name: Get dependencies
-        run: dart pub get
-      - name: Run tests
-        run: dart run test
+      - run: dart pub get
+      - run: dart run test
