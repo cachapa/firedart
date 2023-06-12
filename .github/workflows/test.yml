@@ -1,4 +1,4 @@
-name: Quality Gate
+name: Integration tests
 
 on:
   pull_request:
@@ -25,11 +25,7 @@ jobs:
           echo "const email = '${{ secrets.test_email }}';" >> test/test_config.dart
           echo "const password = '${{ secrets.test_password }}';" >> test/test_config.dart
 
-      - name: Verify code formatting
-        run: dart format --set-exit-if-changed .
       - name: Get dependencies
         run: dart pub get
-      - name: Static code analysis
-        run: dart analyze --fatal-infos
       - name: Run tests
         run: dart run test

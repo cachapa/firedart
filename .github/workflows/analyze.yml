@@ -1,0 +1,20 @@
+name: Static analysis
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+      - name: Get dependencies
+        run: dart pub get
+      - name: Static code analysis
+        run: dart analyze --fatal-infos
