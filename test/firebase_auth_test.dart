@@ -23,7 +23,7 @@ Future main() async {
 
   test('Sign In with Custom Token', () async {
     expect(auth.isSignedIn, false);
-    await auth.signInWithCustomToken(token);
+    await auth.signInWithCustomToken(customToken);
     expect(auth.isSignedIn, true);
     auth.signOut();
     expect(auth.isSignedIn, false);

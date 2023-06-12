@@ -42,7 +42,6 @@ class TokenProvider {
       map['idToken'],
       map['refreshToken'],
       int.parse(map['expiresIn']),
-      map['kind'],
     );
     _notifyState();
   }
