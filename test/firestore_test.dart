@@ -6,6 +6,7 @@ import 'package:firedart/firestore/application_default_authenticator.dart';
 import 'package:firedart/firestore/token_authenticator.dart';
 import 'package:test/test.dart';
 
+import 'firebase_auth_test.dart';
 import 'test_config.dart';
 
 Future main() async {
@@ -35,6 +36,20 @@ Future main() async {
       } catch (_) {}
       expect(auth.isSignedIn, false);
     });
+  });
+
+  group('Custom token', () {
+    var tokenStore = VolatileStore();
+    var auth = FirebaseAuth(apiKey, tokenStore);
+    final authenticator = TokenAuthenticator.from(auth)?.authenticate;
+    var firestore = Firestore(projectId, authenticator: authenticator);
+
+    setUpAll(() async {
+      final token = await createCustomToken();
+      await auth.signInWithCustomToken(token);
+    });
+
+    runTests(firestore);
   });
 
   group('ApplicationDefaultAuthenticator', () {

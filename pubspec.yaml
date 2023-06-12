@@ -15,3 +15,6 @@ dependencies:
 dev_dependencies:
   lints: any
   test: any
+
+  # Create custom auth token for testing
+  firebase_admin: ^0.2.0
