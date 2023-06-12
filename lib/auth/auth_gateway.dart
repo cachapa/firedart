@@ -45,10 +45,10 @@ class AuthGateway {
 
   Future<Map<String, dynamic>> _post(
       String method, Map<String, String> body) async {
-    final requestUrl =
+    var requestUrl =
         'https://identitytoolkit.googleapis.com/v1/accounts:$method';
 
-    final response = await client.post(
+    var response = await client.post(
       Uri.parse(requestUrl),
       body: body,
     );

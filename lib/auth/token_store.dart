@@ -9,14 +9,12 @@ abstract class TokenStore {
 
   DateTime? get expiry => _token?._expiry;
 
-  String? get kind => _token?._kind;
-
   bool get hasToken => _token != null;
 
   void setToken(
-      String? userId, String idToken, String refreshToken, int expiresIn, [String? kind]) {
+      String? userId, String idToken, String refreshToken, int expiresIn) {
     var expiry = DateTime.now().add(Duration(seconds: expiresIn));
-    _token = Token(userId, idToken, refreshToken, expiry, kind);
+    _token = Token(userId, idToken, refreshToken, expiry);
     write(_token);
   }
 
@@ -60,13 +58,12 @@ class VolatileStore extends TokenStore {
 }
 
 class Token {
-  final String? _kind;
   final String? _userId;
   final String _idToken;
   final String _refreshToken;
   final DateTime _expiry;
 
-  Token(this._userId, this._idToken, this._refreshToken, this._expiry, [this._kind]);
+  Token(this._userId, this._idToken, this._refreshToken, this._expiry);
 
   Token.fromMap(Map<String, dynamic> map)
       : this(
