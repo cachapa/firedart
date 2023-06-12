@@ -1,5 +1,3 @@
-> **Note:** Development on this package is currently on hold. You're welcome to use it but be aware that there will be no support or ongoing updates for the time being.
-
 # firedart 🔥🎯
 
 [![pub package](https://img.shields.io/pub/v/firedart.svg)](https://pub.dartlang.org/packages/firedart)
@@ -51,9 +49,12 @@ var user = await firebaseAuth.getUser();
 
 Further usage examples can be found in the [integration tests](https://github.com/cachapa/firedart/blob/master/test/firebase_auth_test.dart).
 
-### Limitations
+### Authentication providers
 
-* Currently the only supported authentication provider is `Email/Password`.
+* Anonymous
+* Email/Password
+* Custom tokens
+* Google app credentials (i.e. service-account.json)
 
 ## Firestore
 

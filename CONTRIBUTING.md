@@ -14,7 +14,11 @@ Make sure you open a ticket to discuss your technical approach and your plans be
 
 #### Avoid refactoring or changing unrelated lines
 
-Avoid refactoring existing code unless discussed previously. This also goes for formatting code outside of that affected by your contribution.
+Avoid refactoring existing code unless discussed previously. The exception is code touched by `dart format` (see below).
+
+#### Make sure your code is formatted according to the official style guide
+
+Firedart uses the official Dart guidelines to ensure consistent code style. Please make sure you run `dart format` when making your contribution.
 
 #### Implement tests
 
