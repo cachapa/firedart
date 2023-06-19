@@ -1,3 +1,8 @@
+## 0.9.4
+
+- Remove superfluous error log (@simonbengtsson)
+- Update http dependency
+
 ## 0.9.3
 
 - Add support for signInWithCustomToken authentication (@eximius313)

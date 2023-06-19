@@ -1,7 +1,6 @@
 name: Quality gate
 
 on:
-  pull_request_target:
   push:
     branches:
       - '**'
