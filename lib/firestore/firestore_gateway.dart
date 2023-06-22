@@ -49,6 +49,11 @@ class _FirestoreGatewayStreamCache {
     _listenRequestStreamController!.add(request);
   }
 
+  void close() {
+    _listenRequestStreamController?.close();
+    _listenResponseStreamController.close();
+  }
+
   void _handleListenOnResponseStream() {
     _shouldCleanup = false;
   }
@@ -81,6 +86,8 @@ class FirestoreGateway {
   final Map<String, _FirestoreGatewayStreamCache> _listenRequestStreamMap;
 
   late FirestoreClient _client;
+
+  late ClientChannel _channel;
 
   FirestoreGateway(
     String projectId, {
@@ -208,29 +215,33 @@ class FirestoreGateway {
         .toList();
   }
 
+  void close() {
+    _listenRequestStreamMap.forEach((_, stream) => stream.close());
+    _listenRequestStreamMap.clear();
+    _channel.shutdown();
+  }
+
   void _setupClient({Emulator? emulator}) {
     final callOptions = _authenticator != null
         ? CallOptions(providers: [_authenticator!])
         : null;
     _listenRequestStreamMap.clear();
-    _client = emulator == null
-        ? FirestoreClient(
-            ClientChannel(
-              'firestore.googleapis.com',
-              options: ChannelOptions(),
-            ),
-            options: callOptions,
+    _channel = emulator == null
+        ? ClientChannel(
+            'firestore.googleapis.com',
+            options: ChannelOptions(),
           )
-        : FirestoreClient(
-            ClientChannel(
-              emulator.host,
-              port: emulator.port,
-              options: ChannelOptions(
-                credentials: ChannelCredentials.insecure(),
-              ),
+        : ClientChannel(
+            emulator.host,
+            port: emulator.port,
+            options: ChannelOptions(
+              credentials: ChannelCredentials.insecure(),
             ),
-            options: callOptions,
           );
+    _client = FirestoreClient(
+      _channel,
+      options: callOptions,
+    );
   }
 
   void _handleError(e) {

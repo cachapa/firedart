@@ -79,4 +79,8 @@ class Firestore {
       CollectionReference(_gateway, path);
 
   DocumentReference document(String path) => DocumentReference(_gateway, path);
+
+  void close() {
+    _gateway.close();
+  }
 }
