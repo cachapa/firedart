@@ -1,3 +1,9 @@
+## 0.9.5
+
+- Fix closing connections properly (@nullbtb)
+- Add optional HTTP client to FirebaseAuth (@nullbtb)
+- Add example using Application Default Credentials (@nullbtb)
+
 ## 0.9.4
 
 - Remove superfluous error log (@simonbengtsson)
