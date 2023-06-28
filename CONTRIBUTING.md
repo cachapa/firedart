@@ -24,7 +24,7 @@ Firedart uses the official Dart guidelines to ensure consistent code style. Plea
 
 If the project includes tests please make sure your contribution doesn't break them. When adding new functionality it is usually good practice to also include explicit tests for it.
 
-#### Limit change surface in your PR
+#### Limit the change surface in your PR
 
 Difficulty in reviewing PRs grows exponentially with the amount of changes, so please try to keep your contributions small. It is usually preferable to submit multiple smaller PRs than a single large one.
 
