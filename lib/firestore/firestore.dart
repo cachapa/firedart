@@ -52,7 +52,7 @@ class Firestore {
   static bool get initialized => _instance != null;
 
   static Firestore get instance {
-    if (initialized == false) {
+    if (!initialized) {
       throw Exception(
           "Firestore hasn't been initialized. Please call Firestore.initialize() before using it.");
     }

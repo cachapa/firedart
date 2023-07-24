@@ -21,7 +21,7 @@ class FirebaseAuth {
   static bool get initialized => _instance != null;
 
   static FirebaseAuth get instance {
-    if (initialized == false) {
+    if (!initialized) {
       throw Exception(
           "FirebaseAuth hasn't been initialized. Please call FirebaseAuth.initialize() before using it.");
     }
