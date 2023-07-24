@@ -1,4 +1,4 @@
-# firedart 🔥🎯
+# Firedart 🔥🎯
 
 [![pub package](https://img.shields.io/pub/v/firedart.svg)](https://pub.dartlang.org/packages/firedart)
 
@@ -10,7 +10,7 @@ Firedart currently implements a subset of `Firebase Auth` and `Firestore`.
 
 ## Dependencies
 
-Add firedart to your `pubspec.yaml` file:
+Add Firedart to your `pubspec.yaml` file:
 
 ``` yaml
 dependencies:
