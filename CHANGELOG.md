@@ -1,6 +1,6 @@
 ## 0.9.7
 
-- Add ability to check if Firestore or FirebaseAuth are already initialized
+- Add ability to check if Firestore or FirebaseAuth are already initialized (eximius313)
 
 ## 0.9.6
 
