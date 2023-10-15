@@ -249,7 +249,7 @@ enum TransactionOptions_ReadOnly_ConsistencySelector { readTime, notSet }
 
 class TransactionOptions_ReadOnly extends $pb.GeneratedMessage {
   static const $core
-          .Map<$core.int, TransactionOptions_ReadOnly_ConsistencySelector>
+      .Map<$core.int, TransactionOptions_ReadOnly_ConsistencySelector>
       _TransactionOptions_ReadOnly_ConsistencySelectorByTag = {
     2: TransactionOptions_ReadOnly_ConsistencySelector.readTime,
     0: TransactionOptions_ReadOnly_ConsistencySelector.notSet

@@ -30,8 +30,8 @@ class DocumentTransform_FieldTransform_ServerValue extends $pb.ProtobufEnum {
   ];
 
   static final $core
-          .Map<$core.int, DocumentTransform_FieldTransform_ServerValue>
-      _byValue = $pb.ProtobufEnum.initByValue(values);
+      .Map<$core.int, DocumentTransform_FieldTransform_ServerValue> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
   static DocumentTransform_FieldTransform_ServerValue? valueOf(
           $core.int value) =>
       _byValue[value];

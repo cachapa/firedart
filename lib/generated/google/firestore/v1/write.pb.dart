@@ -218,7 +218,7 @@ enum DocumentTransform_FieldTransform_TransformType {
 
 class DocumentTransform_FieldTransform extends $pb.GeneratedMessage {
   static const $core
-          .Map<$core.int, DocumentTransform_FieldTransform_TransformType>
+      .Map<$core.int, DocumentTransform_FieldTransform_TransformType>
       _DocumentTransform_FieldTransform_TransformTypeByTag = {
     2: DocumentTransform_FieldTransform_TransformType.setToServerValue,
     3: DocumentTransform_FieldTransform_TransformType.increment,
