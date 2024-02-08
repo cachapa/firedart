@@ -1,20 +1,27 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: google/firestore/v1/firestore.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:async' as $async;
-
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'firestore.pb.dart' as $0;
-import 'document.pb.dart' as $1;
+import 'package:protobuf/protobuf.dart' as $pb;
+
 import '../../protobuf/empty.pb.dart' as $2;
+import 'document.pb.dart' as $1;
+import 'firestore.pb.dart' as $0;
+
 export 'firestore.pb.dart';
 
+@$pb.GrpcServiceName('google.firestore.v1.Firestore')
 class FirestoreClient extends $grpc.Client {
   static final _$getDocument =
       $grpc.ClientMethod<$0.GetDocumentRequest, $1.Document>(
@@ -64,6 +71,12 @@ class FirestoreClient extends $grpc.Client {
           ($0.RunQueryRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.RunQueryResponse.fromBuffer(value));
+  static final _$runAggregationQuery = $grpc.ClientMethod<
+          $0.RunAggregationQueryRequest, $0.RunAggregationQueryResponse>(
+      '/google.firestore.v1.Firestore/RunAggregationQuery',
+      ($0.RunAggregationQueryRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.RunAggregationQueryResponse.fromBuffer(value));
   static final _$partitionQuery =
       $grpc.ClientMethod<$0.PartitionQueryRequest, $0.PartitionQueryResponse>(
           '/google.firestore.v1.Firestore/PartitionQuery',
@@ -156,6 +169,14 @@ class FirestoreClient extends $grpc.Client {
         options: options);
   }
 
+  $grpc.ResponseStream<$0.RunAggregationQueryResponse> runAggregationQuery(
+      $0.RunAggregationQueryRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$runAggregationQuery, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
   $grpc.ResponseFuture<$0.PartitionQueryResponse> partitionQuery(
       $0.PartitionQueryRequest request,
       {$grpc.CallOptions? options}) {
@@ -193,6 +214,7 @@ class FirestoreClient extends $grpc.Client {
   }
 }
 
+@$pb.GrpcServiceName('google.firestore.v1.Firestore')
 abstract class FirestoreServiceBase extends $grpc.Service {
   $core.String get $name => 'google.firestore.v1.Firestore';
 
@@ -269,6 +291,15 @@ abstract class FirestoreServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.RunQueryRequest.fromBuffer(value),
         ($0.RunQueryResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RunAggregationQueryRequest,
+            $0.RunAggregationQueryResponse>(
+        'RunAggregationQuery',
+        runAggregationQuery_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) =>
+            $0.RunAggregationQueryRequest.fromBuffer(value),
+        ($0.RunAggregationQueryResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.PartitionQueryRequest,
             $0.PartitionQueryResponse>(
         'PartitionQuery',
@@ -366,6 +397,12 @@ abstract class FirestoreServiceBase extends $grpc.Service {
     yield* runQuery(call, await request);
   }
 
+  $async.Stream<$0.RunAggregationQueryResponse> runAggregationQuery_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.RunAggregationQueryRequest> request) async* {
+    yield* runAggregationQuery(call, await request);
+  }
+
   $async.Future<$0.PartitionQueryResponse> partitionQuery_Pre(
       $grpc.ServiceCall call,
       $async.Future<$0.PartitionQueryRequest> request) async {
@@ -406,6 +443,8 @@ abstract class FirestoreServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.RollbackRequest request);
   $async.Stream<$0.RunQueryResponse> runQuery(
       $grpc.ServiceCall call, $0.RunQueryRequest request);
+  $async.Stream<$0.RunAggregationQueryResponse> runAggregationQuery(
+      $grpc.ServiceCall call, $0.RunAggregationQueryRequest request);
   $async.Future<$0.PartitionQueryResponse> partitionQuery(
       $grpc.ServiceCall call, $0.PartitionQueryRequest request);
   $async.Stream<$0.WriteResponse> write(

@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: google/protobuf/wrappers.proto
+//  source: google/firestore/v1/bloom_filter.proto
 //
 // @dart = 2.12
 
