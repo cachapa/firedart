@@ -254,7 +254,7 @@ class Page<T> extends ListBase<T> {
 class QueryReference extends Reference {
   final StructuredQuery _structuredQuery = StructuredQuery();
 
-  QueryReference(FirestoreGateway gateway, String path) : super(gateway, path) {
+  QueryReference(super.gateway, super.path) {
     _structuredQuery.from
         .add(StructuredQuery_CollectionSelector()..collectionId = id);
   }
