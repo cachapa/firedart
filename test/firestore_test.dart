@@ -112,6 +112,15 @@ void runTests(Firestore firestore) {
     expect(query.isNotEmpty, true);
   });
 
+  test('Timestamp query', () async {
+    await firestore.document('test/query').set({'test_field': DateTime.now()});
+    var query = await firestore
+        .collection('test')
+        .where('test_field', isLessThan: DateTime.now())
+        .get();
+    expect(query.isNotEmpty, true);
+  });
+
   test('Multiple query parameters', () async {
     await firestore.document('test/query').set({'test_field': 42});
     var query = await firestore
