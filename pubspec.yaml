@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   http: '>=0.13.0 <2.0.0'
-  grpc: ^3.2.3
-  protobuf: ^3.0.0
+  grpc: ^3.2.4
+  protobuf: ^3.1.0
   fixnum: ^1.1.0
 
 dev_dependencies:
