@@ -1,3 +1,7 @@
+## 0.9.8
+- Add retry functionality to Firestore streams (fum36205)
+- Regenerate RPC stubs (fum36205)
+
 ## 0.9.7
 
 - Add ability to check if Firestore or FirebaseAuth are already initialized (eximius313)
