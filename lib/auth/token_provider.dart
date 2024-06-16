@@ -15,7 +15,9 @@ class TokenProvider {
   final StreamController<bool> _signInStateStreamController;
 
   TokenProvider(this.client, this._tokenStore)
-      : _signInStateStreamController = StreamController<bool>();
+      : _signInStateStreamController = StreamController<bool>() {
+    _notifyState();
+  }
 
   String? get userId => _tokenStore.userId;
 
