@@ -5,6 +5,7 @@ import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/firestore.pbgrpc.dart';
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
 import 'package:grpc/grpc.dart';
+import 'package:grpc/grpc_or_grpcweb.dart';
 
 import '../firedart.dart';
 
@@ -20,18 +21,24 @@ class FirestoreGateway {
 
   late FirestoreClient _client;
 
-  late ClientChannel _channel;
+  late GrpcOrGrpcWebClientChannel _channel;
 
+  /// To support web apps, [grpcWebProxy] can be set to point to a proxy
+  /// proxy that translates between grpc-web and grpc.
   FirestoreGateway(
     String projectId, {
     String? databaseId,
     RequestAuthenticator? authenticator,
     Emulator? emulator,
+    Proxy? grpcWebProxy,
   })  : _authenticator = authenticator,
         database =
             'projects/$projectId/databases/${databaseId ?? '(default)'}/documents',
         _listenStreamCache = <String, _ListenStreamWrapper>{} {
-    _setupClient(emulator: emulator);
+    _setupClient(
+      emulator: emulator,
+      grpcWebProxy: grpcWebProxy,
+    );
   }
 
   Future<Page<Document>> getCollection(
@@ -156,23 +163,36 @@ class FirestoreGateway {
     _channel.shutdown();
   }
 
-  void _setupClient({Emulator? emulator}) {
+  void _setupClient({Emulator? emulator, Proxy? grpcWebProxy}) {
     final callOptions = _authenticator != null
         ? CallOptions(providers: [_authenticator!])
         : null;
     _listenStreamCache.clear();
-    _channel = emulator == null
-        ? ClientChannel(
-            'firestore.googleapis.com',
-            options: ChannelOptions(),
-          )
-        : ClientChannel(
-            emulator.host,
-            port: emulator.port,
-            options: ChannelOptions(
-              credentials: ChannelCredentials.insecure(),
-            ),
-          );
+
+    if (grpcWebProxy != null) {
+      _channel = GrpcOrGrpcWebClientChannel.toSeparateEndpoints(
+        grpcHost: 'firestore.googleapis.com',
+        grpcPort: 443,
+        grpcTransportSecure: true,
+        grpcWebHost: grpcWebProxy.host,
+        grpcWebPort: grpcWebProxy.port,
+        grpcWebTransportSecure: false,
+      );
+    } else {
+      _channel = emulator == null
+          ? GrpcOrGrpcWebClientChannel.grpc(
+              'firestore.googleapis.com',
+              options: ChannelOptions(),
+            )
+          : GrpcOrGrpcWebClientChannel.grpc(
+              emulator.host,
+              port: emulator.port,
+              options: ChannelOptions(
+                credentials: ChannelCredentials.insecure(),
+              ),
+            );
+    }
+
     _client = FirestoreClient(
       _channel,
       options: callOptions,
