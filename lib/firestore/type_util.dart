@@ -9,6 +9,8 @@ import 'package:fixnum/fixnum.dart';
 
 import 'firestore_gateway.dart';
 
+/// A utility class for converting between values that come from the Firestore
+/// via gRPC and the equivalent Dart values.
 abstract class TypeUtil {
   static fs.Value encode(dynamic value) {
     if (value == null) {

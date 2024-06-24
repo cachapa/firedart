@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:firedart/auth/token_provider.dart';
 import 'package:http/http.dart' as http;
 
+/// Wraps a http client with print statements for debugging.
 class VerboseClient extends http.BaseClient {
   final http.Client _client;
 
   VerboseClient() : _client = http.Client();
 
+  /// Send a http request, printing request details.
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     print('--> ${request.method} ${request.url}');
@@ -35,6 +37,7 @@ class VerboseClient extends http.BaseClient {
   }
 }
 
+/// Wraps a http client and includes an API key for authenticated requests.
 class KeyClient extends http.BaseClient {
   final http.Client client;
   final String apiKey;
@@ -55,6 +58,7 @@ class KeyClient extends http.BaseClient {
   }
 }
 
+/// Wraps a http client and includes a [TokenProvider] for authenticated requests.
 class UserClient extends http.BaseClient {
   final KeyClient client;
   final TokenProvider tokenProvider;

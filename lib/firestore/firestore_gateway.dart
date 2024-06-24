@@ -11,9 +11,20 @@ import '../firedart.dart';
 typedef RequestAuthenticator = Future<void>? Function(
     Map<String, String> metadata, String uri);
 
+/// Uses a [FirestoreClient] to provide the various ways of accessing the
+/// Firestore database.
+///
+/// Requests are authenticated by the [RequestAuthenticator]
+///
+/// The [FirestoreGateway] hanldes connection errors by allowing up to
+/// [maxStreamReconnectRetries] which is accomplished by keeping a cache of
+/// [ListenRequest]s streams, where a [ListenRequest] is a generated class that
+/// listens to changes by requesting a [Firestore.Listen], which is an RPC that
+/// returns a [ListenResponse].
 class FirestoreGateway {
   final RequestAuthenticator? _authenticator;
 
+  /// Allows setting the database identifier used in requests.
   final String database;
 
   final Map<String, _ListenStreamWrapper> _listenStreamCache;
@@ -22,6 +33,10 @@ class FirestoreGateway {
 
   late ClientChannel _channel;
 
+  /// Passed in during [Firestore.initialize], the [projectId] identifies the
+  /// Firesbase/GCP project, the [databaseId] allows for projects not using
+  /// the default database, [authenticator] is used to authenticate gRPC requests
+  /// and [emulator] allows for local testing.
   FirestoreGateway(
     String projectId, {
     String? databaseId,
@@ -34,6 +49,8 @@ class FirestoreGateway {
     _setupClient(emulator: emulator);
   }
 
+  /// Creates a [ListDocumentsRequest] to the given [path] with a [pageSize] and
+  /// [nextPageToken], allowing for retrieving parts of collections at a time.
   Future<Page<Document>> getCollection(
       String path, int pageSize, String nextPageToken) async {
     var request = ListDocumentsRequest()
@@ -48,6 +65,11 @@ class FirestoreGateway {
     return Page(documents, response.nextPageToken);
   }
 
+  /// Returns a [Stream] of lists of [Document]s when a document in the
+  /// collection is changed, removed or deleted.
+  ///
+  /// DocumentRemoval can be sent instead of a DocumentDelete or a DocumentChange
+  /// if the server can not send the new value of the document.
   Stream<List<Document>> streamCollection(String path) {
     if (_listenStreamCache.containsKey(path)) {
       return _mapCollectionStream(_listenStreamCache[path]!);
@@ -74,6 +96,9 @@ class FirestoreGateway {
     return _mapCollectionStream(_listenStreamCache[path]!);
   }
 
+  /// Create a new [Document] at the given [path] with an optional [documentId]
+  /// paramter. If [documentId is not supplied a random id is automatically
+  /// created.
   Future<Document> createDocument(
       String path, String? documentId, fs.Document document) async {
     var split = path.split('/');
@@ -91,6 +116,7 @@ class FirestoreGateway {
     return Document(this, response);
   }
 
+  /// Gets a [Document] at a given [path].
   Future<Document> getDocument(path) async {
     var rawDocument = await _client
         .getDocument(GetDocumentRequest()..name = path)
@@ -98,6 +124,12 @@ class FirestoreGateway {
     return Document(this, rawDocument);
   }
 
+  /// Updates a [Document] at a given [path].
+  ///
+  /// When the [update] parameter is true, if the document exists on the server
+  /// and has fields not referenced in the passed in [Document], they are left
+  /// unchanged. Fields not present in the input [Document], are deleted from
+  /// the document on the server.
   Future<void> updateDocument(
       String path, fs.Document document, bool update) async {
     document.name = path;
@@ -113,10 +145,16 @@ class FirestoreGateway {
     await _client.updateDocument(request).catchError(_handleError);
   }
 
+  /// Delete the [Document] at the given [path].
   Future<void> deleteDocument(String path) => _client
       .deleteDocument(DeleteDocumentRequest()..name = path)
       .catchError(_handleError);
 
+  /// Get a stream of [Document]s at the given path when a document is changed,
+  /// removed or deleted.
+  ///
+  /// DocumentRemoval can be sent instead of a DocumentDelete or a DocumentChange
+  /// if the server can not send the new value of the document.
   Stream<Document?> streamDocument(String path) {
     if (_listenStreamCache.containsKey(path)) {
       return _mapDocumentStream(_listenStreamCache[path]!.stream);
@@ -138,6 +176,8 @@ class FirestoreGateway {
     return _mapDocumentStream(_listenStreamCache[path]!.stream);
   }
 
+  /// Run a given query on the given path and return a list of documents that
+  /// satisfy the query filters.
   Future<List<Document>> runQuery(
       StructuredQuery structuredQuery, String fullPath) async {
     final runQuery = RunQueryRequest()
@@ -150,6 +190,7 @@ class FirestoreGateway {
         .toList();
   }
 
+  /// Clean up resources and clear the cache.
   void close() {
     _listenStreamCache.forEach((_, stream) => stream.close());
     _listenStreamCache.clear();

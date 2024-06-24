@@ -1,3 +1,9 @@
+/// A superclass for token stores requiring read and write methods to be
+/// implemented, allowing for different strategies for token storage.
+///
+/// Consists of a [Token] with getters for an idToken for making
+/// authenticated requests and a refreshToken for refreshing expired tokens,
+/// as well as the expiry time in seconds.
 abstract class TokenStore {
   Token? _token;
 
@@ -11,6 +17,7 @@ abstract class TokenStore {
 
   bool get hasToken => _token != null;
 
+  /// Create a [Token] from an [idToken], [refreshToken] and the time in seconds.
   void setToken(
       String? userId, String idToken, String refreshToken, int expiresIn) {
     var expiry = DateTime.now().add(Duration(seconds: expiresIn));
@@ -18,6 +25,7 @@ abstract class TokenStore {
     write(_token);
   }
 
+  /// Create a [TokenStore] using the [read] method to retrieve a token.
   TokenStore() {
     _token = read();
   }
@@ -57,6 +65,9 @@ class VolatileStore extends TokenStore {
   void delete() {}
 }
 
+/// Contains an idToken for making authenticated requests and a refreshToken
+/// for refreshing expired tokens, as well as the expiry time of the idToken,
+/// in seconds. Optionally holds the userId of the signed in user.
 class Token {
   final String? _userId;
   final String _idToken;

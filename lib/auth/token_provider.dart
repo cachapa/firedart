@@ -8,6 +8,12 @@ import 'exceptions.dart';
 
 const _tokenExpirationThreshold = Duration(seconds: 30);
 
+/// A [TokenProvider] has a [KeyClient] for making requests using a project's
+/// API key as well as a [TokenStore] for storing a [Token].
+///
+/// The [TokenProvider] also has getters for the [Token] members as well as
+/// providing [signInState], a stream that emits booleans indicating whether or
+/// not the user is currently signed in.
 class TokenProvider {
   final KeyClient client;
   final TokenStore _tokenStore;
@@ -25,6 +31,7 @@ class TokenProvider {
 
   Stream<bool> get signInState => _signInStateStreamController.stream;
 
+  /// Get an idToken, including refreshing the token if required.
   Future<String> get idToken async {
     if (!isSignedIn) throw SignedOutException();
 
@@ -36,6 +43,8 @@ class TokenProvider {
     return _tokenStore.idToken!;
   }
 
+  /// Set the [TokenStore]'s [Token] from a Map with keys value pairs for
+  /// the userId, the idToken and the refreshToken.
   void setToken(Map<String, dynamic> map) {
     _tokenStore.setToken(
       map['localId'],
@@ -46,6 +55,7 @@ class TokenProvider {
     _notifyState();
   }
 
+  /// Clear the token store and notify listeners of the user's state change.
   void signOut() {
     _tokenStore.clear();
     _notifyState();

@@ -5,6 +5,7 @@ import 'package:firedart/firestore/token_authenticator.dart';
 import 'firestore_gateway.dart';
 import 'models.dart';
 
+/// A convenience class for keeping the host name and port of the emulator.
 class Emulator {
   Emulator(this.host, this.port);
 
@@ -12,10 +13,23 @@ class Emulator {
   final int port;
 }
 
+/// Keeps a [Firestore] singleton accessible via a global [instance] getter.
+///
+/// The [FirestoreGateway] member, created during [initialization], allows
+/// creation of [Reference]s, [QueryReference]s, [DocumentReference]s and
+/// [CollectionReference]s.
 class Firestore {
-  /* Singleton interface */
   static Firestore? _instance;
 
+  /// Provide the [projectId] of the Firebase/GCP project.
+  ///
+  /// If [useApplicationDefaultAuth] is true the library will attempt to
+  /// automatically find credentials based on the application environment.
+  ///
+  /// A [databaseId] can be provided if a project is not using the default
+  /// database.
+  ///
+  /// An [Emulator] object can be provided for local testing.
   static Firestore initialize(
     String projectId, {
     bool useApplicationDefaultAuth = false,
@@ -49,8 +63,10 @@ class Firestore {
     return _instance!;
   }
 
+  /// A boolean indicating if the Firestore singleton has been initialized.
   static bool get initialized => _instance != null;
 
+  /// Provides the singleton [Firebase] instance or throws if not initialized.
   static Firestore get instance {
     if (!initialized) {
       throw Exception(
@@ -59,9 +75,9 @@ class Firestore {
     return _instance!;
   }
 
-  /* Instance interface */
   final FirestoreGateway _gateway;
 
+  /// Should not be called directly, use [Firestore.initialize] and [Firestore.instance]
   Firestore(
     String projectId, {
     String? databaseId,
@@ -75,13 +91,17 @@ class Firestore {
         ),
         assert(projectId.isNotEmpty);
 
+  /// Create a [Reference] from a given path.
   Reference reference(String path) => Reference.create(_gateway, path);
 
+  /// Create a [CollectionReference] from a given path.
   CollectionReference collection(String path) =>
       CollectionReference(_gateway, path);
 
+  /// Create a [DocumentReference] from a given path.
   DocumentReference document(String path) => DocumentReference(_gateway, path);
 
+  /// Call to clean up and release resources when no longer needed.
   void close() {
     _gateway.close();
   }
