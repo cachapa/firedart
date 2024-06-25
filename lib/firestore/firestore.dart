@@ -1,16 +1,10 @@
 import 'package:firedart/auth/firebase_auth.dart';
 import 'package:firedart/firestore/application_default_authenticator.dart';
 import 'package:firedart/firestore/token_authenticator.dart';
+import 'package:firedart/shared/emulator.dart';
 
 import 'firestore_gateway.dart';
 import 'models.dart';
-
-class Emulator {
-  Emulator(this.host, this.port);
-
-  final String host;
-  final int port;
-}
 
 class Firestore {
   /* Singleton interface */
@@ -28,7 +22,7 @@ class Firestore {
     final RequestAuthenticator? authenticator;
     if (useApplicationDefaultAuth) {
       authenticator = ApplicationDefaultAuthenticator(
-        useEmulator: emulator != null,
+        emulator: emulator,
       ).authenticate;
     } else {
       FirebaseAuth? auth;

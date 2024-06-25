@@ -4,6 +4,7 @@ import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/firestore.pbgrpc.dart';
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
+import 'package:firedart/shared/emulator.dart';
 import 'package:grpc/grpc.dart';
 
 import '../firedart.dart';
@@ -22,12 +23,11 @@ class FirestoreGateway {
 
   late ClientChannel _channel;
 
-  FirestoreGateway(
-    String projectId, {
-    String? databaseId,
-    RequestAuthenticator? authenticator,
-    Emulator? emulator,
-  })  : _authenticator = authenticator,
+  FirestoreGateway(String projectId,
+      {String? databaseId,
+      RequestAuthenticator? authenticator,
+      Emulator? emulator})
+      : _authenticator = authenticator,
         database =
             'projects/$projectId/databases/${databaseId ?? '(default)'}/documents',
         _listenStreamCache = <String, _ListenStreamWrapper>{} {
@@ -161,17 +161,17 @@ class FirestoreGateway {
         ? CallOptions(providers: [_authenticator!])
         : null;
     _listenStreamCache.clear();
-    _channel = emulator == null
+    _channel = emulator != null
         ? ClientChannel(
-            'firestore.googleapis.com',
-            options: ChannelOptions(),
-          )
-        : ClientChannel(
             emulator.host,
             port: emulator.port,
             options: ChannelOptions(
               credentials: ChannelCredentials.insecure(),
             ),
+          )
+        : ClientChannel(
+            'firestore.googleapis.com',
+            options: ChannelOptions(),
           );
     _client = FirestoreClient(
       _channel,

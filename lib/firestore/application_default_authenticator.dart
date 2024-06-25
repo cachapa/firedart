@@ -1,9 +1,10 @@
+import 'package:firedart/shared/emulator.dart';
 import 'package:grpc/grpc.dart';
 
 class ApplicationDefaultAuthenticator {
-  ApplicationDefaultAuthenticator({required this.useEmulator});
+  ApplicationDefaultAuthenticator({this.emulator});
 
-  final bool useEmulator;
+  final Emulator? emulator;
 
   late final Future<HttpBasedAuthenticator> _delegate =
       applicationDefaultCredentialsAuthenticator([
@@ -11,7 +12,7 @@ class ApplicationDefaultAuthenticator {
   ]);
 
   Future<void> authenticate(Map<String, String> metadata, String uri) async {
-    if (useEmulator) {
+    if (emulator != null) {
       metadata['authorization'] = 'Bearer owner';
 
       return;

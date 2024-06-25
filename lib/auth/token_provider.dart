@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_store.dart';
+import 'package:firedart/shared/emulator.dart';
 
 import 'exceptions.dart';
 
@@ -11,10 +12,11 @@ const _tokenExpirationThreshold = Duration(seconds: 30);
 class TokenProvider {
   final KeyClient client;
   final TokenStore _tokenStore;
+  final Emulator? emulator;
 
   final StreamController<bool> _signInStateStreamController;
 
-  TokenProvider(this.client, this._tokenStore)
+  TokenProvider(this.client, this._tokenStore, {this.emulator})
       : _signInStateStreamController = StreamController<bool>();
 
   String? get userId => _tokenStore.userId;
@@ -53,7 +55,10 @@ class TokenProvider {
 
   Future _refresh() async {
     var response = await client.post(
-      Uri.parse('https://securetoken.googleapis.com/v1/token'),
+      emulator != null
+          ? Uri.parse(
+              'http://${emulator!.host}:${emulator!.port}/securetoken.googleapis.com/v1/token')
+          : Uri.parse('https://securetoken.googleapis.com/v1/token'),
       body: {
         'grant_type': 'refresh_token',
         'refresh_token': _tokenStore.refreshToken,

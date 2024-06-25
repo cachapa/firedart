@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firedart/firedart.dart';
 import 'package:firedart/firestore/application_default_authenticator.dart';
 import 'package:firedart/firestore/token_authenticator.dart';
+import 'package:firedart/shared/emulator.dart';
 import 'package:test/test.dart';
 
 import 'firebase_auth_test.dart';
@@ -59,7 +60,9 @@ Future main() async {
       'See the docs: https://cloud.google.com/docs/authentication/application-default-credentials#GAC',
     );
 
-    final auth = ApplicationDefaultAuthenticator(useEmulator: false);
+    final auth = ApplicationDefaultAuthenticator(
+      emulator: Emulator(host: 'localhost', port: 4000),
+    );
     var firestore = Firestore(projectId, authenticator: auth.authenticate);
 
     runTests(firestore);

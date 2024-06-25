@@ -3,6 +3,7 @@ import 'package:firedart/auth/client.dart';
 import 'package:firedart/auth/token_provider.dart';
 import 'package:firedart/auth/token_store.dart';
 import 'package:firedart/auth/user_gateway.dart';
+import 'package:firedart/shared/emulator.dart';
 import 'package:http/http.dart' as http;
 
 class FirebaseAuth {
@@ -10,11 +11,12 @@ class FirebaseAuth {
   static FirebaseAuth? _instance;
 
   static FirebaseAuth initialize(String apiKey, TokenStore tokenStore,
-      {http.Client? httpClient}) {
+      {http.Client? httpClient, Emulator? emulator}) {
     if (initialized) {
       throw Exception('FirebaseAuth instance was already initialized');
     }
-    _instance = FirebaseAuth(apiKey, tokenStore, httpClient: httpClient);
+    _instance = FirebaseAuth(apiKey, tokenStore,
+        httpClient: httpClient, emulator: emulator);
     return _instance!;
   }
 
@@ -31,20 +33,23 @@ class FirebaseAuth {
   /* Instance interface */
   final String apiKey;
 
+  final Emulator? emulator;
+
   http.Client httpClient;
   late TokenProvider tokenProvider;
 
   late AuthGateway _authGateway;
   late UserGateway _userGateway;
 
-  FirebaseAuth(this.apiKey, TokenStore tokenStore, {http.Client? httpClient})
+  FirebaseAuth(this.apiKey, TokenStore tokenStore,
+      {http.Client? httpClient, this.emulator})
       : assert(apiKey.isNotEmpty),
         httpClient = httpClient ?? http.Client() {
-    var keyClient = KeyClient(this.httpClient, apiKey);
-    tokenProvider = TokenProvider(keyClient, tokenStore);
+    var keyClient = KeyClient(this.httpClient, apiKey, emulator: emulator);
+    tokenProvider = TokenProvider(keyClient, tokenStore, emulator: emulator);
 
-    _authGateway = AuthGateway(keyClient, tokenProvider);
-    _userGateway = UserGateway(keyClient, tokenProvider);
+    _authGateway = AuthGateway(keyClient, tokenProvider, emulator: emulator);
+    _userGateway = UserGateway(keyClient, tokenProvider, emulator: emulator);
   }
 
   bool get isSignedIn => tokenProvider.isSignedIn;
