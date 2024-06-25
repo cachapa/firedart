@@ -40,3 +40,20 @@ jobs:
           echo "const password = '${{ secrets.test_password }}';" >> test/test_config.dart
       - run: dart pub get
       - run: dart run test
+    
+  test-emulator:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+      - name: Load test credentials
+        run: |
+          echo "${{ secrets.test_service_account }}" | base64 -d - > test/service-account.json
+          echo "const apiKey = '${{ secrets.test_api_key }}';" > test/test_config.dart
+          echo "const projectId = '${{ secrets.test_project_id }}';" >> test/test_config.dart
+          echo "const email = '${{ secrets.test_email }}';" >> test/test_config.dart
+          echo "const password = '${{ secrets.test_password }}';" >> test/test_config.dart
+      - run: dart pub get
+      - run: curl -sL https://firebase.tools | bash
+      - run: firebase emulators:exec 'test/run_test.sh' --only firestore --project ${{ secrets.test_project_id }}
