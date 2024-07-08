@@ -1,7 +1,9 @@
 import 'dart:collection';
 
+import 'package:firedart/generated/google/firestore/v1/common.pb.dart';
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
+import 'package:firedart/generated/google/firestore/v1/write.pb.dart';
 import 'package:firedart/generated/google/protobuf/wrappers.pb.dart';
 import 'package:firedart/generated/google/type/latlng.pb.dart';
 import 'package:grpc/grpc.dart';
@@ -15,11 +17,11 @@ abstract class Reference {
 
   String get id => path.substring(path.lastIndexOf('/') + 1);
 
-  String get fullPath => '${_gateway.database}/$path';
+  String get fullPath => '${_gateway.documentDatabase}/$path';
 
   Reference(this._gateway, String path)
-      : path = _trimSlashes(path.startsWith(_gateway.database)
-            ? path.substring(_gateway.database.length + 1)
+      : path = _trimSlashes(path.startsWith(_gateway.documentDatabase)
+            ? path.substring(_gateway.documentDatabase.length + 1)
             : path);
 
   factory Reference.create(FirestoreGateway gateway, String path) {
@@ -371,5 +373,84 @@ class QueryReference extends Reference {
     compositeFilter.filters.add(queryFilter);
     _structuredQuery.where = StructuredQuery_Filter()
       ..compositeFilter = compositeFilter;
+  }
+}
+
+/// Signature of a transaction callback.
+typedef TransactionHandler<T> = Future<T> Function(Transaction transaction);
+
+/// Transaction class which is created from a call to [runTransaction()].
+class Transaction {
+  final FirestoreGateway _gateway;
+  final List<int> _transaction;
+
+  Transaction(this._gateway, this._transaction);
+
+  final List<Write> _mutations = <Write>[];
+
+  /// An immutable list of the [Write]s that have been added to this transaction.
+  UnmodifiableListView<Write> get mutations => UnmodifiableListView(_mutations);
+
+  /// Reads the document referenced by the provided [path].
+  ///
+  /// If the document does not exist, the operation throws a [GrpcError] with
+  /// [StatusCode.notFound].
+  Future<Document> get(String path) async {
+    return _gateway.getDocument(
+      _fullPath(path),
+      transaction: _transaction,
+    );
+  }
+
+  /// Deletes the document referred by the provided [path].
+  ///
+  /// If the document does not exist, the operation does nothing and returns
+  /// normally.
+  void delete(String path) {
+    _mutations.add(
+      Write(delete: _fullPath(path)),
+    );
+  }
+
+  /// Updates fields provided in [data] for the document referred to by [path].
+  ///
+  /// Only the fields specified in [data] will be updated. Fields that
+  /// are not specified in [data] will not be changed.
+  ///
+  /// If the document does not yet exist, it will be created.
+  void update(String path, Map<String, dynamic> data) {
+    _mutations.add(
+      Write(
+        updateMask: DocumentMask(fieldPaths: data.keys),
+        update: fs.Document(
+          name: _fullPath(path),
+          fields: _encodeMap(data),
+        ),
+      ),
+    );
+  }
+
+  /// Sets fields provided in [data] for the document referred to by [path].
+  ///
+  /// All fields will be overwritten with the provided [data]. This means
+  /// that all fields that are not specified in [data] will be deleted.
+  ///
+  /// If the document does not yet exist, it will be created.
+  void set(String path, Map<String, dynamic> data) {
+    _mutations.add(
+      Write(
+        updateMask: null,
+        update: fs.Document(
+          name: _fullPath(path),
+          fields: _encodeMap(data),
+        ),
+      ),
+    );
+  }
+
+  String _fullPath(String path) => '${_gateway.documentDatabase}/$path';
+
+  Map<String, fs.Value> _encodeMap(Map<String, dynamic> map) {
+    return map.map((key, value) => MapEntry(key, TypeUtil.encode(value)));
   }
 }

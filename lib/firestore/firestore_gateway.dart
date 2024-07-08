@@ -14,7 +14,9 @@ typedef RequestAuthenticator = Future<void>? Function(
 class FirestoreGateway {
   final RequestAuthenticator? _authenticator;
 
-  final String database;
+  late final String database;
+
+  late final String documentDatabase;
 
   final Map<String, _ListenStreamWrapper> _listenStreamCache;
 
@@ -28,9 +30,9 @@ class FirestoreGateway {
     RequestAuthenticator? authenticator,
     Emulator? emulator,
   })  : _authenticator = authenticator,
-        database =
-            'projects/$projectId/databases/${databaseId ?? '(default)'}/documents',
         _listenStreamCache = <String, _ListenStreamWrapper>{} {
+    database = 'projects/$projectId/databases/${databaseId ?? '(default)'}';
+    documentDatabase = '$database/documents';
     _setupClient(emulator: emulator);
   }
 
@@ -61,14 +63,14 @@ class FirestoreGateway {
       ..structuredQuery = query;
     final target = Target()..query = queryTarget;
     final request = ListenRequest()
-      ..database = database
+      ..database = documentDatabase
       ..addTarget = target;
 
     _listenStreamCache[path] = _ListenStreamWrapper.create(
         request,
         (requestStream) => _client.listen(requestStream,
             options: CallOptions(
-                metadata: {'google-cloud-resource-prefix': database})),
+                metadata: {'google-cloud-resource-prefix': documentDatabase})),
         onDone: () => _listenStreamCache.remove(path));
 
     return _mapCollectionStream(_listenStreamCache[path]!);
@@ -91,10 +93,18 @@ class FirestoreGateway {
     return Document(this, response);
   }
 
-  Future<Document> getDocument(path) async {
-    var rawDocument = await _client
-        .getDocument(GetDocumentRequest()..name = path)
-        .catchError(_handleError);
+  Future<Document> getDocument(
+    String path, {
+    List<int>? transaction,
+  }) async {
+    var getDocumentRequest = GetDocumentRequest()..name = path;
+
+    if (transaction != null) {
+      getDocumentRequest.transaction = transaction;
+    }
+
+    var rawDocument =
+        await _client.getDocument(getDocumentRequest).catchError(_handleError);
     return Document(this, rawDocument);
   }
 
@@ -125,14 +135,14 @@ class FirestoreGateway {
     final documentsTarget = Target_DocumentsTarget()..documents.add(path);
     final target = Target()..documents = documentsTarget;
     final request = ListenRequest()
-      ..database = database
+      ..database = documentDatabase
       ..addTarget = target;
 
     _listenStreamCache[path] = _ListenStreamWrapper.create(
         request,
         (requestStream) => _client.listen(requestStream,
             options: CallOptions(
-                metadata: {'google-cloud-resource-prefix': database})),
+                metadata: {'google-cloud-resource-prefix': documentDatabase})),
         onDone: () => _listenStreamCache.remove(path));
 
     return _mapDocumentStream(_listenStreamCache[path]!.stream);
@@ -148,6 +158,49 @@ class FirestoreGateway {
         .where((event) => event.hasDocument())
         .map((event) => Document(this, event.document))
         .toList();
+  }
+
+  Future<T> runTransaction<T>(
+    TransactionHandler<T> transactionHandler, {
+    int maxAttempts = 5,
+    int attempt = 1,
+  }) async {
+    try {
+      return await _runTransaction(transactionHandler);
+    } on GrpcError catch (e) {
+      if (e.code == StatusCode.aborted && attempt < maxAttempts) {
+        return await runTransaction(
+          transactionHandler,
+          attempt: attempt++,
+          maxAttempts: maxAttempts,
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<T> _runTransaction<T>(
+    TransactionHandler<T> transactionHandler,
+  ) async {
+    final transactionRequest = BeginTransactionRequest(database: database);
+    var transactionResponse = await _client
+        .beginTransaction(transactionRequest)
+        .catchError(_handleError);
+
+    var transactionId = transactionResponse.transaction;
+    var transaction = Transaction(this, transactionId);
+
+    final result = await transactionHandler(transaction);
+
+    var commitRequest = CommitRequest(
+      database: database,
+      transaction: transactionId,
+      writes: transaction.mutations,
+    );
+    await _client.commit(commitRequest).catchError(_handleError);
+
+    return result;
   }
 
   void close() {
