@@ -41,8 +41,13 @@ class FirestoreGateway {
       ..collectionId = path.substring(path.lastIndexOf('/') + 1)
       ..pageSize = pageSize
       ..pageToken = nextPageToken;
-    var response =
-        await _client.listDocuments(request).catchError(_handleError);
+    var response = await _client
+        .listDocuments(
+          request,
+          options:
+              CallOptions(metadata: {'google-cloud-resource-prefix': database}),
+        )
+        .catchError(_handleError);
     var documents =
         response.documents.map((rawDocument) => Document(this, rawDocument));
     return Page(documents, response.nextPageToken);
@@ -86,14 +91,21 @@ class FirestoreGateway {
       ..documentId = documentId ?? ''
       ..document = document;
 
-    var response =
-        await _client.createDocument(request).catchError(_handleError);
+    var response = await _client
+        .createDocument(
+          request,
+          options:
+              CallOptions(metadata: {'google-cloud-resource-prefix': database}),
+        )
+        .catchError(_handleError);
     return Document(this, response);
   }
 
   Future<Document> getDocument(path) async {
     var rawDocument = await _client
-        .getDocument(GetDocumentRequest()..name = path)
+        .getDocument(GetDocumentRequest()..name = path,
+            options: CallOptions(
+                metadata: {'google-cloud-resource-prefix': database}))
         .catchError(_handleError);
     return Document(this, rawDocument);
   }
@@ -110,11 +122,21 @@ class FirestoreGateway {
       request.updateMask = mask;
     }
 
-    await _client.updateDocument(request).catchError(_handleError);
+    await _client
+        .updateDocument(
+          request,
+          options:
+              CallOptions(metadata: {'google-cloud-resource-prefix': database}),
+        )
+        .catchError(_handleError);
   }
 
   Future<void> deleteDocument(String path) => _client
-      .deleteDocument(DeleteDocumentRequest()..name = path)
+      .deleteDocument(
+        DeleteDocumentRequest()..name = path,
+        options:
+            CallOptions(metadata: {'google-cloud-resource-prefix': database}),
+      )
       .catchError(_handleError);
 
   Stream<Document?> streamDocument(String path) {
