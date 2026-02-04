@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
 import 'package:firedart/generated/google/firestore/v1/query.pb.dart';
-import 'package:firedart/generated/google/protobuf/wrappers.pb.dart';
+import 'package:protobuf/well_known_types/google/protobuf/wrappers.pb.dart';
 import 'package:firedart/generated/google/type/latlng.pb.dart';
 import 'package:grpc/grpc.dart';
 

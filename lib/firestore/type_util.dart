@@ -1,10 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:firedart/firedart.dart';
+
 import 'package:firedart/generated/google/firestore/v1/document.pb.dart' as fs;
-import 'package:firedart/generated/google/protobuf/struct.pb.dart';
-import 'package:firedart/generated/google/protobuf/struct.pbenum.dart';
-import 'package:firedart/generated/google/protobuf/timestamp.pb.dart';
+import 'package:protobuf/well_known_types/google/protobuf/struct.pb.dart';
+import 'package:protobuf/well_known_types/google/protobuf/struct.pbenum.dart';
+import 'package:protobuf/well_known_types/google/protobuf/timestamp.pb.dart';
 import 'package:fixnum/fixnum.dart';
 
 import 'firestore_gateway.dart';

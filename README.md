@@ -12,7 +12,7 @@ Firedart currently implements a subset of `Firebase Auth` and `Firestore`.
 
 Add Firedart to your `pubspec.yaml` file:
 
-``` yaml
+```yaml
 dependencies:
   firedart: [latest version]
 ```
@@ -27,13 +27,13 @@ You'll also need to go to your `Firebase Console`, open `Project Settings` and u
 
 ### Usage
 
-``` dart
+```dart
 import 'package:firedart/firedart.dart';
 ```
 
 `FirebaseAuth` has a singleton version which should be enough for most use cases. You'll need to initialise it with your API key and a token store (see note above):
 
-``` dart
+```dart
 FirebaseAuth.initialize(apiKey, await HiveStore.create());
 await FirebaseAuth.instance.signIn(email, password);
 var user = await FirebaseAuth.instance.getUser();
@@ -41,7 +41,7 @@ var user = await FirebaseAuth.instance.getUser();
 
 Alternatively you can instantiate your own `FirebaseAuth` object:
 
-``` dart
+```dart
 var firebaseAuth = FirebaseAuth.(apiKey, await PreferencesStore());
 await firebaseAuth.signIn(email, password);
 var user = await firebaseAuth.getUser();
@@ -51,10 +51,10 @@ Further usage examples can be found in the [integration tests](https://github.co
 
 ### Authentication providers
 
-* Anonymous
-* Email/Password
-* Custom tokens
-* Google app credentials (i.e. service-account.json)
+- Anonymous
+- Email/Password
+- Custom tokens
+- Google app credentials (i.e. service-account.json)
 
 ## Firestore
 
@@ -62,13 +62,13 @@ The `Firestore` class is a basic implementation of the service's RPC interface. 
 
 ### Usage
 
-``` dart
+```dart
 import 'package:firedart/firedart.dart';
 ```
 
 As with `FirebaseAuth`, `Firestore` offers a singleton version that needs to be initialised with your `Project ID`, which you can find under `Project Settings` -> `General`:
 
-``` dart
+```dart
 Firestore.initialize(projectId);
 var map = await Firestore.instance.collection("users").get();
 var users = UserCollection.fromMap(map);
@@ -76,7 +76,7 @@ var users = UserCollection.fromMap(map);
 
 You can also instantiate your own `Firestore` object. Please note that if your database requires authenticated access, you'll need to pass along an instance of `FirebaseAuth`.
 
-``` dart
+```dart
 var firebaseAuth = FirebaseAuth.(apiKey, await HiveStore());
 var auth = TokenAuthenticator.from(auth)?.authenticate;
 var firestore = Firestore(projectId, authenticator: firebaseAuth);
@@ -90,10 +90,10 @@ Further usage examples can be found in the [integration tests](https://github.co
 
 ### Limitations
 
-* Collection queries (limit, sort, etc.) are currently not supported.
-* The data is not cached locally.
-* Failed writes (e.g. due to network errors) are not retried.
-* Closed streams are not automatically recovered.
+- Collection queries (limit, sort, etc.) are currently not supported.
+- The data is not cached locally.
+- Failed writes (e.g. due to network errors) are not retried.
+- Closed streams are not automatically recovered.
 
 ### Regenerating the RPC stubs
 
@@ -101,17 +101,22 @@ The Firestore RPC stubs are based on Google's official protobuf definition files
 
 To regenerate them, you will need to check out both [googleapis](https://github.com/googleapis/googleapis) and [protobuf](https://github.com/google/protobuf).
 
+**SIDENOTE**: `protobuf` doesn't seem to be needed anymore, you can just use those via `import 'package:protobuf/well_known_types/google/protobuf/wrappers.pb.dart';`
+
 Set the `PROTOBUF` and `GOOGLEAPIS` environment variables to point to your clones of the above repositories respectively, and then run:
 
 ```sh
 $ tool/regenerate.sh
 ```
 
+- Check if you have protobuf installed: `protobuf --version`
+- You will also need dart plugin for generating dart code: `dart pub global activate protoc_plugin`
+
 ## Debugging
 
 For debugging `Firebase Auth` you can use `VerboseClient`, an HTTP client that logs all communication to the console. The logs can expose sensitive data including passwords and keys, so it's recommended to only enable it for development builds. In Flutter this can be achieved using the `kReleaseMode` constant from the `foundation` package:
 
-``` dart
+```dart
 var client = !kReleaseMode ? VerboseClient() : http.Client();
 var firebaseAuth = FirebaseAuth(apiKey, await PreferencesStore(), httpClient: client);
 ```
