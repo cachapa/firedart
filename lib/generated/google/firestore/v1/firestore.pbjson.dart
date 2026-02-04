@@ -1,13 +1,15 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/firestore/v1/firestore.proto
-//
-// @dart = 2.12
+// Generated from google/firestore/v1/firestore.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
+// ignore_for_file: unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -457,6 +459,15 @@ const RunQueryRequest$json = {
       '9': 1,
       '10': 'readTime'
     },
+    {
+      '1': 'explain_options',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.ExplainOptions',
+      '8': {},
+      '10': 'explainOptions'
+    },
   ],
   '8': [
     {'1': 'query_type'},
@@ -471,8 +482,9 @@ final $typed_data.Uint8List runQueryRequestDescriptor = $convert.base64Decode(
     'AFIPc3RydWN0dXJlZFF1ZXJ5EiIKC3RyYW5zYWN0aW9uGAUgASgMSAFSC3RyYW5zYWN0aW9uEl'
     'IKD25ld190cmFuc2FjdGlvbhgGIAEoCzInLmdvb2dsZS5maXJlc3RvcmUudjEuVHJhbnNhY3Rp'
     'b25PcHRpb25zSAFSDm5ld1RyYW5zYWN0aW9uEjkKCXJlYWRfdGltZRgHIAEoCzIaLmdvb2dsZS'
-    '5wcm90b2J1Zi5UaW1lc3RhbXBIAVIIcmVhZFRpbWVCDAoKcXVlcnlfdHlwZUIWChRjb25zaXN0'
-    'ZW5jeV9zZWxlY3Rvcg==');
+    '5wcm90b2J1Zi5UaW1lc3RhbXBIAVIIcmVhZFRpbWUSUQoPZXhwbGFpbl9vcHRpb25zGAogASgL'
+    'MiMuZ29vZ2xlLmZpcmVzdG9yZS52MS5FeHBsYWluT3B0aW9uc0ID4EEBUg5leHBsYWluT3B0aW'
+    '9uc0IMCgpxdWVyeV90eXBlQhYKFGNvbnNpc3RlbmN5X3NlbGVjdG9y');
 
 @$core.Deprecated('Use runQueryResponseDescriptor instead')
 const RunQueryResponse$json = {
@@ -497,6 +509,14 @@ const RunQueryResponse$json = {
     },
     {'1': 'skipped_results', '3': 4, '4': 1, '5': 5, '10': 'skippedResults'},
     {'1': 'done', '3': 6, '4': 1, '5': 8, '9': 0, '10': 'done'},
+    {
+      '1': 'explain_metrics',
+      '3': 11,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.ExplainMetrics',
+      '10': 'explainMetrics'
+    },
   ],
   '8': [
     {'1': 'continuation_selector'},
@@ -509,7 +529,99 @@ final $typed_data.Uint8List runQueryResponseDescriptor = $convert.base64Decode(
     'hkb2N1bWVudBgBIAEoCzIdLmdvb2dsZS5maXJlc3RvcmUudjEuRG9jdW1lbnRSCGRvY3VtZW50'
     'EjcKCXJlYWRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCHJlYWRUaW'
     '1lEicKD3NraXBwZWRfcmVzdWx0cxgEIAEoBVIOc2tpcHBlZFJlc3VsdHMSFAoEZG9uZRgGIAEo'
-    'CEgAUgRkb25lQhcKFWNvbnRpbnVhdGlvbl9zZWxlY3Rvcg==');
+    'CEgAUgRkb25lEkwKD2V4cGxhaW5fbWV0cmljcxgLIAEoCzIjLmdvb2dsZS5maXJlc3RvcmUudj'
+    'EuRXhwbGFpbk1ldHJpY3NSDmV4cGxhaW5NZXRyaWNzQhcKFWNvbnRpbnVhdGlvbl9zZWxlY3Rv'
+    'cg==');
+
+@$core.Deprecated('Use executePipelineRequestDescriptor instead')
+const ExecutePipelineRequest$json = {
+  '1': 'ExecutePipelineRequest',
+  '2': [
+    {'1': 'database', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'database'},
+    {
+      '1': 'structured_pipeline',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.StructuredPipeline',
+      '9': 0,
+      '10': 'structuredPipeline'
+    },
+    {'1': 'transaction', '3': 5, '4': 1, '5': 12, '9': 1, '10': 'transaction'},
+    {
+      '1': 'new_transaction',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.TransactionOptions',
+      '9': 1,
+      '10': 'newTransaction'
+    },
+    {
+      '1': 'read_time',
+      '3': 7,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Timestamp',
+      '9': 1,
+      '10': 'readTime'
+    },
+  ],
+  '8': [
+    {'1': 'pipeline_type'},
+    {'1': 'consistency_selector'},
+  ],
+};
+
+/// Descriptor for `ExecutePipelineRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List executePipelineRequestDescriptor = $convert.base64Decode(
+    'ChZFeGVjdXRlUGlwZWxpbmVSZXF1ZXN0Eh8KCGRhdGFiYXNlGAEgASgJQgPgQQJSCGRhdGFiYX'
+    'NlEloKE3N0cnVjdHVyZWRfcGlwZWxpbmUYAiABKAsyJy5nb29nbGUuZmlyZXN0b3JlLnYxLlN0'
+    'cnVjdHVyZWRQaXBlbGluZUgAUhJzdHJ1Y3R1cmVkUGlwZWxpbmUSIgoLdHJhbnNhY3Rpb24YBS'
+    'ABKAxIAVILdHJhbnNhY3Rpb24SUgoPbmV3X3RyYW5zYWN0aW9uGAYgASgLMicuZ29vZ2xlLmZp'
+    'cmVzdG9yZS52MS5UcmFuc2FjdGlvbk9wdGlvbnNIAVIObmV3VHJhbnNhY3Rpb24SOQoJcmVhZF'
+    '90aW1lGAcgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgBUghyZWFkVGltZUIPCg1w'
+    'aXBlbGluZV90eXBlQhYKFGNvbnNpc3RlbmN5X3NlbGVjdG9y');
+
+@$core.Deprecated('Use executePipelineResponseDescriptor instead')
+const ExecutePipelineResponse$json = {
+  '1': 'ExecutePipelineResponse',
+  '2': [
+    {'1': 'transaction', '3': 1, '4': 1, '5': 12, '10': 'transaction'},
+    {
+      '1': 'results',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.Document',
+      '10': 'results'
+    },
+    {
+      '1': 'execution_time',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Timestamp',
+      '10': 'executionTime'
+    },
+    {
+      '1': 'explain_stats',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.ExplainStats',
+      '10': 'explainStats'
+    },
+  ],
+};
+
+/// Descriptor for `ExecutePipelineResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List executePipelineResponseDescriptor = $convert.base64Decode(
+    'ChdFeGVjdXRlUGlwZWxpbmVSZXNwb25zZRIgCgt0cmFuc2FjdGlvbhgBIAEoDFILdHJhbnNhY3'
+    'Rpb24SNwoHcmVzdWx0cxgCIAMoCzIdLmdvb2dsZS5maXJlc3RvcmUudjEuRG9jdW1lbnRSB3Jl'
+    'c3VsdHMSQQoOZXhlY3V0aW9uX3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW'
+    '1wUg1leGVjdXRpb25UaW1lEkYKDWV4cGxhaW5fc3RhdHMYBCABKAsyIS5nb29nbGUuZmlyZXN0'
+    'b3JlLnYxLkV4cGxhaW5TdGF0c1IMZXhwbGFpblN0YXRz');
 
 @$core.Deprecated('Use runAggregationQueryRequestDescriptor instead')
 const RunAggregationQueryRequest$json = {
@@ -544,6 +656,15 @@ const RunAggregationQueryRequest$json = {
       '9': 1,
       '10': 'readTime'
     },
+    {
+      '1': 'explain_options',
+      '3': 8,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.ExplainOptions',
+      '8': {},
+      '10': 'explainOptions'
+    },
   ],
   '8': [
     {'1': 'query_type'},
@@ -559,8 +680,9 @@ final $typed_data.Uint8List runAggregationQueryRequestDescriptor = $convert.base
     'lvblF1ZXJ5EiIKC3RyYW5zYWN0aW9uGAQgASgMSAFSC3RyYW5zYWN0aW9uElIKD25ld190cmFu'
     'c2FjdGlvbhgFIAEoCzInLmdvb2dsZS5maXJlc3RvcmUudjEuVHJhbnNhY3Rpb25PcHRpb25zSA'
     'FSDm5ld1RyYW5zYWN0aW9uEjkKCXJlYWRfdGltZRgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U'
-    'aW1lc3RhbXBIAVIIcmVhZFRpbWVCDAoKcXVlcnlfdHlwZUIWChRjb25zaXN0ZW5jeV9zZWxlY3'
-    'Rvcg==');
+    'aW1lc3RhbXBIAVIIcmVhZFRpbWUSUQoPZXhwbGFpbl9vcHRpb25zGAggASgLMiMuZ29vZ2xlLm'
+    'ZpcmVzdG9yZS52MS5FeHBsYWluT3B0aW9uc0ID4EEBUg5leHBsYWluT3B0aW9uc0IMCgpxdWVy'
+    'eV90eXBlQhYKFGNvbnNpc3RlbmN5X3NlbGVjdG9y');
 
 @$core.Deprecated('Use runAggregationQueryResponseDescriptor instead')
 const RunAggregationQueryResponse$json = {
@@ -583,6 +705,14 @@ const RunAggregationQueryResponse$json = {
       '6': '.google.protobuf.Timestamp',
       '10': 'readTime'
     },
+    {
+      '1': 'explain_metrics',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.ExplainMetrics',
+      '10': 'explainMetrics'
+    },
   ],
 };
 
@@ -591,7 +721,8 @@ final $typed_data.Uint8List runAggregationQueryResponseDescriptor = $convert.bas
     'ChtSdW5BZ2dyZWdhdGlvblF1ZXJ5UmVzcG9uc2USPgoGcmVzdWx0GAEgASgLMiYuZ29vZ2xlLm'
     'ZpcmVzdG9yZS52MS5BZ2dyZWdhdGlvblJlc3VsdFIGcmVzdWx0EiAKC3RyYW5zYWN0aW9uGAIg'
     'ASgMUgt0cmFuc2FjdGlvbhI3CglyZWFkX3RpbWUYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVG'
-    'ltZXN0YW1wUghyZWFkVGltZQ==');
+    'ltZXN0YW1wUghyZWFkVGltZRJMCg9leHBsYWluX21ldHJpY3MYCiABKAsyIy5nb29nbGUuZmly'
+    'ZXN0b3JlLnYxLkV4cGxhaW5NZXRyaWNzUg5leHBsYWluTWV0cmljcw==');
 
 @$core.Deprecated('Use partitionQueryRequestDescriptor instead')
 const PartitionQueryRequest$json = {

@@ -1,13 +1,15 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/firestore/v1/document.proto
-//
-// @dart = 2.12
+// Generated from google/firestore/v1/document.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
+// ignore_for_file: unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -148,6 +150,32 @@ const Value$json = {
       '9': 0,
       '10': 'mapValue'
     },
+    {
+      '1': 'field_reference_value',
+      '3': 19,
+      '4': 1,
+      '5': 9,
+      '9': 0,
+      '10': 'fieldReferenceValue'
+    },
+    {
+      '1': 'function_value',
+      '3': 20,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.Function',
+      '9': 0,
+      '10': 'functionValue'
+    },
+    {
+      '1': 'pipeline_value',
+      '3': 21,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.Pipeline',
+      '9': 0,
+      '10': 'pipelineValue'
+    },
   ],
   '8': [
     {'1': 'value_type'},
@@ -166,7 +194,10 @@ final $typed_data.Uint8List valueDescriptor = $convert.base64Decode(
     'gIIAEoCzITLmdvb2dsZS50eXBlLkxhdExuZ0gAUg1nZW9Qb2ludFZhbHVlEkIKC2FycmF5X3Zh'
     'bHVlGAkgASgLMh8uZ29vZ2xlLmZpcmVzdG9yZS52MS5BcnJheVZhbHVlSABSCmFycmF5VmFsdW'
     'USPAoJbWFwX3ZhbHVlGAYgASgLMh0uZ29vZ2xlLmZpcmVzdG9yZS52MS5NYXBWYWx1ZUgAUght'
-    'YXBWYWx1ZUIMCgp2YWx1ZV90eXBl');
+    'YXBWYWx1ZRI0ChVmaWVsZF9yZWZlcmVuY2VfdmFsdWUYEyABKAlIAFITZmllbGRSZWZlcmVuY2'
+    'VWYWx1ZRJGCg5mdW5jdGlvbl92YWx1ZRgUIAEoCzIdLmdvb2dsZS5maXJlc3RvcmUudjEuRnVu'
+    'Y3Rpb25IAFINZnVuY3Rpb25WYWx1ZRJGCg5waXBlbGluZV92YWx1ZRgVIAEoCzIdLmdvb2dsZS'
+    '5maXJlc3RvcmUudjEuUGlwZWxpbmVIAFINcGlwZWxpbmVWYWx1ZUIMCgp2YWx1ZV90eXBl');
 
 @$core.Deprecated('Use arrayValueDescriptor instead')
 const ArrayValue$json = {
@@ -226,3 +257,125 @@ final $typed_data.Uint8List mapValueDescriptor = $convert.base64Decode(
     'CghNYXBWYWx1ZRJBCgZmaWVsZHMYASADKAsyKS5nb29nbGUuZmlyZXN0b3JlLnYxLk1hcFZhbH'
     'VlLkZpZWxkc0VudHJ5UgZmaWVsZHMaVQoLRmllbGRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkS'
     'MAoFdmFsdWUYAiABKAsyGi5nb29nbGUuZmlyZXN0b3JlLnYxLlZhbHVlUgV2YWx1ZToCOAE=');
+
+@$core.Deprecated('Use function_Descriptor instead')
+const Function_$json = {
+  '1': 'Function',
+  '2': [
+    {'1': 'name', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'name'},
+    {
+      '1': 'args',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.Value',
+      '8': {},
+      '10': 'args'
+    },
+    {
+      '1': 'options',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.Function.OptionsEntry',
+      '8': {},
+      '10': 'options'
+    },
+  ],
+  '3': [Function__OptionsEntry$json],
+};
+
+@$core.Deprecated('Use function_Descriptor instead')
+const Function__OptionsEntry$json = {
+  '1': 'OptionsEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {
+      '1': 'value',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.Value',
+      '10': 'value'
+    },
+  ],
+  '7': {'7': true},
+};
+
+/// Descriptor for `Function`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List function_Descriptor = $convert.base64Decode(
+    'CghGdW5jdGlvbhIXCgRuYW1lGAEgASgJQgPgQQJSBG5hbWUSMwoEYXJncxgCIAMoCzIaLmdvb2'
+    'dsZS5maXJlc3RvcmUudjEuVmFsdWVCA+BBAVIEYXJncxJJCgdvcHRpb25zGAMgAygLMiouZ29v'
+    'Z2xlLmZpcmVzdG9yZS52MS5GdW5jdGlvbi5PcHRpb25zRW50cnlCA+BBAVIHb3B0aW9ucxpWCg'
+    'xPcHRpb25zRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSMAoFdmFsdWUYAiABKAsyGi5nb29nbGUu'
+    'ZmlyZXN0b3JlLnYxLlZhbHVlUgV2YWx1ZToCOAE=');
+
+@$core.Deprecated('Use pipelineDescriptor instead')
+const Pipeline$json = {
+  '1': 'Pipeline',
+  '2': [
+    {
+      '1': 'stages',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.Pipeline.Stage',
+      '8': {},
+      '10': 'stages'
+    },
+  ],
+  '3': [Pipeline_Stage$json],
+};
+
+@$core.Deprecated('Use pipelineDescriptor instead')
+const Pipeline_Stage$json = {
+  '1': 'Stage',
+  '2': [
+    {'1': 'name', '3': 1, '4': 1, '5': 9, '8': {}, '10': 'name'},
+    {
+      '1': 'args',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.Value',
+      '8': {},
+      '10': 'args'
+    },
+    {
+      '1': 'options',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.google.firestore.v1.Pipeline.Stage.OptionsEntry',
+      '8': {},
+      '10': 'options'
+    },
+  ],
+  '3': [Pipeline_Stage_OptionsEntry$json],
+};
+
+@$core.Deprecated('Use pipelineDescriptor instead')
+const Pipeline_Stage_OptionsEntry$json = {
+  '1': 'OptionsEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {
+      '1': 'value',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.Value',
+      '10': 'value'
+    },
+  ],
+  '7': {'7': true},
+};
+
+/// Descriptor for `Pipeline`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pipelineDescriptor = $convert.base64Decode(
+    'CghQaXBlbGluZRJACgZzdGFnZXMYASADKAsyIy5nb29nbGUuZmlyZXN0b3JlLnYxLlBpcGVsaW'
+    '5lLlN0YWdlQgPgQQJSBnN0YWdlcxr+AQoFU3RhZ2USFwoEbmFtZRgBIAEoCUID4EECUgRuYW1l'
+    'EjMKBGFyZ3MYAiADKAsyGi5nb29nbGUuZmlyZXN0b3JlLnYxLlZhbHVlQgPgQQFSBGFyZ3MSTw'
+    'oHb3B0aW9ucxgDIAMoCzIwLmdvb2dsZS5maXJlc3RvcmUudjEuUGlwZWxpbmUuU3RhZ2UuT3B0'
+    'aW9uc0VudHJ5QgPgQQFSB29wdGlvbnMaVgoMT3B0aW9uc0VudHJ5EhAKA2tleRgBIAEoCVIDa2'
+    'V5EjAKBXZhbHVlGAIgASgLMhouZ29vZ2xlLmZpcmVzdG9yZS52MS5WYWx1ZVIFdmFsdWU6AjgB');

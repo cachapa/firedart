@@ -1,13 +1,15 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/firestore/v1/query.proto
-//
-// @dart = 2.12
+// Generated from google/firestore/v1/query.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
+// ignore_for_file: unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -74,6 +76,15 @@ const StructuredQuery$json = {
       '6': '.google.protobuf.Int32Value',
       '10': 'limit'
     },
+    {
+      '1': 'find_nearest',
+      '3': 9,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.StructuredQuery.FindNearest',
+      '8': {},
+      '10': 'findNearest'
+    },
   ],
   '3': [
     StructuredQuery_CollectionSelector$json,
@@ -83,7 +94,8 @@ const StructuredQuery$json = {
     StructuredQuery_UnaryFilter$json,
     StructuredQuery_Order$json,
     StructuredQuery_FieldReference$json,
-    StructuredQuery_Projection$json
+    StructuredQuery_Projection$json,
+    StructuredQuery_FindNearest$json
   ],
   '4': [StructuredQuery_Direction$json],
 };
@@ -305,6 +317,78 @@ const StructuredQuery_Projection$json = {
 };
 
 @$core.Deprecated('Use structuredQueryDescriptor instead')
+const StructuredQuery_FindNearest$json = {
+  '1': 'FindNearest',
+  '2': [
+    {
+      '1': 'vector_field',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.StructuredQuery.FieldReference',
+      '8': {},
+      '10': 'vectorField'
+    },
+    {
+      '1': 'query_vector',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.google.firestore.v1.Value',
+      '8': {},
+      '10': 'queryVector'
+    },
+    {
+      '1': 'distance_measure',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.google.firestore.v1.StructuredQuery.FindNearest.DistanceMeasure',
+      '8': {},
+      '10': 'distanceMeasure'
+    },
+    {
+      '1': 'limit',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.Int32Value',
+      '8': {},
+      '10': 'limit'
+    },
+    {
+      '1': 'distance_result_field',
+      '3': 5,
+      '4': 1,
+      '5': 9,
+      '8': {},
+      '10': 'distanceResultField'
+    },
+    {
+      '1': 'distance_threshold',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.DoubleValue',
+      '8': {},
+      '10': 'distanceThreshold'
+    },
+  ],
+  '4': [StructuredQuery_FindNearest_DistanceMeasure$json],
+};
+
+@$core.Deprecated('Use structuredQueryDescriptor instead')
+const StructuredQuery_FindNearest_DistanceMeasure$json = {
+  '1': 'DistanceMeasure',
+  '2': [
+    {'1': 'DISTANCE_MEASURE_UNSPECIFIED', '2': 0},
+    {'1': 'EUCLIDEAN', '2': 1},
+    {'1': 'COSINE', '2': 2},
+    {'1': 'DOT_PRODUCT', '2': 3},
+  ],
+};
+
+@$core.Deprecated('Use structuredQueryDescriptor instead')
 const StructuredQuery_Direction$json = {
   '1': 'Direction',
   '2': [
@@ -324,38 +408,50 @@ final $typed_data.Uint8List structuredQueryDescriptor = $convert.base64Decode(
     'J1Y3R1cmVkUXVlcnkuT3JkZXJSB29yZGVyQnkSNgoIc3RhcnRfYXQYByABKAsyGy5nb29nbGUu'
     'ZmlyZXN0b3JlLnYxLkN1cnNvclIHc3RhcnRBdBIyCgZlbmRfYXQYCCABKAsyGy5nb29nbGUuZm'
     'lyZXN0b3JlLnYxLkN1cnNvclIFZW5kQXQSFgoGb2Zmc2V0GAYgASgFUgZvZmZzZXQSMQoFbGlt'
-    'aXQYBSABKAsyGy5nb29nbGUucHJvdG9idWYuSW50MzJWYWx1ZVIFbGltaXQaYgoSQ29sbGVjdG'
-    'lvblNlbGVjdG9yEiMKDWNvbGxlY3Rpb25faWQYAiABKAlSDGNvbGxlY3Rpb25JZBInCg9hbGxf'
-    'ZGVzY2VuZGFudHMYAyABKAhSDmFsbERlc2NlbmRhbnRzGqgCCgZGaWx0ZXISYQoQY29tcG9zaX'
-    'RlX2ZpbHRlchgBIAEoCzI0Lmdvb2dsZS5maXJlc3RvcmUudjEuU3RydWN0dXJlZFF1ZXJ5LkNv'
-    'bXBvc2l0ZUZpbHRlckgAUg9jb21wb3NpdGVGaWx0ZXISVQoMZmllbGRfZmlsdGVyGAIgASgLMj'
-    'AuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuRmllbGRGaWx0ZXJIAFILZmll'
-    'bGRGaWx0ZXISVQoMdW5hcnlfZmlsdGVyGAMgASgLMjAuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdH'
-    'J1Y3R1cmVkUXVlcnkuVW5hcnlGaWx0ZXJIAFILdW5hcnlGaWx0ZXJCDQoLZmlsdGVyX3R5cGUa'
-    '3gEKD0NvbXBvc2l0ZUZpbHRlchJNCgJvcBgBIAEoDjI9Lmdvb2dsZS5maXJlc3RvcmUudjEuU3'
-    'RydWN0dXJlZFF1ZXJ5LkNvbXBvc2l0ZUZpbHRlci5PcGVyYXRvclICb3ASRQoHZmlsdGVycxgC'
-    'IAMoCzIrLmdvb2dsZS5maXJlc3RvcmUudjEuU3RydWN0dXJlZFF1ZXJ5LkZpbHRlclIHZmlsdG'
-    'VycyI1CghPcGVyYXRvchIYChRPUEVSQVRPUl9VTlNQRUNJRklFRBAAEgcKA0FORBABEgYKAk9S'
-    'EAIaqgMKC0ZpZWxkRmlsdGVyEkkKBWZpZWxkGAEgASgLMjMuZ29vZ2xlLmZpcmVzdG9yZS52MS'
-    '5TdHJ1Y3R1cmVkUXVlcnkuRmllbGRSZWZlcmVuY2VSBWZpZWxkEkkKAm9wGAIgASgOMjkuZ29v'
-    'Z2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuRmllbGRGaWx0ZXIuT3BlcmF0b3JSAm'
-    '9wEjAKBXZhbHVlGAMgASgLMhouZ29vZ2xlLmZpcmVzdG9yZS52MS5WYWx1ZVIFdmFsdWUi0gEK'
-    'CE9wZXJhdG9yEhgKFE9QRVJBVE9SX1VOU1BFQ0lGSUVEEAASDQoJTEVTU19USEFOEAESFgoSTE'
-    'VTU19USEFOX09SX0VRVUFMEAISEAoMR1JFQVRFUl9USEFOEAMSGQoVR1JFQVRFUl9USEFOX09S'
-    'X0VRVUFMEAQSCQoFRVFVQUwQBRINCglOT1RfRVFVQUwQBhISCg5BUlJBWV9DT05UQUlOUxAHEg'
-    'YKAklOEAgSFgoSQVJSQVlfQ09OVEFJTlNfQU5ZEAkSCgoGTk9UX0lOEAoalQIKC1VuYXJ5Rmls'
-    'dGVyEkkKAm9wGAEgASgOMjkuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuVW'
-    '5hcnlGaWx0ZXIuT3BlcmF0b3JSAm9wEksKBWZpZWxkGAIgASgLMjMuZ29vZ2xlLmZpcmVzdG9y'
-    'ZS52MS5TdHJ1Y3R1cmVkUXVlcnkuRmllbGRSZWZlcmVuY2VIAFIFZmllbGQiXgoIT3BlcmF0b3'
-    'ISGAoUT1BFUkFUT1JfVU5TUEVDSUZJRUQQABIKCgZJU19OQU4QAhILCgdJU19OVUxMEAMSDgoK'
-    'SVNfTk9UX05BThAEEg8KC0lTX05PVF9OVUxMEAVCDgoMb3BlcmFuZF90eXBlGqABCgVPcmRlch'
-    'JJCgVmaWVsZBgBIAEoCzIzLmdvb2dsZS5maXJlc3RvcmUudjEuU3RydWN0dXJlZFF1ZXJ5LkZp'
-    'ZWxkUmVmZXJlbmNlUgVmaWVsZBJMCglkaXJlY3Rpb24YAiABKA4yLi5nb29nbGUuZmlyZXN0b3'
-    'JlLnYxLlN0cnVjdHVyZWRRdWVyeS5EaXJlY3Rpb25SCWRpcmVjdGlvbhovCg5GaWVsZFJlZmVy'
-    'ZW5jZRIdCgpmaWVsZF9wYXRoGAIgASgJUglmaWVsZFBhdGgaWQoKUHJvamVjdGlvbhJLCgZmaW'
-    'VsZHMYAiADKAsyMy5nb29nbGUuZmlyZXN0b3JlLnYxLlN0cnVjdHVyZWRRdWVyeS5GaWVsZFJl'
-    'ZmVyZW5jZVIGZmllbGRzIkUKCURpcmVjdGlvbhIZChVESVJFQ1RJT05fVU5TUEVDSUZJRUQQAB'
-    'INCglBU0NFTkRJTkcQARIOCgpERVNDRU5ESU5HEAI=');
+    'aXQYBSABKAsyGy5nb29nbGUucHJvdG9idWYuSW50MzJWYWx1ZVIFbGltaXQSWAoMZmluZF9uZW'
+    'FyZXN0GAkgASgLMjAuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuRmluZE5l'
+    'YXJlc3RCA+BBAVILZmluZE5lYXJlc3QaYgoSQ29sbGVjdGlvblNlbGVjdG9yEiMKDWNvbGxlY3'
+    'Rpb25faWQYAiABKAlSDGNvbGxlY3Rpb25JZBInCg9hbGxfZGVzY2VuZGFudHMYAyABKAhSDmFs'
+    'bERlc2NlbmRhbnRzGqgCCgZGaWx0ZXISYQoQY29tcG9zaXRlX2ZpbHRlchgBIAEoCzI0Lmdvb2'
+    'dsZS5maXJlc3RvcmUudjEuU3RydWN0dXJlZFF1ZXJ5LkNvbXBvc2l0ZUZpbHRlckgAUg9jb21w'
+    'b3NpdGVGaWx0ZXISVQoMZmllbGRfZmlsdGVyGAIgASgLMjAuZ29vZ2xlLmZpcmVzdG9yZS52MS'
+    '5TdHJ1Y3R1cmVkUXVlcnkuRmllbGRGaWx0ZXJIAFILZmllbGRGaWx0ZXISVQoMdW5hcnlfZmls'
+    'dGVyGAMgASgLMjAuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuVW5hcnlGaW'
+    'x0ZXJIAFILdW5hcnlGaWx0ZXJCDQoLZmlsdGVyX3R5cGUa3gEKD0NvbXBvc2l0ZUZpbHRlchJN'
+    'CgJvcBgBIAEoDjI9Lmdvb2dsZS5maXJlc3RvcmUudjEuU3RydWN0dXJlZFF1ZXJ5LkNvbXBvc2'
+    'l0ZUZpbHRlci5PcGVyYXRvclICb3ASRQoHZmlsdGVycxgCIAMoCzIrLmdvb2dsZS5maXJlc3Rv'
+    'cmUudjEuU3RydWN0dXJlZFF1ZXJ5LkZpbHRlclIHZmlsdGVycyI1CghPcGVyYXRvchIYChRPUE'
+    'VSQVRPUl9VTlNQRUNJRklFRBAAEgcKA0FORBABEgYKAk9SEAIaqgMKC0ZpZWxkRmlsdGVyEkkK'
+    'BWZpZWxkGAEgASgLMjMuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuRmllbG'
+    'RSZWZlcmVuY2VSBWZpZWxkEkkKAm9wGAIgASgOMjkuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1'
+    'Y3R1cmVkUXVlcnkuRmllbGRGaWx0ZXIuT3BlcmF0b3JSAm9wEjAKBXZhbHVlGAMgASgLMhouZ2'
+    '9vZ2xlLmZpcmVzdG9yZS52MS5WYWx1ZVIFdmFsdWUi0gEKCE9wZXJhdG9yEhgKFE9QRVJBVE9S'
+    'X1VOU1BFQ0lGSUVEEAASDQoJTEVTU19USEFOEAESFgoSTEVTU19USEFOX09SX0VRVUFMEAISEA'
+    'oMR1JFQVRFUl9USEFOEAMSGQoVR1JFQVRFUl9USEFOX09SX0VRVUFMEAQSCQoFRVFVQUwQBRIN'
+    'CglOT1RfRVFVQUwQBhISCg5BUlJBWV9DT05UQUlOUxAHEgYKAklOEAgSFgoSQVJSQVlfQ09OVE'
+    'FJTlNfQU5ZEAkSCgoGTk9UX0lOEAoalQIKC1VuYXJ5RmlsdGVyEkkKAm9wGAEgASgOMjkuZ29v'
+    'Z2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnkuVW5hcnlGaWx0ZXIuT3BlcmF0b3JSAm'
+    '9wEksKBWZpZWxkGAIgASgLMjMuZ29vZ2xlLmZpcmVzdG9yZS52MS5TdHJ1Y3R1cmVkUXVlcnku'
+    'RmllbGRSZWZlcmVuY2VIAFIFZmllbGQiXgoIT3BlcmF0b3ISGAoUT1BFUkFUT1JfVU5TUEVDSU'
+    'ZJRUQQABIKCgZJU19OQU4QAhILCgdJU19OVUxMEAMSDgoKSVNfTk9UX05BThAEEg8KC0lTX05P'
+    'VF9OVUxMEAVCDgoMb3BlcmFuZF90eXBlGqABCgVPcmRlchJJCgVmaWVsZBgBIAEoCzIzLmdvb2'
+    'dsZS5maXJlc3RvcmUudjEuU3RydWN0dXJlZFF1ZXJ5LkZpZWxkUmVmZXJlbmNlUgVmaWVsZBJM'
+    'CglkaXJlY3Rpb24YAiABKA4yLi5nb29nbGUuZmlyZXN0b3JlLnYxLlN0cnVjdHVyZWRRdWVyeS'
+    '5EaXJlY3Rpb25SCWRpcmVjdGlvbhovCg5GaWVsZFJlZmVyZW5jZRIdCgpmaWVsZF9wYXRoGAIg'
+    'ASgJUglmaWVsZFBhdGgaWQoKUHJvamVjdGlvbhJLCgZmaWVsZHMYAiADKAsyMy5nb29nbGUuZm'
+    'lyZXN0b3JlLnYxLlN0cnVjdHVyZWRRdWVyeS5GaWVsZFJlZmVyZW5jZVIGZmllbGRzGsQECgtG'
+    'aW5kTmVhcmVzdBJbCgx2ZWN0b3JfZmllbGQYASABKAsyMy5nb29nbGUuZmlyZXN0b3JlLnYxLl'
+    'N0cnVjdHVyZWRRdWVyeS5GaWVsZFJlZmVyZW5jZUID4EECUgt2ZWN0b3JGaWVsZBJCCgxxdWVy'
+    'eV92ZWN0b3IYAiABKAsyGi5nb29nbGUuZmlyZXN0b3JlLnYxLlZhbHVlQgPgQQJSC3F1ZXJ5Vm'
+    'VjdG9yEnAKEGRpc3RhbmNlX21lYXN1cmUYAyABKA4yQC5nb29nbGUuZmlyZXN0b3JlLnYxLlN0'
+    'cnVjdHVyZWRRdWVyeS5GaW5kTmVhcmVzdC5EaXN0YW5jZU1lYXN1cmVCA+BBAlIPZGlzdGFuY2'
+    'VNZWFzdXJlEjYKBWxpbWl0GAQgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkludDMyVmFsdWVCA+BB'
+    'AlIFbGltaXQSNwoVZGlzdGFuY2VfcmVzdWx0X2ZpZWxkGAUgASgJQgPgQQFSE2Rpc3RhbmNlUm'
+    'VzdWx0RmllbGQSUAoSZGlzdGFuY2VfdGhyZXNob2xkGAYgASgLMhwuZ29vZ2xlLnByb3RvYnVm'
+    'LkRvdWJsZVZhbHVlQgPgQQFSEWRpc3RhbmNlVGhyZXNob2xkIl8KD0Rpc3RhbmNlTWVhc3VyZR'
+    'IgChxESVNUQU5DRV9NRUFTVVJFX1VOU1BFQ0lGSUVEEAASDQoJRVVDTElERUFOEAESCgoGQ09T'
+    'SU5FEAISDwoLRE9UX1BST0RVQ1QQAyJFCglEaXJlY3Rpb24SGQoVRElSRUNUSU9OX1VOU1BFQ0'
+    'lGSUVEEAASDQoJQVNDRU5ESU5HEAESDgoKREVTQ0VORElORxAC');
 
 @$core.Deprecated('Use structuredAggregationQueryDescriptor instead')
 const StructuredAggregationQuery$json = {
