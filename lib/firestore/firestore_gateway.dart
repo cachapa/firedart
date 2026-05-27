@@ -91,7 +91,7 @@ class FirestoreGateway {
     return Document(this, response);
   }
 
-  Future<Document> getDocument(path) async {
+  Future<Document> getDocument(String path) async {
     var rawDocument = await _client
         .getDocument(GetDocumentRequest()..name = path)
         .catchError(_handleError);
@@ -179,7 +179,7 @@ class FirestoreGateway {
     );
   }
 
-  void _handleError(e) {
+  void _handleError(dynamic e) {
     if (e is GrpcError &&
         [
           StatusCode.unknown,
